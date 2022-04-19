@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zry">
+
+
+    <meta name="subtitle" content="Simple Life">
+
+
+
+
+<title>OS | Matcha Flavor</title>
+
+
+
+    <link rel="icon" href="/mesh.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Matcha Flavor</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Matcha Flavor</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">OS</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zry</a>      
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 31, 2022&nbsp;&nbsp;9:49:02</a>      
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD/">持续更新中</a>
+                                  
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <toc>
+
+<h1 id="os"><a href="#OS" class="headerlink" title="OS"></a>OS</h1><p>操作系统（Operating System）是计算机系统中最基本的系统软件，它负责控制管理计算机的所有软硬件资源，对工作、资源进行调度和分配，并为用户和其他软硬件提供相应接口。它提供了三个基本的抽象：1）文件是对 I / O 设备的抽象；2）虚拟内存是对主存和磁盘的抽象；3）进程是对处理器、主存和 I / O 设备的抽象。</p>
+<p>本文将着重记述 <strong>进程管理</strong>、<strong>存储管理</strong>、<strong>文件系统</strong> 及 <strong>输入/输出</strong> 相关内容。</p>
+<h2 id="一-进程管理"><a href="#一、进程管理" class="headerlink" title="一、进程管理"></a>一、进程管理</h2><p><strong>进程</strong> （Process）是操作系统对一个正在运行的程序的一种抽象（通俗来说，是程序的一次执行）。系统使用 <strong>进程控制块 PCB</strong>（Process Control Block，也称 process table）来描述进程的基本情况和运行状态，从而对各进程进行控制和管理。创建、撤销进程的本质是创建、撤销 PCB，因此 <strong>PCB 是进程存在的唯一标志</strong>。</p>
+<p><strong>进程映像</strong>（进程实体）= 程序段 + 相关数据段 + PCB</p>
+<p>一个 CPU 看上去在并发地执行多个进程，其实是通过处理器在进程间的切换来实现的（一个进程的指令和另一个进程的指令是交错执行的）。进程间的转换是由操作系统 <strong>内核</strong>（kernel）进行管理的，这个内核是操作系统代码常驻主存的部分。当应用程序需要操作系统的某些操作时，它将通过执行特殊的 <strong>系统调用</strong>（system call）指令，将控制权传递给内核，内核执行完相应操作后再将权限归还。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>并发（concurrency）</th>
+<th>并行（parallelism）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指一个同时具有多个活动的系统</td>
+<td>指用并发来使一个系统运行得更快</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="11-进程-amp-线程"><a href="#1-1-进程-amp-线程" class="headerlink" title="1.1 进程 &amp; 线程"></a>1.1 进程 &amp; 线程</h3><p>在现代操作系统中，一个进程实际上可以由多个称为 <strong>线程</strong> （Thread）的执行单元组成，线程也是程序执行流的最小单元。每个线程都共享相同的代码和全局数据，因而多线程之间往往比多进程之间更容易共享数据（线程一般也比进程更为高效）。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>进程（Process）</th>
+<th>线程（Thread）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>为了更好地使多道程序并发执行，提高资源利用率和系统吞吐量；是 <strong>拥有资源</strong> 的基本单位</td>
+<td>减小程序在并发执行时所付出的时空开销，提高操作系统的并发性能；是 <strong>独立调度</strong> 的基本单位</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>因为进程拥有资源而线程不持有资源，所以切换线程的时空开销要小于切换进程</p>
+<p>创建一个线程较创建一个进程要快10~100倍</p>
+</blockquote>
+<p>线程的实现分为 <strong>用户级线程</strong>（User-Level Thread，ULT） 和 <strong>内核级线程</strong> （Kernel-Level Thread，KLT）两种。在用户级线程中，有关线程管理的所有工作都由应用程序完成；在内核级线程中，线程管理的所有工作都由内核完成。</p>
+<p>在同时支持用户线程和内核线程的系统中，有多种多线程模型，统一形式为将 n 个用户级线程映射到 m 个内核级线程上（m ≤ n）。</p>
+<h3 id="12-进程控制之-fork-amp-execve-unix"><a href="#1-2-进程控制之-fork-amp-execve-（UNIX）" class="headerlink" title="1.2 进程控制之 fork &amp; execve （UNIX）"></a>1.2 进程控制之 fork &amp; execve （UNIX）</h3><blockquote>
+<p>每个进程都有一个唯一的正数进程 ID （PID，Process ID）。使用 pid_t getpid(void) 和 pid_t getppid(void)可以分别获得进程和其父进程的 PID（在Linux系统中 pid_t 在 types.h 中被定义为 int。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">pid_t</span> <span class="title">fork</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><strong>父进程</strong> 可以通过调用 fork 函数创建一个新的运行的 <strong>子进程</strong>，子进程获得父进程持有的所有资源的副本，两者的最大区别在于它们有不同的 PID。</p>
+<p>特别的，fork 函数被父进程调用一次，将会返回两次，它在父进程中返回子进程的 PID，在子进程中返回 0。</p>
+<p><strong>回收子进程</strong>：当一个进程终止时（被称为 zombie process），内核并不会立即将其清除，而是等待它被父进程 <strong>回收</strong>（reaped）后再将其抛弃。如果一个父进程没有回收其 zobime 子进程就终止了，那么内核会安排 init 进程去回收它们。父进程可以通过调用 waitpid 函数来等待它的子进程终止或停止。</p>
+<blockquote>
+<p>init 进程的 PID 为1，它是在系统启动时由内核创建的，它不会终止，是所有进程的祖先。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="comment">//成功则不返回，错误则返回-1</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">execve</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *filename, <span class="keyword">const</span> <span class="keyword">char</span> *argv[], <span class="keyword">const</span> <span class="keyword">char</span> *envp[])</span></span>;</span><br></pre></td></tr></table></figure>
+<p>调用 execve 函数将基于当前进程的 context 加载并运行一个新程序；与 fork 调用一次返回两次不同，execve 调用一次从不返回（特指 PID）。在 execve 加载了 filename 并调用启动代码设置栈后，将会把控制权交给新程序的主函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[], <span class="keyword">char</span> *envp[])</span></span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>程序与进程：进程是执行中程序的一个具体实例；程序总是运行在某个进程的 context 中。</p>
+<p>fork 函数在新的子进程中运行与父进程相同的程序；execve 函数在当前进程的 context 中加载并运行一个新的程序（<strong>没有创建新进程</strong>）。</p>
+</blockquote>
+<h3 id="13-进程通信"><a href="#1-3-进程通信" class="headerlink" title="1.3 进程通信"></a>1.3 进程通信</h3><h3 id="14-进程调度"><a href="#1-4-进程调度" class="headerlink" title="1.4 进程调度"></a>1.4 进程调度</h3><p>在多道程序系统中，进程的数量往往多于处理机的数量，因此就需要在多进程竞争处理机时采用一定的算法进行调度以实现进程的并发执行。</p>
+<blockquote>
+<p>由于 CPU 在各进程之间来回快速切换，所以每个进程执行其运算的速度是不确定的。通常，进程的运算速度与时序是难以复现的，所以，在对进程编程时不能对时序做任何假设。</p>
+</blockquote>
+<h2 id="二-存储管理"><a href="#二、存储管理" class="headerlink" title="二、存储管理"></a>二、存储管理</h2><p>鉴于此部分内容与 <strong>CO</strong> 有些许重叠，故不再赘述整体框架，这里只记述一些特别的内容。</p>
+<h3 id="21-多级页表-amp-自映射"><a href="#2-1-多级页表-amp-自映射" class="headerlink" title="2.1 多级页表 &amp; 自映射"></a>2.1 多级页表 &amp; 自映射</h3><p>首先来看看多级页表，考虑一个采用二级页表机制的 $32$ 位虚拟存储系统，字长 $4$ 字节，虚拟地址结构如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>一级页表（页目录）</th>
+<th>二级页表</th>
+<th>页内偏移</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$22-31$位</td>
+<td>$12-21$位</td>
+<td>$0-11$位</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>可见，这样的页式虚拟存储系统页面大小为 $ 2^{12}B=4KB $ ，每一级页表 $10$ 位，每个页表项占一个字，即页表大小和页面大小相同，也为 $4KB$。此外，有一页一级页表，有 $2^{10}=1K$ 页二级页表，由此可知一级页表共占据内存空间 $4KB$，二级页表共占据内存空间 $4MB$。</p>
+<p>那么这些页表该存放在哪儿呢？如果将一级页表与二级页表分别存储，显然，就需要引入额外的 <strong>判断</strong> 逻辑来区分当前地址含义为1）普通页面；2）二级页表页面；3）一级页表页面，这不仅会增加硬件设计的复杂性，也会使用额外的位来存储页面种类信息；同时，如果要在位宽更大的虚拟存储系统中使用更多级的页表（比如 RISC-V SV39分页硬件机制在 $64$ 位机器上使用 $39$ 位虚拟地址和三级页表（ $9×3+12$ ）来进行内存管理），就意味着随页表级数线性增加的额外开销，系统的复杂性也随着提升。</p>
+<p>因此，为了统一虚实地址转换机制（使之可以共用一套映射硬件），一些 OS 采用了 <strong>自映射</strong> 的方式，将 $K$ 级页表嵌入 $K + 1$ 级页表，即在连续存储的 $K+1$ 级页表中有一页表的所有页表项所映射页面依次为连续存储的 $K+1$ 级页表，它就是 $K$ 级页表（$K$ 级页表中的首个页表项映射到连续存储的 $K+1$ 级页表中的首个 $K+1$ 级页表）。</p>
+<p>下图以一个进程有 $4GB$ 地址空间为例，记所有二级页表所在的连续的 $4MB$ 空间的起始地址为 $PT_{Base}$ （Base Address of Page Table），一级页表（也称页目录）的起始地址为 $PD_{Base}$ （Base Address of Page Directory）。</p>
+<p><img src="/2022/03/31/OS/image-20220419093050484.png" alt="二级页表"></p>
+<p>于是，根据 <strong>自映射</strong> 的定义，就可以得到 $PT_{Base}$ 和 $PD_{Base}$ 之间的关系：</p>
+<p>$ PT_{Base}&gt;&gt;22&lt;&lt;(10+2)=PT_{Base}&gt;&gt;10=PD_{Base}-PT_{Base}$</p>
+<p>即：$PD_{Base}=PT_{Base}+(PT_{Base}&gt;&gt;10)$</p>
+<p>这里对上述关系的推导稍作解释：</p>
+<ol>
+<li>$PT_{Base}&gt;&gt;22$ 得到映射到首个二级页表的二级页表页表号</li>
+<li>$PT_{Base}&gt;&gt;22&lt;&lt;(10+2)$ 得到上述页表号对应二级页表相对首个二级页表的地址偏移（$2$ 为页表项位宽，此处一个字表示一个页表项，位宽为 $\log_24=2$ ；$10$ 为二级页表位宽）</li>
+<li>所得即为 $PD_{Base}$ 相对 $PT_{Base}$ 的偏移量</li>
+</ol>
+<h3 id="22-页面置换算法"><a href="#2-2-页面置换算法" class="headerlink" title="2.2 页面置换算法"></a>2.2 页面置换算法</h3><h2 id="三-文件系统"><a href="#三、文件系统" class="headerlink" title="三、文件系统"></a>三、文件系统</h2><h2 id="四-输入输出"><a href="#四、输入-输出" class="headerlink" title="四、输入/输出"></a>四、输入/输出</h2><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>Computer Systems: A Programmer’s Perspective (3rd Edition)</li>
+<li>Modern Operating Systems (4th Edition)</li>
+<li>See Mips Run Linux (2nd Edition)</li>
+</ol>
+<blockquote>
+<p>未完待续… …</p>
+<p>OS 博大精深，为什么不先教 CSAPP 呢 ？ 怎么回事呢怎么回事呢怎么回事呢 ？</p>
+</blockquote>
+</toc>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/OS/"># OS</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/04/06/Game-Theory/">Game-Theory</a>
+            
+            
+            <a class="next" rel="next" href="/2022/03/27/OO-Multithreaded/">OO-Multithreaded</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <!--🌞 Zry |-->
+        <span>🔗 iszry@foxmail.com </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

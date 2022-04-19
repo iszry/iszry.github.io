@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zry">
+
+
+    <meta name="subtitle" content="Simple Life">
+
+
+
+
+<title>C_X86混合编程 | Matcha Flavor</title>
+
+
+
+    <link rel="icon" href="/mesh.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Matcha Flavor</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Matcha Flavor</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">C_X86混合编程</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zry</a>      
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 28, 2021&nbsp;&nbsp;10:35:40</a>      
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/CS/">CS</a>
+                                  
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <toc>
+
+<h1 id="c_x86混合编程"><a href="#C-X86混合编程" class="headerlink" title="C_X86混合编程"></a>C_X86混合编程</h1><h2 id="c语言内嵌汇编代码"><a href="#C语言内嵌汇编代码" class="headerlink" title="C语言内嵌汇编代码"></a>C语言内嵌汇编代码</h2><h3 id="嵌入语法"><a href="#嵌入语法" class="headerlink" title="嵌入语法"></a>嵌入语法</h3><p>先看一个简单的加法，代码如下。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> __stdcall <span class="title">add</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c;</span><br><span class="line">    __asm(</span><br><span class="line">        <span class="string">&quot;MOV ESI, %1;&quot;</span></span><br><span class="line">        <span class="string">&quot;ADD ESI, %2;&quot;</span></span><br><span class="line">        <span class="string">&quot;MOV %0, ESI;&quot;</span></span><br><span class="line">        : <span class="string">&quot;=r&quot;</span>(c)</span><br><span class="line">        : <span class="string">&quot;r&quot;</span>(a), <span class="string">&quot;r&quot;</span>(b));</span><br><span class="line">    <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;addResult:%d&quot;</span>, add(<span class="number">2</span>, <span class="number">3</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>__stdcall约束了函数传参顺序，保证以从右到左的顺序对参数进行压栈。上例中入栈顺序b，a，最后a在栈顶，b在栈底。</p>
+</li>
+<li><p>这里给出在C语言中嵌入汇编代码的一种形式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">__asm__ __volatile__(<span class="string">&quot;Instruction List&quot;</span> ： Output ： Input ： Clobber/Modify)；</span><br><span class="line"><span class="comment">//也可简化为如下形式</span></span><br><span class="line">__asm(<span class="string">&quot;Instruction List&quot;</span> ： Output ： Input ： Clobber/Modify)；</span><br></pre></td></tr></table></figure>
+<p>volatile可选，选用即向GCC编译器声明不对汇编代码进行优化，不选用则GCC会自动决定优化与否；</p>
+<p>“Instruction List”以字符串形式显示指令，一对引号包含一条指令，在引号内加;或\n\t作为结束标志；</p>
+<p>第一个冒号后为输出域，第二个冒号后为输入域。域中格式为”操作符“(变量名)，操作符前加修饰符=表示输出，无修饰符表示输入，变量为C代码中变量，多条输入或输出间用逗号隔开；</p>
+<p>从输出域开始，对出现的变量从0开始依次编号，在汇编代码中以寄存器形式进行调用，上例中%0代表c，%1代表a，%2代表b。</p>
+<p><del>第三个冒号后的参数在这里未用到，作用暂未了解；</del></p>
+</li>
+</ol>
+<p>操作符（大多数未实测）：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>r</td>
+<td>通用寄存器$R_0$-$R_{15}$</td>
+</tr>
+<tr>
+<td>m</td>
+<td>一个有效内存地址</td>
+</tr>
+<tr>
+<td>I</td>
+<td>数据处理指令中的立即数</td>
+</tr>
+<tr>
+<td>X</td>
+<td>被修饰的操作符只能作为输出</td>
+</tr>
+<tr>
+<td>a, b, c, d</td>
+<td>寄存器eax, ebx, ecx,edx</td>
+</tr>
+<tr>
+<td>q,r</td>
+<td>动态分配的寄存器</td>
+</tr>
+<tr>
+<td>g</td>
+<td>eax,ebx,ecx,edx或内存变量</td>
+</tr>
+<tr>
+<td>数字”0”</td>
+<td>指定与第0个变量相同的约束</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>修饰符：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>修饰符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>被修饰的操作符是只读的</td>
+</tr>
+<tr>
+<td>=</td>
+<td>被修饰的操作符只写</td>
+</tr>
+<tr>
+<td>+</td>
+<td>被修饰的操作符具有可读写的属性</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>被修饰的操作符只能作为输出</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="执行程序"><a href="#执行程序" class="headerlink" title="执行程序"></a>执行程序</h3><p>命令行或git执行下述命令：</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -fno-<span class="keyword">builtin</span> -m<span class="number">32</span> -masm<span class="operator">=</span>intel <span class="keyword">add</span>.<span class="keyword">c</span> -o <span class="keyword">add</span></span><br></pre></td></tr></table></figure>
+<p><strong>注：将add.c与add更换为相应的c文件名！</strong></p>
+<p>然后打开C文件同一目录下的同名exe文件，也可以：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">start</span> <span class="built_in">add</span>.exe</span><br></pre></td></tr></table></figure>
+<p><strong>注：将add.exe更换为相应的exe文件名！</strong></p>
+<ol>
+<li>-fno-builtin 关闭编译器对汇编代码优化，与前文提到的volatile异曲同工，二者取其一即有效（未实测）。（可选）</li>
+<li>-m32 在64位环境下强制进行32位编译。（必选）</li>
+<li>-masm=intel 表示使用X86汇编。（X86必选，默认汇编语言不是X86）</li>
+<li>打开exe文件后窗口可能立刻关闭或不便于记录输出结果，可以考虑在代码末端加入getch();或getchar();保持窗口打开，前者读取任意字符后结束进程，后者读取回车后结束进程。</li>
+</ol>
+<h2 id="运行效率"><a href="#运行效率" class="headerlink" title="运行效率"></a>运行效率</h2><h3 id="随机生成测试数据"><a href="#随机生成测试数据" class="headerlink" title="随机生成测试数据"></a>随机生成测试数据</h3><p>使用排序来比较程序执行效率，先随机生成一些待排序数据。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> cnt 100000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> delay 5</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    FILE *in = fopen(<span class="string">&quot;sortData.txt&quot;</span>, <span class="string">&quot;w&quot;</span>);</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; cnt / delay;i++)&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timespec</span> <span class="title">time1</span> =</span> &#123; <span class="number">0</span>, <span class="number">0</span> &#125;;</span><br><span class="line">    clock_gettime(CLOCK_REALTIME, &amp;time1);</span><br><span class="line">    srand(time1.tv_nsec);</span><br><span class="line">	<span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; delay; j++)</span><br><span class="line">	&#123;</span><br><span class="line">   		<span class="keyword">int</span> srandNum = rand();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, srandNum);</span><br><span class="line">        <span class="built_in">fprintf</span>(in, <span class="string">&quot;%d\n&quot;</span>, srandNum);</span><br><span class="line">	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fclose(in);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="冒泡排序横向对比"><a href="#冒泡排序横向对比" class="headerlink" title="冒泡排序横向对比"></a>冒泡排序横向对比</h3><p>分别使用C语言与X86汇编编写冒泡排序函数，进行横向对比。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="keyword">int</span> nums1[<span class="number">100000</span> + <span class="number">5</span>], nums2[<span class="number">100000</span> + <span class="number">5</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span>* arr,<span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span> (i = len - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123; </span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                temp = arr[j];</span><br><span class="line">                arr[j] = arr[j + <span class="number">1</span>];</span><br><span class="line">                arr[j + <span class="number">1</span>] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> __stdcall <span class="title">bubble</span><span class="params">(<span class="keyword">int</span> *nums,<span class="keyword">int</span> count)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    __asm__ __volatile__(</span><br><span class="line">        <span class="string">&quot;MOV ESI, %0;&quot;</span></span><br><span class="line">        <span class="string">&quot;MOV ECX, %1;&quot;</span></span><br><span class="line">        <span class="string">&quot;DEC ECX;&quot;</span></span><br><span class="line">        <span class="string">&quot;outloop:;&quot;</span></span><br><span class="line">        <span class="string">&quot;CMP ECX,1;&quot;</span></span><br><span class="line">        <span class="string">&quot;JL done;&quot;</span></span><br><span class="line">        <span class="string">&quot;MOV EDX,0;&quot;</span></span><br><span class="line">        <span class="string">&quot;MOV EAX,[ESI];&quot;</span></span><br><span class="line">        <span class="string">&quot;innerloop:;&quot;</span></span><br><span class="line">        <span class="string">&quot;CMP EDX,ECX;&quot;</span></span><br><span class="line">        <span class="string">&quot;JGE bottom;&quot;</span></span><br><span class="line">        <span class="string">&quot;INC EDX;&quot;</span></span><br><span class="line">        <span class="string">&quot;MOV EBX,[ESI+EDX*4];&quot;</span></span><br><span class="line">        <span class="string">&quot;MOV EAX,[ESI+EDX*4-4];&quot;</span></span><br><span class="line">        <span class="string">&quot;CMP EBX,EAX;&quot;</span></span><br><span class="line">        <span class="string">&quot;JBE innerloop;&quot;</span></span><br><span class="line">        <span class="string">&quot;swap:;&quot;</span></span><br><span class="line">        <span class="string">&quot;MOV [ESI+EDX*4-4],EBX;&quot;</span></span><br><span class="line">        <span class="string">&quot;MOV [ESI+EDX*4],EAX;&quot;</span></span><br><span class="line">        <span class="string">&quot;JMP innerloop;&quot;</span></span><br><span class="line">        <span class="string">&quot;bottom:;&quot;</span></span><br><span class="line">        <span class="string">&quot;DEC ECX;&quot;</span></span><br><span class="line">        <span class="string">&quot;JMP outloop;&quot;</span></span><br><span class="line">        <span class="string">&quot;done:;&quot;</span> ::<span class="string">&quot;r&quot;</span>(nums),</span><br><span class="line">        <span class="string">&quot;r&quot;</span>(count));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">clock_t</span> st, end;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>, n;</span><br><span class="line">    FILE *in = fopen(<span class="string">&quot;sortData.txt&quot;</span>, <span class="string">&quot;r&quot;</span>);</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">fscanf</span>(in,<span class="string">&quot;%d&quot;</span>,n)!=EOF)&#123;</span><br><span class="line">        nums1[len] = n;</span><br><span class="line">        nums2[len] = n;</span><br><span class="line">        len++;</span><br><span class="line">    &#125;</span><br><span class="line">    fclose(in);</span><br><span class="line">    st = clock();</span><br><span class="line">    bubble(nums1, len);</span><br><span class="line">    end = clock();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Intel X86 bubbleSort.asm time: %d\n&quot;</span>, end-st);</span><br><span class="line">    st = clock();</span><br><span class="line">    bubbleSort(nums2, len);</span><br><span class="line">    end = clock();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;C bubbleSort.c time: %d\n&quot;</span>, end-st);</span><br><span class="line">    getch();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>某次运行结果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intel X86 bubbleSort.<span class="keyword">asm</span> time: <span class="number">6058</span></span><br><span class="line">C bubbleSort.c time: <span class="number">18246</span></span><br></pre></td></tr></table></figure>
+<p>多次运行发现在该测试流程下，X86汇编的执行速度始终约为C语言执行速度的三倍。</p>
+</toc>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%B1%87%E7%BC%96/"># 汇编</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/03/25/OOP-Java/">OOP - Java</a>
+            
+            
+            <a class="next" rel="next" href="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/">RealityCapture三维重建分析</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <!--🌞 Zry |-->
+        <span>🔗 iszry@foxmail.com </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

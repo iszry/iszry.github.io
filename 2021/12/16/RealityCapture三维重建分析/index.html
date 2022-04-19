@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zry">
+
+
+    <meta name="subtitle" content="Simple Life">
+
+
+
+
+<title>RealityCapture三维重建分析 | Matcha Flavor</title>
+
+
+
+    <link rel="icon" href="/mesh.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Matcha Flavor</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Matcha Flavor</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">RealityCapture三维重建分析</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zry</a>      
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 16, 2021&nbsp;&nbsp;15:26:42</a>      
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/CS/">CS</a>
+                                  
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <toc>
+
+<h1 id="realitycapture三维重建分析"><a href="#RealityCapture三维重建分析" class="headerlink" title="RealityCapture三维重建分析"></a>RealityCapture三维重建分析</h1><h2 id="一-软件介绍"><a href="#一、软件介绍" class="headerlink" title="一、软件介绍"></a>一、软件介绍</h2><p>RealityCapture：</p>
+<p><a target="_blank" rel="noopener" href="https://www.capturingreality.com/">RealityCapture: Mapping and 3D Modeling Photogrammetry Software - CapturingReality.com</a></p>
+<p>RealityCapture is the state-of-the-art photogrammetry software solution that is changing the industry.</p>
+<p>It is currently the fastest solution on the market, which brings effectivity to your work and allows you to focus on your targets.</p>
+<p>Create virtual reality scenes, textured 3D meshes, orthographic projections, geo-referenced maps and much more from images and/or laser scans completely automatically.</p>
+<h2 id="二-重建步骤"><a href="#二、重建步骤" class="headerlink" title="二、重建步骤"></a>二、重建步骤</h2><p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/head_tag.png" alt></p>
+<ol>
+<li><p>WORKFLOW-&gt;Add imagery-&gt;Inputs/Folder 添加用于三维重建的图片。（必选）</p>
+</li>
+<li><p>通过WORKFLOW-&gt;Import &amp; Metadata从外部导入激光扫描、光照、地理位置等信息辅助建模。（可选）</p>
+</li>
+<li><p>通过ALIGNMENT设置相机参数、比例尺等详细信息（有默认值）。（可选）</p>
+<p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/head_tag2.png" alt></p>
+</li>
+<li><p>Align Images获得点云模型。（必选）</p>
+</li>
+<li><p>通过RECONSTRUCTION进行进一步重建（WORKFLOW-&gt;Process中有常用选项）。（必选）</p>
+<p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/head_tag3.png" alt></p>
+</li>
+<li><p>通过Export将模型导出为需要形式。（必选）</p>
+</li>
+</ol>
+<h2 id="三-重建结果"><a href="#三、重建结果" class="headerlink" title="三、重建结果"></a>三、重建结果</h2><h3 id="align-images"><a href="#Align-Images" class="headerlink" title="Align Images"></a>Align Images</h3><p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/auto1.png" alt="Align Images"></p>
+<p>综合考虑所有图片进行稀疏重建，获得点云模型，轮廓与原图大致相似。</p>
+<h3 id="normal-detail"><a href="#Normal-Detail" class="headerlink" title="Normal Detail"></a>Normal Detail</h3><p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/auto2.png" alt="Normal Detail"></p>
+<p>初步渲染后的模型结构基本确定，但上图最右侧塔尖处出现大片连结。（中央塔尖消失不见是因为塔尖超出框选的区域范围）</p>
+<h3 id="colorize"><a href="#Colorize" class="headerlink" title="Colorize"></a>Colorize</h3><p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/auto3.png" alt="Colorize"></p>
+<p>着色后可以看到最右侧塔尖处的大片连结为白色，结合晴朗的拍摄环境，分析极有可能是天空中的白云造成的干扰，也有可能是塔尖反光造成的影响。</p>
+<h3 id="texture"><a href="#Texture" class="headerlink" title="Texture"></a>Texture</h3><p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/auto4.png" alt="Texture"></p>
+<p>有了纹理后，模型的窗棂、房檐等部件的层次感更佳。</p>
+<h3 id="simplify"><a href="#Simplify" class="headerlink" title="Simplify"></a>Simplify</h3><p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/auto5.png" alt="Simplify"></p>
+<p>Combine triangles where possible to eliminate complexity and speed up computation for various operations.</p>
+<p>尽可能减少三角面片数量，使连接处平滑，减小计算量。</p>
+<h3 id="high-detail"><a href="#High-Detail" class="headerlink" title="High Detail"></a>High Detail</h3><p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/auto6.png" alt="High Detail"></p>
+<p>考虑更多细节后，右侧塔尖的轮廓大致显现，但塔顶出现点云丢失，初步分析原因是重建算法在优化处理时，将该部分点云同 反光/云 产生的点云一同删去。</p>
+<h3 id="define-ground-plane"><a href="#Define-Ground-Plane" class="headerlink" title="Define Ground Plane"></a>Define Ground Plane</h3><p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/auto7.png" alt="Define Ground Plane"></p>
+<p>对模型进行旋转，从多个角度观察模型。旋转后发现右侧塔尖仍被干扰（High Detail结果中此部分被限制在框选区域外侧，从而不显现）。</p>
+<h3 id="smooth"><a href="#Smooth" class="headerlink" title="Smooth"></a>Smooth</h3><p>Before：</p>
+<p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/before_smooth.png" alt="Before"></p>
+<p>After：</p>
+<p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/after_smooth.png" alt="After"></p>
+<p>进一步优化模型。</p>
+<h3 id="check"><a href="#Check" class="headerlink" title="Check"></a>Check</h3><p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/check.png" alt="Check"></p>
+<p>对模型的拓扑结构进行检测，未发现问题。（若发现问题可选择close hole等选项卡进行修补完善）</p>
+<h3 id="export"><a href="#Export" class="headerlink" title="Export"></a>Export</h3><p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/reconstruct_zry.png" alt="Export"></p>
+<p>渲染出图，这里仅导出为png形式（其它形式的导出结果不便于展示），根据实际需要可选择导出形式。</p>
+<h3 id="原始数据"><a href="#原始数据" class="headerlink" title="原始数据"></a>原始数据</h3><p>Church：</p>
+<p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/Church.JPG" alt></p>
+<p>数据集来自：<a target="_blank" rel="noopener" href="https://www.maths.lth.se/matematiklth/personal/calle/dataset/dataset.html">Carl Olsson (lth.se)</a></p>
+<p>共781张图片，分辨率1936×1296，约493MB。</p>
+<p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/data1.JPG" alt="data1"></p>
+<p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/data2.JPG" alt="data2"></p>
+<h2 id="四-分析对比"><a href="#四、分析对比" class="headerlink" title="四、分析对比"></a>四、分析对比</h2><h3 id="处理分析汇总"><a href="#处理分析汇总" class="headerlink" title="处理分析汇总"></a>处理分析汇总</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Process</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Align Images</td>
+<td>一方面，数据集较大，从相机位姿可以看出图片是环绕着教堂密集地进行采集；另一方面，图片背景较干净，除了蓝天白云的干扰几乎无其他干扰因素。因此重建效果较好。</td>
+</tr>
+<tr>
+<td>Normal Detail</td>
+<td>进一步进行稠密重建时，几乎在建筑物的每一个塔尖处都出现了变形。从原图可以发现塔尖处的十字架和铁索较细，且为金属材质，易反光，图片环境光照较强加剧了反光现象，使之变形。</td>
+</tr>
+<tr>
+<td>Colorize</td>
+<td>受限于重建点云密度，色彩锐利度不足；未导入光照信息，色彩也不如原图明艳。</td>
+</tr>
+<tr>
+<td>Texture</td>
+<td>模型细节“更加”精细，但由于先进行Normal Detail后模型已经具有一定纹理，肉眼无法分辨此步骤前后的差别。</td>
+</tr>
+<tr>
+<td>Simplify</td>
+<td>模型简化后（约减少一半三角面片数），可以明显感受到模型变得粗糙。</td>
+</tr>
+<tr>
+<td>High Detail</td>
+<td>即便在Simplify后，仍花费约40min进行重建，未Simplify的Normal Detail仅需5min左右。但High Detail解决了塔尖处模型畸变的情况，虽然在塔尖处有部分信息缺失，但整体形状与原图相符，且还原了部分十字架与铁索，因此猜测High Detail会对光线效果进行更多的计算。</td>
+</tr>
+<tr>
+<td>Smooth</td>
+<td>Smooth后的模型在建筑物的部分边缘处有更好的表现。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="数据要求分析"><a href="#数据要求分析" class="headerlink" title="数据要求分析"></a>数据要求分析</h3><p>手动采集数据后，发现建模软件对重建数据有较高要求。</p>
+<p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/tb5th.jpg" alt></p>
+<p>87张图片，像素4608×3456，重建结果：</p>
+<p><img src="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/hand.png" alt></p>
+<ol>
+<li>普通手机相机不含depth信息，影响重建结果。</li>
+<li>人为进行移步换景式的拍照对被建模物体所在的空间位置有要求，且难以均匀覆盖各个拍摄角度。</li>
+<li>以上图为例，道路两侧的行道树占据图片大幅画面，建模算法难免受其影响。</li>
+<li>教学楼各部分颜色、纹理、结构相似，重建时可能信息的映射可能发生错位。相比之下使用数据集中的教堂的结构并不完全对称，且有明显的塔尖特征进行位置匹配，不易发生错位。</li>
+</ol>
+<h3 id="横向对比"><a href="#横向对比" class="headerlink" title="横向对比"></a>横向对比</h3><p>以之前使用过的Colmap和Meshroom为参照：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Colmap</th>
+<th>Meshroom</th>
+<th>RealityCapture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作</td>
+<td>需要手动调参，逐步提取特征、匹配特征并进行SFM，进行MVS时也需手动处理SFM数据。</td>
+<td>可进行一键进行SFM+MVS重建。</td>
+<td>可进行一键SFM+MVS重建，且可分布进行色彩、纹理等处理。</td>
+</tr>
+<tr>
+<td>效果</td>
+<td>信息丢失较少，点云密集，但色彩与纹理重建效果较差。</td>
+<td>信息丢失较多，但色彩与纹理重建效果较好。</td>
+<td>信息丢失较少，点云密集，色彩与纹理重建效果较好。</td>
+</tr>
+<tr>
+<td>界面</td>
+<td>软件较小，轻量级，支持GUI与命令行。</td>
+<td>软件较大，支持GUI与命令行，采用图形化模式（流程图）进行进度示意，并可对每一步的数据进行操作。</td>
+<td>软件较大，支持GUI与命令行，导航栏功能丰富，但旋转与缩放操作较不方便。</td>
+</tr>
+<tr>
+<td>效率</td>
+<td>相对耗时较短，重建240张图片不到30min。</td>
+<td>相对耗时较长，重建240张图片约耗时60min。</td>
+<td>又快又好，耗时短于前两者，重建781张图片耗时40min。</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>对数据集几乎没有特殊要求，可以处理由不同相机拍摄获得的图片。</td>
+<td>对数据集有较高要求，数据不符合规范可能无法进行重建。</td>
+<td>对数据集几乎没有特殊要求，但较好的数据可以获得更好的重建效果。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>最后附上Colmap和Meshroom介绍：</p>
+<p><strong>Colmap：</strong></p>
+<p>Colmap is a general-purpose Structure-from-Motion (SfM) and Multi-View Stereo (MVS) pipeline with a graphical and command-line interface. </p>
+<p><a target="_blank" rel="noopener" href="https://colmap.github.io/">COLMAP — COLMAP 3.7 documentation</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/colmap/colmap">colmap/colmap: COLMAP - Structure-from-Motion and Multi-View Stereo (github.com)</a></p>
+<p><strong>Meshroom：</strong></p>
+<p>Meshroom is a free, open-source 3D Reconstruction Software based on the AliceVision framework.</p>
+<p><a target="_blank" rel="noopener" href="https://meshroom-manual.readthedocs.io/en/latest/#">Meshroom Manual — Meshroom v2021.0.1 documentation (meshroom-manual.readthedocs.io)</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/alicevision/meshroom">alicevision/meshroom: 3D Reconstruction Software (github.com)</a></p>
+</toc>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA/"># 三维重建</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/12/28/C-X86%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/">C_X86混合编程</a>
+            
+            
+            <a class="next" rel="next" href="/2021/12/15/CO/">CO</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <!--🌞 Zry |-->
+        <span>🔗 iszry@foxmail.com </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zry">
+
+
+    <meta name="subtitle" content="Simple Life">
+
+
+
+
+<title>OO-Multithreaded | Matcha Flavor</title>
+
+
+
+    <link rel="icon" href="/mesh.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Matcha Flavor</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Matcha Flavor</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">OO-Multithreaded</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zry</a>      
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 27, 2022&nbsp;&nbsp;14:49:47</a>      
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/CS/">CS</a>
+                                  
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <toc>
+
+<h1 id="oo-multithreaded"><a href="#OO-Multithreaded" class="headerlink" title="OO-Multithreaded"></a>OO-Multithreaded</h1><h2 id="一-线程-thread"><a href="#一、线程-Thread" class="headerlink" title="一、线程 ( Thread )"></a>一、线程 ( Thread )</h2><p>多进程：操作系统将 CPU 的时间片分配给每一个进程，给人并行处理的感觉。</p>
+<p>多线程：一个程序同时执行多个任务，每一个任务称为一个线程( thread )。</p>
+<p>多进程和多线程的本质区别在于每个进程拥有自己的一套变量，而线程则共享数据。</p>
+<p>Java 程序运行时会有一到多个线程运行。每个线程都有专属的栈，用以追踪方法的执行（例：线程栈栈底为线程入口方法）。同一个 Java 程序的所有线程共享一个堆，用于保存对象或数组，为垃圾回收提供支持（无法被程序引用 -&gt; 被垃圾回收器回收，无程序引用 ≠ 引用计数为零）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Normal Thread Mode</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="comment">/*has work to do*/</span>) &#123;</span><br><span class="line">            <span class="comment">//work</span></span><br><span class="line">            <span class="comment">//sleep(...) or wait(...)</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        <span class="comment">//deal with the exception</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="11-线程状态与状态迁移"><a href="#1-1-线程状态与状态迁移" class="headerlink" title="1.1 线程状态与状态迁移"></a>1.1 线程状态与状态迁移</h3><p>线程有如下六种状态：</p>
+<ol>
+<li>New（新创建）：调用 start 方法后进入 Runnable 状态</li>
+<li>Runnable（可运行）：可运行线程可能正在运行也可能没有运行</li>
+<li>Blocked（被阻塞）：当线程试图获取某个被其他线程持有的Object lock ，进入 Blocked状态，当所有其他线程释放该 lock 并交给该线程时，退出 Blocked 状态</li>
+<li>Waiting（等待）：线程主动进入等待状态，等待特定条件被唤醒</li>
+<li>Timed waiting（计时等待）：Waiting + 超时参数（超时期满强制唤醒）</li>
+<li>Terminated（被终止）：因 Run 方法正常退出而自然死亡 或 因一个未捕获的异常终止 Run 方法而意外死亡</li>
+</ol>
+<p><img src="/2022/03/27/OO-Multithreaded/image-20220411150055518.png" alt="State-change"></p>
+<h3 id="12-多线程协同"><a href="#1-2-多线程协同" class="headerlink" title="1.2 多线程协同"></a>1.2 多线程协同</h3><h4 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h4><p><strong>线程安全</strong>（thread-safe）是关于对象是否能被多个线程安全访问的特性。线程安全的对象，无论被以怎样的交叠次序进行访问，都将得到相同的结果。</p>
+<ul>
+<li>线程安全的类对应的任意对象都是线程安全的</li>
+<li>任何时候访问线程安全对象都无需做同步控制措施</li>
+</ul>
+<p>引起线程安全问题的原因：某线程中的 数据关联 / 逻辑关联 codeBlock  被其他线程干扰。</p>
+<p>解决方案：对具有关联性的 CodeBlock 进行封装（设计专属数据结构 / 使用同步控制块），保证 <strong>计算原子性</strong>。</p>
+<blockquote>
+<p><strong>线程优先级</strong>：一个线程继承它的父类线程的优先级，可用 setPriority 方法将线程优先级设置在 MIN_PRIORITY = 1 与 MAX_PRIOITY = 10 之间（线程的默认优先级为 NORM_PRIORITY ）。然而，在 Oracle 为 Linux 提供的 Java 虚拟机中，线程的优先级<strong>被忽略</strong>——所有线程具有相同的优先级。<strong>设计时不要让线程安全问题 / 程序逻辑依赖于线程优先级！</strong></p>
+<p><strong>计算原子性</strong>：与 Atomic 相关原子数据类相似。</p>
+</blockquote>
+<h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><h5 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h5><p>关键字 <strong>synchronized</strong>（同步锁）：对所有同步控制区域加上同步锁（同一线程对同一对象锁是可重入的，且同一线程可以多次获取同一把锁——支持多次重入）。通常在 synchronized 控制区域中配套使用 wait - notify / notifyAll 方法避免轮询。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(lock<span class="comment">/*class or object*/</span>)&#123;</span><br><span class="line">    <span class="comment">// codeBlock</span></span><br><span class="line">    lock.notifyAll();<span class="comment">// lock.notify();</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">synchronized</span> class <span class="title">ClassName</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// class</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// method</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JVM 确保每个对象只有一个 lock ，只有拿到 lock 的线程才会执行。</p>
+<p>尽量避免轮询——<strong>空转线程</strong>浪费 CPU 资源，该睡就睡（wait  / sleep）。</p>
+<p>sleep 和 wait 方法的区别：sleep 方法不会释放 lock ，但 wait 方法会释放 lock 。</p>
+<h5 id="reentrantlock-reentrantreadwritelock"><a href="#ReentrantLock-ReentrantReadWriteLock" class="headerlink" title="ReentrantLock / ReentrantReadWriteLock"></a>ReentrantLock / ReentrantReadWriteLock</h5><p>类 <strong>ReentrantLock</strong>（可重入锁）：对同一线程重复获取同一锁的次数进行计数（构造器可选参数 boolean fair 表示可选用公平锁 / 非公平锁，默认使用非公平锁）。<strong>必须在 finally 块中释放锁！</strong>此外，使用 tryLock 可用轮询方式获取锁，如果锁可用，则获取锁并立即返回 true ，否则立即返回 false ，可避免死锁。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ReentrantLock lock = <span class="keyword">new</span> ReentrantLock(); <span class="comment">// an unfair lock</span></span><br><span class="line">lock.lock();<span class="comment">// if(lock.tryLock())&#123; try ... finally ... &#125;</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// synchronized codeBlock</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Condition 在 Java 1.5 之后出现的一个接口，用于替代 Object 中的 wait - notify / notifyAll 以实现线程调度（对应 Condition 中的 await - signal /signAll）。使用 Condition 可以有选择地对线程进行调度（synchronized 相当于只有单一的 Condition）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line"><span class="keyword">public</span> Condition conditionA = lock.newCondition();</span><br><span class="line"><span class="keyword">public</span> Condition conditionB = lock.newCondition();</span><br></pre></td></tr></table></figure>
+<p>相对于使用 synchronized ，使用 Condition 可以避免 notify / notifyAll 带来的线程唤醒顺序的不确定性。</p>
+<p>类 <strong>ReentrantReadWriteLock</strong>：读写分离，允许所有对象共享读操作，但写操作与其他任何读写操作互斥。（详见后文设计模式中的 Read-Write Lock模式）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ReentrantReadWriteLock rwl = <span class="keyword">new</span> ReentrantReadWriteLock();</span><br><span class="line"><span class="keyword">private</span> Lock readLock = rwl.readLock();</span><br><span class="line"><span class="keyword">private</span> Lock writeLock = rwl.writeLock();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getTotalBalance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    readLock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;...&#125;</span><br><span class="line">    <span class="keyword">finally</span> &#123; readLock.unlock(); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">transfer</span><span class="params">(...)</span></span>&#123;</span><br><span class="line">    writeLock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;...&#125;</span><br><span class="line">    <span class="keyword">finally</span> &#123; writeLock.unlock(); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二-多线程设计模式"><a href="#二、多线程设计模式" class="headerlink" title="二、多线程设计模式"></a>二、多线程设计模式</h2><h3 id="21-guarded-suspension-模式"><a href="#2-1-Guarded-Suspension-模式" class="headerlink" title="2.1 Guarded Suspension 模式"></a>2.1 Guarded Suspension 模式</h3><p><img src="/2022/03/27/OO-Multithreaded/image-20220411170739555.png" alt="Guarded-suspension"></p>
+<p>当线程执行 guardedMethod 方法时，若守护条件 guarded （守护条件成立与否还和 GuardedObject 的状态相关联）成立则可立即执行，否则就要进行等待。在 Java 中，guardedMethod 通过 while 和 wait 来实现，stateChaningMethod 通过 notify / notifyAll 来实现。</p>
+<p>Guarded Suspension 模式在许多于并发相关的设计模式中都有应用，它针对处理对资源的互斥访问。</p>
+<h3 id="22-producer-consumer-模式"><a href="#2-2-Producer-Consumer-模式" class="headerlink" title="2.2 Producer - Consumer 模式"></a>2.2 Producer - Consumer 模式</h3><p><img src="/2022/03/27/OO-Multithreaded/image-20220411135912642.png" alt="Producer-ConsumerModel"></p>
+<p>在 Producer-Consumer 模式中，将在不同线程中执行的输入与输出进行解耦，设置共享数据类 Channel 对数据进行专门管理（应在共享数据类中使用锁以保证线程安全）。此外，使用该模式还可借助缓冲区平衡 producer 与 consumer 生产 - 消耗速度间的差异。这种设计模式将多线程协调控制的 codeBlock 封装在 Channel 中，让 Producer 和 Consumer 专注于各自的线程。</p>
+<blockquote>
+<p>Worker Thread （又称 Background Thread、Thread Pool）模式，是 Producer - Consumer 模式的变种。</p>
+</blockquote>
+<h3 id="23-thread-specific-storage-模式"><a href="#2-3-Thread-Specific-Storage-模式" class="headerlink" title="2.3 Thread-Specific Storage 模式"></a>2.3 Thread-Specific Storage 模式</h3><p><img src="/2022/03/27/OO-Multithreaded/image-20220411173307935.png" alt="Thread-Specific-StorageModel"></p>
+<blockquote>
+<p>TS 为 Thread-Specific 的缩写，上图中的 Client 类与 TSObject 类均有 n 个对象，它们一一对应。</p>
+<p>其中 TSObjectCollection 以线程为键来获取和存储 TSObject 对象。</p>
+</blockquote>
+<p>Thread-Specific Storage 模式为每个线程提供了独立的存储空间，这样的存储空间对其他线程不可见，自然也就不存在线程安全问题。其实，该模式的本质是将 <strong>互斥处理</strong> 提前到调度阶段执行，以维护工作线程彼此间的独立性。</p>
+<h3 id="24-thread-per-message-模式"><a href="#2-4-Thread-Per-Message-模式" class="headerlink" title="2.4 Thread-Per-Message 模式"></a>2.4 Thread-Per-Message 模式</h3><p><img src="/2022/03/27/OO-Multithreaded/image-20220411181039613.png" alt="Thread-Per-Message"></p>
+<p>在 handle 操作非常耗时或需要等待输入 / 输出时（比启动新线程的时间代价更不可接受时），Thread-Per-Message 模式可以显著提高 Host 的响应性，降低延迟时间。但该设计模式仅适用于对操作顺序没有要求、不需要返回值时。</p>
+<blockquote>
+<p>一言以蔽之：new Thread(getOneMessage());</p>
+</blockquote>
+<h3 id="25-read-write-lock-模式"><a href="#2-5-Read-Write-Lock-模式" class="headerlink" title="2.5 Read-Write Lock 模式"></a>2.5 Read-Write Lock 模式</h3><p><img src="/2022/03/27/OO-Multithreaded/image-20220411161749600.png" alt="Read-Write-LockModel"></p>
+<p>Read-Write Lock 模式利用了进行读取操作的线程彼此不会产生冲突的特性，对多个同时进行 read 操作的 Reader 不做互斥处理，使之可以并发执行，从而提高程序性能。这种设计模式适用于读取操作繁重，或读取频率高于写入频率的场景。</p>
+<p>在该模式中最为关键的类是 ReadWriteLock，它要解决两类冲突：</p>
+<ol>
+<li>read-write conflict</li>
+<li>write-write conflict</li>
+</ol>
+<p>具体实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ReadWriteLock</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> readingReaders = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> waitingWriters = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> writingWriters = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> preferWriter = <span class="keyword">true</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">readLock</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (writingWriters &gt; <span class="number">0</span> || (preferWriter &amp;&amp; waitingWriters &gt; <span class="number">0</span>)) &#123;</span><br><span class="line">            wait();</span><br><span class="line">        &#125;</span><br><span class="line">        readingReaders++;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">readUnlock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        readingReaders--;</span><br><span class="line">        preferWriter = <span class="keyword">true</span>;</span><br><span class="line">        notifyAll();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">writeLock</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        waitingWriters++;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (readingReaders &gt; <span class="number">0</span> || writingWriters &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                wait();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            waitingWriters++;</span><br><span class="line">        &#125;</span><br><span class="line">        writingWriters++;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">writeUnlock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        writingWriters--;</span><br><span class="line">        preferWriter = <span class="keyword">false</span>;</span><br><span class="line">        notifyAll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>引入 ReadWriteLock 既确保了 SharedResource 的安全性，还可以提高程序性能。</p>
+<h2 id="三-参考资料"><a href="#三、参考资料" class="headerlink" title="三、参考资料"></a>三、参考资料</h2><ol>
+<li>图解 Java 多线程设计模式</li>
+<li>Java 核心技术卷 Ⅰ</li>
+</ol>
+</toc>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/OO/"># OO</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/03/31/OS/">OS</a>
+            
+            
+            <a class="next" rel="next" href="/2022/03/25/OOP-Java/">OOP - Java</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <!--🌞 Zry |-->
+        <span>🔗 iszry@foxmail.com </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
