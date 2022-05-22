@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zry">
+
+
+    <meta name="subtitle" content="Simple Life">
+
+
+
+
+<title>ML Notes | Matcha Flavor</title>
+
+
+
+    <link rel="icon" href="/mesh.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Matcha Flavor</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Matcha Flavor</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">ML Notes</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zry</a>      
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 21, 2022&nbsp;&nbsp;10:50:04</a>      
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD/">持续更新中</a>
+                                  
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <toc>
+
+<h1 id="ml-notes"><a href="#ML-Notes" class="headerlink" title="ML Notes"></a>ML Notes</h1><h2 id="有监督学习supervised-learning"><a href="#有监督学习（Supervised-Learning）" class="headerlink" title="有监督学习（Supervised Learning）"></a>有监督学习（Supervised Learning）</h2><h3 id="回归regression"><a href="#回归（Regression）" class="headerlink" title="回归（Regression）"></a>回归（Regression）</h3><p>使用<strong>方差</strong>作为<strong>代价函数</strong> $J$（cost function）较为常见，$\Theta$ 为参数向量。</p>
+<p>$h_\Theta(x)=\Theta^TX\\\\J(\Theta)=\frac{1}{2m} \sum_{i=0}^{m}(h_{\Theta}(X^{(i)})-Y^{(i)})^{2}$</p>
+<p><strong>梯度下降</strong>（Gradient descent）求解局部最优解（线性回归中均为全局最优解）：</p>
+<p>$\Theta := \Theta-\alpha\frac{\partial}{\partial\Theta}J(\Theta) $         ($\alpha$ refers learning rate)</p>
+<p><strong>应用至线性回归（Batch Gradient Descent）：</strong></p>
+<p>$define\ \  X_0=1\\\\h_\Theta(X^{(i)})=\Theta^TX^{(i)}\\\\\Theta:=\Theta-\alpha \frac{1}{m}\sum_{i=1}^{m}(h_{\Theta}(X^{(i)})-Y^{(i)})X^{(i)}$</p>
+<blockquote>
+<p>Batch: Each step of gradient Descent uses all the training examples.</p>
+</blockquote>
+<p><strong>特征缩放（Feature Scaling）/ 均值归一化（Mean normalization)：</strong>使 $X_i$ 的规模相近，提高梯度下降效率。</p>
+<p>$x_i\ := \frac{x_i}{Maxof(x_i)\ in\ X_i}\ \ or\ \ x_i\ :=\frac{x_i-\mu_i}{\sigma_i}$</p>
+<p><strong>正规方程（Normal Equation）求线性回归解析解：</strong></p>
+<p>$Y_{m\times 1}=X_{m\times (n+1)}\Theta_{(n+1)\times 1}\\\\\Rightarrow \Theta_{min\ J_{(\Theta)}}=(X^TX)^{-1}X^TY$</p>
+<p><strong>正则化（Regulation）：</strong></p>
+<p>$J(\Theta)=\frac{1}{2m} [\ \sum_{i=0}^{m}(h_{\Theta}(X^{(i)})-Y^{(i)})^{2}+\lambda\sum_{j=1}^n\theta_j^2\ ] $</p>
+<p>引入额外的正则化项 $\lambda\sum_{j=1}^n\theta_j^2$ 用于缩小所有参数（$\Theta$）的规模</p>
+<p>正则化后进行梯度下降：</p>
+<p>$\theta_0:=\theta_0-\alpha \frac{1}{m}\sum_{i=1}^{m}(h_{\Theta}(X^{(i)})-Y^{(i)})X_0^{(i)}\\\\\theta_j:=\theta_j (1-\alpha\frac{\lambda}{m})-\alpha \frac{1}{m}\sum_{i=1}^{m}(h_{\Theta}(X^{(i)})-Y^{(i)})X_j^{(i)}\\\\\Theta=(X^TX+\lambda\begin{bmatrix}<br>{0}&amp;{}&amp;{}&amp;{}\\<br>{}&amp;{1}&amp;{}&amp;{}\\<br>{}&amp;{}&amp;{\ddots}&amp;{}\\<br>{}&amp;{}&amp;{}&amp;{1}\\<br>\end{bmatrix}^{-1}X^TY$</p>
+<p><strong>Tips：</strong></p>
+<ol>
+<li>随着迭代次数的增加， $J$ 应该单调递减；可以画出 $J$ 随迭代次数变化曲线或者设置 $J$ 的收敛条件。</li>
+<li>若 $J$ 递增或出现增减周期性变化，可以考虑减小 $\alpha$ 。</li>
+<li>对线性回归而言，只要 $\alpha$ 足够小，$J$ 一定单调递减。</li>
+<li>可以尝试以三倍间隔取 $\alpha$，如 0.001，0.003，0.01，0.03 等。</li>
+<li>使用换元可以用线性回归模型处理多项式回归问题（注意特征缩放）。</li>
+<li>一般来说，在特征向量维数较高（维数上万时开始考虑）时使用梯度下降法，相反则使用正规方程。</li>
+<li>因为需要计算$(X^TX)^{-1}$正规方程解法复杂度为O($n^3$)。</li>
+<li>若$X^TX$不可逆，考虑剔除多余特征或者计算伪逆，进行正则化也可以避免求伪逆。</li>
+<li>使用向量化方法可以提高代码运行效率。</li>
+</ol>
+<h3 id="分类classification"><a href="#分类（Classification）" class="headerlink" title="分类（Classification）"></a>分类（Classification）</h3><p><strong>Logistic Regression 分类：</strong></p>
+<p>Logistic/Sigmoid Function:</p>
+<p>$f(x)=\frac{1}{1+e^{-x}}\ \ x\in(-\infin,\infin)$</p>
+<p>Single Example Logistic Regression:</p>
+<p>$h_{\Theta}(X)=\frac{1}{1+e^{-\Theta^T X}}\\\\J(\Theta)=\frac{1}{m}\sum_{i=1}^{m}Cost(h_\Theta(X^{(i)}),Y^{(i)})\\\\Cost(h_\Theta(X^{(i)}),Y^{(i)})=-Y^{(i)}log(h_\Theta(X^{(i)}))-(1-Y^{(i)})log(1-h_\Theta(X^{(i)}))\\\\\Theta:=\Theta-\alpha \frac{1}{m}\sum_{i=1}^{m}(h_{\Theta}(X^{(i)})-Y^{(i)})X^{(i)}$</p>
+<blockquote>
+<p>Tip：这里以向量形式隐藏了参数 $\Theta$ 与特征 $X$ 的具体形式。</p>
+</blockquote>
+<p>Gradient Descent （梯度下降法）的优化算法：</p>
+<ol>
+<li>Conjugate gradient（共轭梯度法）</li>
+<li>BFGS（牛顿法）</li>
+<li>L-BFGS（limited-牛顿法）</li>
+</ol>
+<p><strong>一对多分类：</strong>构造多个 Logistic Regression Classifier 进行多次划分。</p>
+<p><strong>减缓过拟合现象：</strong></p>
+<ol>
+<li>减少特征数量</li>
+<li>正则化</li>
+</ol>
+<p><strong>Regulation logistic regression：</strong></p>
+<p>$Cost\ function:J(\Theta)=-\frac{1}{m}[\sum_{i=1}^{m}Y^{(i)}log(h_\Theta(X^{(i)}))+(1-Y^{(i)})log(1-h_\Theta(X^{(i)}))]+\frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2\\\\\theta_0:=\theta_0-\alpha \frac{1}{m}\sum_{i=1}^{m}(h_{\Theta}(X^{(i)})-Y^{(i)})X_0^{(i)}\\\\\theta_j:=\theta_j (1-\alpha\frac{\lambda}{m})-\alpha \frac{1}{m}\sum_{i=1}^{m}(h_{\Theta}(X^{(i)})-Y^{(i)})X_j^{(i)}$</p>
+<blockquote>
+<p>和线性回归的形式化表达式完全一样，区别仅在于 $h_\Theta(X)$ 与 $J(\Theta)$ 的具体形式。</p>
+</blockquote>
+<h3 id="神经网络neural-networks"><a href="#神经网络（Neural-Networks）" class="headerlink" title="神经网络（Neural Networks）"></a>神经网络（Neural Networks）</h3><p>当特征数增长时，使用 Logistic Regress 以增加多项式阶数的形式构造非线性分类器（non-linear classifier）的复杂度过高。</p>
+<p>Sigmoid（Logistic）activation function</p>
+<p>Input Layer （X） -&gt; Hidden Layers -&gt; Output Layer （Y）</p>
+<p>若网络在第 $j$ 层有 $s_j$ 个神经元，则 $\Theta^{(j)}$ 的维度为 $s_{j+1}\times(s_j+1)$。</p>
+<p><strong>Forward propation in the hidden layers：</strong></p>
+<p>$define A^{(0)}=X\\\\then\ A^{(i)}=g(\Theta^{(i)}A^{(i-1)})\ while \ the\ function\ g \ refers\ Sigmoid/Logistic\ function$</p>
+<blockquote>
+<p>计算单元下标通常从1开始，实际运算时添加值恒为1的下标为0的偏置单元。</p>
+</blockquote>
+<p>简单来说，神经网络的每一层都将学习一个参数矩阵 $\Theta$ 用于将上一层的特征以线性变换的形式进行复合，再将复合特征作为下一层网络的输入特征。</p>
+<p><strong>Cost function：</strong></p>
+<p>$J(\Theta)=-\frac{1}{m}[\sum_{i=1}^{m}\sum_{k=1}^KY^{(i)}_{k}log((h_\Theta(X^{(i)}))_k)+(1-Y^{(i)}_k)log(1-(h_\Theta(X^{(i)}))_k)]+\frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}(\theta_{ji}^{(l)})^2$</p>
+<p><strong>Backpropagation algorithm：</strong></p>
+<p>若网络共 $L$ 层，则最后一层为输出，根据输出 $Y$ 得到 $\delta^{(L)}=A^{(L)}-Y$</p>
+<p>第 $l$ 层的误差为 $\delta^{(l)}=(\Theta^{(l)})^T\delta^{(l+1)}.*g’(z^{(l)})\ \ while\  \ l\in[2,L-1]$</p>
+<p>反向传播至第一层为输入，不进行修改。</p>
+<h2 id="无监督学习unsupervised-learning"><a href="#无监督学习（Unsupervised-Learning）" class="headerlink" title="无监督学习（Unsupervised Learning）"></a>无监督学习（Unsupervised Learning）</h2><h3 id="聚类cluster"><a href="#聚类（Cluster）" class="headerlink" title="聚类（Cluster）"></a>聚类（Cluster）</h3></toc>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Machine-Learning/"># Machine Learning</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2022/04/06/Game-Theory/">Game-Theory</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <!--🌞 Zry |-->
+        <span>🔗 iszry@foxmail.com </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
