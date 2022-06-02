@@ -291,15 +291,14 @@
 <li>若$X^TX$不可逆，考虑剔除多余特征或者计算伪逆，进行正则化也可以避免求伪逆。</li>
 <li>使用向量化方法可以提高代码运行效率。</li>
 </ol>
-<h3 id="分类classification"><a href="#分类（Classification）" class="headerlink" title="分类（Classification）"></a>分类（Classification）</h3><p><strong>Logistic Regression 分类：</strong></p>
-<p>Logistic/Sigmoid Function:</p>
-<p>$f(x)=\frac{1}{1+e^{-x}}\ \ x\in(-\infin,\infin)$</p>
-<p>Single Example Logistic Regression:</p>
+<h3 id="logistic-regression-分类"><a href="#Logistic-Regression-分类" class="headerlink" title="Logistic Regression 分类"></a>Logistic Regression 分类</h3><p><strong>Logistic/Sigmoid Function:</strong></p>
+<p>$f(x)=\frac{1}{1+e^{-x}}\ \ x\in(-\infty,\infty)$</p>
+<p><strong>Single Example Logistic Regression:</strong></p>
 <p>$h_{\Theta}(X)=\frac{1}{1+e^{-\Theta^T X}}\\\\J(\Theta)=\frac{1}{m}\sum_{i=1}^{m}Cost(h_\Theta(X^{(i)}),Y^{(i)})\\\\Cost(h_\Theta(X^{(i)}),Y^{(i)})=-Y^{(i)}log(h_\Theta(X^{(i)}))-(1-Y^{(i)})log(1-h_\Theta(X^{(i)}))\\\\\Theta:=\Theta-\alpha \frac{1}{m}\sum_{i=1}^{m}(h_{\Theta}(X^{(i)})-Y^{(i)})X^{(i)}$</p>
 <blockquote>
 <p>Tip：这里以向量形式隐藏了参数 $\Theta$ 与特征 $X$ 的具体形式。</p>
 </blockquote>
-<p>Gradient Descent （梯度下降法）的优化算法：</p>
+<p><strong>Gradient Descent</strong> （梯度下降法）的优化算法：</p>
 <ol>
 <li>Conjugate gradient（共轭梯度法）</li>
 <li>BFGS（牛顿法）</li>
@@ -332,7 +331,40 @@
 <p>若网络共 $L$ 层，则最后一层为输出，根据输出 $Y$ 得到 $\delta^{(L)}=A^{(L)}-Y$</p>
 <p>第 $l$ 层的误差为 $\delta^{(l)}=(\Theta^{(l)})^T\delta^{(l+1)}.*g’(z^{(l)})\ \ while\  \ l\in[2,L-1]$</p>
 <p>反向传播至第一层为输入，不进行修改。</p>
-<h2 id="无监督学习unsupervised-learning"><a href="#无监督学习（Unsupervised-Learning）" class="headerlink" title="无监督学习（Unsupervised Learning）"></a>无监督学习（Unsupervised Learning）</h2><h3 id="聚类cluster"><a href="#聚类（Cluster）" class="headerlink" title="聚类（Cluster）"></a>聚类（Cluster）</h3></toc>
+<p><strong>Gradient Descent:</strong></p>
+<p>$\Delta^{(l)}:=\Delta^{(l)}+\delta^{(l+1)}(A^{(l)})^T\\\\\frac{\partial}{\partial\Theta^{(l)}_{ij}}J(\Theta):=\frac{1}{m}\Delta^{(l)}_{ij}+\lambda\Theta^{(l)}_{ij}\  \ if\ \ j≠0\\\\\frac{\partial}{\partial\Theta^{(l)}_{ij}}J(\Theta):=\frac{1}{m}\Delta^{(l)}_{ij}\  \ if\ \ j=0$</p>
+<p><strong>Gradient checking：</strong></p>
+<p>$check:\ \ \frac{\partial}{\partial\Theta}J(\Theta)≈\frac{J(\Theta+\epsilon)-J(\Theta-\epsilon)}{2\epsilon}$</p>
+<h3 id="支持向量机support-vector-machine"><a href="#支持向量机（Support-Vector-Machine）" class="headerlink" title="支持向量机（Support Vector Machine）"></a>支持向量机（Support Vector Machine）</h3><p><strong>Cost Function：</strong></p>
+<p>$min\ \ J(\Theta)=C\sum^m_{i=1}[Y^{(i)}cost_{1}(\Theta^TX^{(i)})+(1-Y^{(i)})cost_0(\Theta^TX^{(i)})]+\frac{1}{2}\sum^{n}_{i=0}\theta^2_i$</p>
+<blockquote>
+<p>Also described as <strong>large margin classifier</strong> , especially when <strong>C</strong> is large. SVM is effective in describing nonlinear functions. Large C: Lower bias, high variance; Small C: Higher bias, low variance.</p>
+<p>Mathmetic detail: $\sum_{i=1}^{n}\theta_i^2$ could be replaced by $\Theta^TM\Theta$ </p>
+</blockquote>
+<p><strong>SVM Decision Boundary:</strong></p>
+<p>$min\ \ \frac{1}{2}\sum^{n}_{i=1}\theta_i^2=\frac{1}{2}||\theta||^2\\\\s.t.\theta^TX^{(i)}=p^{(i)}\cdot||\theta||≥1\ \ \ \ if\ \ Y^{(i)}=1\\\\\\ \ \ \ \ \ \  \ \theta^TX^{(i)}=p^{(i)}\cdot||\theta||≤-1\ \ \ \ if\ \ Y^{(i)}=0\\\\where\ p^{(i)}\ is\ the\ projection\ of\ X^{(i)}\ onto\ the\ vector\ \theta.\\\\Simplification:\theta_0=0$</p>
+<p><strong>Kernel Function:</strong></p>
+<blockquote>
+<p>The <strong>kernel function</strong> is also called <strong>similarity function</strong>. Need to satisfy technical condition called “Mercer’s Theorem” to make sure SVM package’s optimizations run correctly, and do not diverge.</p>
+</blockquote>
+<p><strong>Gaussian Kernel</strong>: $K(x,l^{(i)})=exp(-\frac{||x-l^{(i)}||^2}{2\sigma^2})$</p>
+<p><strong>Polynomial Kernel:</strong> $K(X,l)=(X^Tl+constant)^{degree}$</p>
+<p>String Kernel, chi-square kernel, histogram intersection kernel and so on.</p>
+<blockquote>
+<p>SVM is a convex optimization problem and it always gives <strong>the global minimum</strong>, we don’t need to worry about the local optima in neural network.</p>
+</blockquote>
+<h2 id="无监督学习unsupervised-learning"><a href="#无监督学习（Unsupervised-Learning）" class="headerlink" title="无监督学习（Unsupervised Learning）"></a>无监督学习（Unsupervised Learning）</h2><h3 id="聚类clustering"><a href="#聚类（Clustering）" class="headerlink" title="聚类（Clustering）"></a>聚类（Clustering）</h3><p><strong>K-means 流程：</strong></p>
+<ol>
+<li>选取 K 个聚类中心</li>
+<li>遍历样本并一一对应地分配给聚类中心形成 K 个簇</li>
+<li>分别移动每个聚类中心至对应簇的平均位置，若有聚类中心移动则重复步骤 2 ，否则达到均衡状态</li>
+</ol>
+<p>代价函数 $J(\mu^{k},c^{m})=\frac{1}{m}\sum_{i=1}^m(c^{i}-\mu_{c^i})^2$</p>
+<blockquote>
+<p>通常会将簇内样本数为零的聚类中心移除，如果确需 K 类，则将该聚类中心再次进行随机初始化</p>
+<p>为了剔除局部最优解，应多次（50-1000）运行 K-means 算法，取 $J_{min}$ 对应的分类形式，这种做法在 K 取值较小时效果明显</p>
+</blockquote>
+<h2 id="降维dimensionality-reduction"><a href="#降维（Dimensionality-Reduction）" class="headerlink" title="降维（Dimensionality Reduction）"></a>降维（Dimensionality Reduction）</h2></toc>
         </div>
 
         
