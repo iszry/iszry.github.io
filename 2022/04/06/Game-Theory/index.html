@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zry">
+
+
+    <meta name="subtitle" content="Simple Life">
+
+
+
+
+<title>Game-Theory | Matcha Flavor</title>
+
+
+
+    <link rel="icon" href="/mesh.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Matcha Flavor</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Matcha Flavor</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Game-Theory</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zry</a>      
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 6, 2022&nbsp;&nbsp;21:19:04</a>      
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD/">持续更新中</a>
+                                  
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <toc>
+
+<h1 id="game-theory"><a href="#Game-Theory" class="headerlink" title="Game Theory"></a>Game Theory</h1><h2 id="浅析博弈"><a href="#浅析博弈" class="headerlink" title="浅析博弈"></a>浅析博弈</h2><h3 id="什么是博弈"><a href="#什么是博弈" class="headerlink" title="什么是博弈"></a>什么是博弈</h3><p>静态博弈与动态博弈。</p>
+<p>博弈的结果是<strong>选择</strong>。</p>
+<ol>
+<li><p>前提假设（博弈的基础）：<strong>趋利避害</strong>-&gt;价值观差异</p>
+<p>理性人假设-&gt;<strong>共同理性</strong>-&gt;普适准则</p>
+<p>两个满足共同理性的人的思想如同相对放置的两面镜子。</p>
+</li>
+<li><p>囚徒困境（示例）</p>
+<p>理性选择：对结果进行<strong>偏好排序</strong>后做出选择。</p>
+</li>
+</ol>
+<h3 id="博弈的均衡"><a href="#博弈的均衡" class="headerlink" title="博弈的均衡"></a>博弈的均衡</h3><p>Equilibrium of game: Reach the fixed point.</p>
+<p>绝大多数具有实际意义的社会博弈可以达到纳什均衡。</p>
+<p>Nash equilibrium: the most common way to define the solution to <strong>a non-cooperative game</strong> involving two or more players.</p>
+<p>合作与竞争过程中均存在博弈。</p>
+<h3 id="博弈的过程"><a href="#博弈的过程" class="headerlink" title="博弈的过程"></a>博弈的过程</h3><p>认识人与人的联系、人的行事动机、社会的基本问题与社会选择的评价。</p>
+<p><strong>要素</strong></p>
+<ol>
+<li>Player</li>
+<li>Strategy</li>
+</ol>
+<p>Players是博弈中的决策主体，player会基于自己的<strong>认知</strong>分析other players的<strong>认知</strong>。</p>
+<p>A strategy refers to a series of decisions for a player to deal with any situation faced in the whole process.</p>
+<h3 id="人性"><a href="#人性" class="headerlink" title="人性"></a>人性</h3><p><strong>劣根性</strong>：</p>
+<ol>
+<li>事前自作聪明</li>
+<li>事后装作无辜</li>
+</ol>
+<p><strong>人品</strong>：对事物的偏好序</p>
+<p>人与人的区别在于 <strong>程度</strong> 的区别</p>
+<blockquote>
+<p>对人性而言，堵不如疏</p>
+</blockquote>
+<h2 id="博弈-amp-均衡"><a href="#博弈-amp-均衡" class="headerlink" title="博弈 &amp; 均衡"></a>博弈 &amp; 均衡</h2><p>均衡：所有策略组合的子集。</p>
+<h3 id="劣策略"><a href="#劣策略" class="headerlink" title="劣策略"></a>劣策略</h3><p>通过（重复）剔除严格劣策略来简化博弈过程——剪枝</p>
+<p><strong>智猪博弈</strong>：剔除严格劣策略后存在平衡状态</p>
+<p>劣纯策略、混合策略、占优策略</p>
+<h3 id="pareto-optimality"><a href="#Pareto-Optimality" class="headerlink" title="Pareto Optimality"></a>Pareto Optimality</h3><p>帕累托最优：</p>
+<h3 id="nash-equilibrium"><a href="#Nash-Equilibrium" class="headerlink" title="Nash Equilibrium"></a>Nash Equilibrium</h3><p>纳什均衡：所有人的策略达到局部最优（策略组中策略均为最佳应对）。任何参与人都没有动机单方面偏离纳什均衡策略（单方面改变策略使自己的收益更多）。</p>
+<blockquote>
+<p>占优策略均衡是一种特殊的纳什均衡.</p>
+</blockquote>
+<p><strong>相遇博弈</strong>（协调博弈）：参与人之间需要协调彼此的策略，他们因而需要协调对彼此策略的预期。</p>
+<p>每名参与人都希望正确预期其他参与人的策略，同时也希望自己的策略被其他参与人正确地预期到。  </p>
+<p><strong>军备竞赛</strong>：参与人之间的对抗与合作都有可能成为均衡，但是相对于对抗均衡，合作均衡对于所有参与人来说更加有利。  </p>
+<p>率先由 对抗 -&gt; 合作 的一方会承担一定损失。</p>
+<p><strong>鹰鸽博弈</strong>（演化博弈）：少数派占优</p>
+<p>鹰鸽博弈均衡也称为 <strong>演化稳定均衡</strong> (evolutionarily stable equilibrium)。</p>
+<h4 id="cournot-模型"><a href="#Cournot-模型" class="headerlink" title="Cournot 模型"></a>Cournot 模型</h4><p>最基本的寡头产量竞争模型（Cournot 模型）包括以下四个方面的基本要素：</p>
+<ol>
+<li>同质产品（homogeneous goods）</li>
+<li>双寡头（duopoly）</li>
+<li>同时行动（simultaneous move）</li>
+<li>产量竞争（quantity competition）</li>
+</ol>
+<p><img src="/2022/04/06/Game-Theory/image-20220408154808948.png" alt="CournotModel"></p>
+<p><strong>纯策略纳什均衡</strong> 与 <strong>混合策略纳什均衡</strong>：</p>
+<p>一些博弈不存在纯策略纳什均衡（如石头剪刀布），考虑参与人分别以相应的概率选择对应策略，联立所有参与人的反应函数即可求解混合策略纳什均衡。</p>
+<p>Nash 均衡总是意味着博弈参与人之间的某种<strong>协调</strong>，其实现需要参与人的<strong>一致预期</strong>：</p>
+<ol>
+<li>基于信念的选择是合理的</li>
+<li>支持选择的信念是正确的</li>
+</ol>
+<blockquote>
+<p>Rational agents cannot agree to disagree…  </p>
+</blockquote>
+<h3 id="动态博弈"><a href="#动态博弈" class="headerlink" title="动态博弈"></a>动态博弈</h3><p>在博弈中，参与人有时不是同时行动 (simultaneous-move，对应静态博弈) ，而是相继行动 (sequential-move，对应动态博弈)。因此，可以说动态博弈体现了<strong>信息</strong>对博弈的重要性（又分为<strong>完全信息博弈</strong>与<strong>不完全信息博弈</strong>） 。</p>
+<p>绝大多数情况，当信息相对透明公开时，先发制人占优。当信息相对闭塞时，后发制人占优。在现实生活中，绝大多数博弈的信息均不明朗，采取后发制人往往更占优。</p>
+<p><strong>海盗分金</strong>：五个海盗依次制定策略分配100金币直到策略被认可，策略被否决者死，投票严格大于半数时通过。</p>
+<p>（自底向上进行分析）</p>
+<p>二海盗：45，4必死，5全拿</p>
+<p>三海盗：345，34必死，5全拿</p>
+<p>四海盗：2345，2全拿</p>
+<p>五海盗：12345，给345一个，1拿97</p>
+<p><strong>蜈蚣博弈</strong>：参与人甲乙轮流决定<strong>继续</strong> / <strong>停止</strong>，如果一人选择了<strong>停止</strong>，那么博弈立即终结，参与人获得相应支付；如果一人选择了<strong>继续</strong>，那么他将以交出一单位支付给另一位参与人为代价，将决定权交给另一位参与人。上述博弈每被推迟一期，下一期做决定者将获得额外一单位支付（支付累计增加）。</p>
+<p>可见，每名参与人在轮到自己做出决策时，都可以选择有利于所有参与人总体利益的“长远”策略 (不使博弈立即终结)，但每一次总体长远利益的实现，都会导致做出这种决策的参与人自身利益的损失。我们发现，尽管有一条实现所有参与人总利益最大化的路径，但是博弈难以沿着一路径发展。  </p>
+<p>通过逆向归纳的方法，始终求解博弈最后一个阶段的子博弈（实现子博弈 Nash 均衡），最终可以达到子博弈完美 Nash 均衡（sub-game perfect Nash equilibrium, SPNE），它是对 Nash 均衡的精炼。</p>
+<blockquote>
+<p>特别的，在静态博弈中，子博弈完美 Nash 均衡等同于 Nash 均衡。</p>
+</blockquote>
+<h4 id="bargaining-game"><a href="#Bargaining-Game" class="headerlink" title="Bargaining Game"></a>Bargaining Game</h4><p><strong>设定</strong>（纯粹冲突场景）：甲乙两人就如何分割一元钱进行博弈，两人可以各自提出一个要求的数额。如果两人要求的数额之和不大于1，则按照两人要求的数额分配一元钱，否则两人都得不到任何东西。</p>
+<p>解决 Bargaining Game 均衡问题的两种思路</p>
+<ol>
+<li>公理化方法（axiomatic approach）</li>
+<li>基于策略的方法（strategy-based approach）</li>
+</ol>
+<p>基于公理化方法的 Nash 均衡解：求解 $max_{x\in[0,1]}x^{\delta_{1}}(1-x)^{\delta_{2}}$</p>
+<p>$ \delta : $ 议价能力（Bargaining stress / Bargaining power）</p>
+<p>基于策略的方法：假设博弈一共进行 T 期，（在第 T 期，如果甲乙两人仍旧无法达成共识，博弈也必须终止），在每一期，甲乙依次提出分配方案，另一人只能选择接受或离开（take it or leave it)，一旦方案被接受，博弈在该期直接结束，并按方案进行分配，否则博弈进入下一期。</p>
+<p>但是，对甲乙两人而言，下一期获得一单位货币分别等价于本期获得 $ \delta_1$ 单位和 $\delta_2$ 单位货币（$\delta_1 \in (0,1) $， $\delta_2 \in (0,1)$，$\delta$ 为<strong>贴现因子</strong>这意味着选择延迟进入下一期需要付出<strong>等待成本</strong>）。</p>
+<p><del>容易证明：</del></p>
+<p>若 T ≥ 2 为偶数，在博弈第一期的参与人提出的分配方案是：</p>
+<p>$\{(1-\delta_2)\sum_{t=0}^{\frac{T}{2}-1}\delta_1^t\delta_2^t,1-(1-\delta_2)\sum_{t=0}^{\frac{T}{2}-1}\delta_1^t\delta_2^t\}$</p>
+<p>若 T ≥ 3 为奇数，在博弈第一期的参与人提出的分配方案是：</p>
+<p>$\{1-\delta_2(1-\delta_1)\sum_{t=0}^{\frac{T-1}{2}-1}\delta_1^t\delta_2^t,\delta_2(1-\delta_1)\sum_{t=0}^{\frac{T-1}{2}-1}\delta_1^t\delta_2^t\}$</p>
+<p>若 T 无限，该博弈有一个是稳态策略均衡的 SPNE ，它将表现出周期性，解为：</p>
+<p>$\{\frac{1-\delta_2}{1-\delta_1\delta_2},\frac{1-\delta_1}{1-\delta_1\delta_2}\}$</p>
+<blockquote>
+<p>贴现因子越大，越耐心的参与人在谈判中越占优势。</p>
+</blockquote>
+<h4 id="重复博弈"><a href="#重复博弈" class="headerlink" title="重复博弈"></a>重复博弈</h4><p>重复博弈是一类特殊的动态博弈。如果一个<strong>多期博弈</strong>（multi-stage game）在其每一期具有相同的结构，相当于在每一期进行一次<strong>单期博弈</strong>（stage game），称这样的博弈为<strong>重复博弈</strong>（repeated game）。由于可以存在 未来奖励 或者 未来惩罚，重复博弈有可能产生与单期博弈不同的结果。  </p>
+<p>假设囚徒困境中的两人采用冷酷战略进行多期囚徒困境的重复博弈。</p>
+<p><strong>冷酷战略</strong>（trigger strategy）：采取合作，但只要对方在之前的博弈中选择过背叛，从该期开始的所有博弈均选择背叛。</p>
+<p>有限期采取冷酷战略的囚徒困境重复博弈从第一期开始双方均会选择<strong>背叛</strong>（逆向归纳）。</p>
+<p>无限期采取冷酷战略的囚徒困境重复博弈则双方均会选择合作（贴现因子 $\delta = 1$时），从第 T 期时开始选择背叛（根据 $\delta \in (0,1)$对当期收益与后续有限收益总和进行判断）。</p>
+<h4 id="stackelberg-模型"><a href="#Stackelberg-模型" class="headerlink" title="Stackelberg 模型"></a>Stackelberg 模型</h4><p>标准的 Cournot 模型假设所有厂商是同时行动的，但实际情况中会有实力较强大的寡头充当行业的领导者率先进行行动（Stackelberg 模型），其他厂商充当追随者，此时，领导者将拥有先发制人的优势（first mover advantage），从而往往可以获得相对追随者更高的利润。</p>
+<p><img src="/2022/04/06/Game-Theory/image-20220408154702917.png" alt="StackelbergModel"></p>
+<h3 id="非对称信息博弈"><a href="#非对称信息博弈" class="headerlink" title="非对称信息博弈"></a>非对称信息博弈</h3><p>非对称信息博弈（asymmetric information games）有两种：</p>
+<ol>
+<li>不完美信息博弈（imperfect information games）：存在参与人在行动时无法确定自己所在的博弈树节点</li>
+<li>不完全信息博弈（incomplete information games）：参与人无法确定其他参与人的支付函数（类型）</li>
+</ol>
+<blockquote>
+<p>信息：其他参与人的 <strong>人品</strong> 与 <strong>行动</strong> </p>
+<p>Harsanyi 证明，给定若干条件，可通过 Harsanyi 变换将不完全信息转换为不完美信息</p>
+</blockquote>
+<p><strong>信念</strong>（belief）与 <strong>声誉</strong>（reputation）：</p>
+<p>在不完美信息博弈中，参与人会基于 <strong>信念</strong> 猜测自己在博弈树中的哪个节点，再进行行动。</p>
+<blockquote>
+<p>对理性人来说，信息决定信念，信念决定行动</p>
+<p>对非理性人来说，先有行动，再寻找信念使之合理化</p>
+</blockquote>
+<p>博弈论中的 <strong>声誉</strong> 指先行动的参与人通过其前期的选择，向后期行动的参与人传递关于自身类型的信息。</p>
+<p>再看囚徒困境：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>A/B</th>
+<th>fight</th>
+<th>cooperate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fight</td>
+<td>0，0</td>
+<td>4，-1</td>
+</tr>
+<tr>
+<td>cooperate</td>
+<td>-1，4</td>
+<td>3，3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>假设 B 为 <strong>理性</strong> 人；A 有 p 的概率是 <strong>非理性</strong> 的，采取 以牙还牙（tit-for-tat，TFT）策略，有 1-p 的概率是 <strong>理性</strong> 的</p>
+<p>非理性 A 全程合作，理性 A 最后两期不合作，其余期合作</p>
+<p>理性 B 最后一期不合作，其余期合作</p>
+<blockquote>
+<p><strong>信息量</strong>：理性 A &gt; 理性 B</p>
+</blockquote>
+<h3 id="bayesian-均衡-amp-序贯均衡"><a href="#Bayesian-均衡-amp-序贯均衡" class="headerlink" title="Bayesian 均衡 &amp; 序贯均衡"></a>Bayesian 均衡 &amp; 序贯均衡</h3><p>Bayesian 均衡-&gt;完美贝叶斯纳什均衡</p>
+<p>序贯均衡-&gt;构造非均衡策略组收敛序列收敛于均衡策略组</p>
+<p>拟完美均衡 恰当均衡</p>
+<h1 id="sociality"><a href="#Sociality" class="headerlink" title="Sociality"></a>Sociality</h1><blockquote>
+<p>人是一切社会关系的总和。</p>
+</blockquote>
+<p>劣币驱逐良币：买者关注商品的整体声誉，卖者关注自身的商品质量。</p>
+<p>All same products share with the same reputation, However, the bad product rob the profit from the good product which depends on the difference.</p>
+<blockquote>
+<p>毁我教者，着我衣人。</p>
+</blockquote>
+<p>利用不同身份者的不同 <strong>偏好</strong> 来甄别身份。</p>
+<h2 id="market"><a href="#Market" class="headerlink" title="Market"></a>Market</h2><h3 id="lemon-market"><a href="#Lemon-Market" class="headerlink" title="Lemon Market"></a>Lemon Market</h3><h3 id="拍卖"><a href="#拍卖" class="headerlink" title="拍卖"></a>拍卖</h3><p>英式叫价拍卖、荷兰式拍卖、Vickery 拍卖（次高价格拍卖，所有人给出真实报价评估）</p>
+<blockquote>
+<p>未完待续… …</p>
+</blockquote>
+</toc>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8D%9A%E5%BC%88%E8%AE%BA/"># 博弈论</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/05/21/ML%20Notes/">ML Notes</a>
+            
+            
+            <a class="next" rel="next" href="/2022/03/31/OS/">OS</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <!--🌞 Zry |-->
+        <span>🔗 iszry@foxmail.com </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

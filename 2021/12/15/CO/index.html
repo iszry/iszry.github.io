@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zry">
+
+
+    <meta name="subtitle" content="Simple Life">
+
+
+
+
+<title>CO | Matcha Flavor</title>
+
+
+
+    <link rel="icon" href="/mesh.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Matcha Flavor</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Matcha Flavor</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">CO</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zry</a>      
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 15, 2021&nbsp;&nbsp;14:12:42</a>      
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/CS/">CS</a>
+                                  
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <toc>
+
+<h1 id="co"><a href="#CO" class="headerlink" title="CO"></a>CO</h1><h2 id="一-概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>计组（CO）覆盖了数字逻辑、汇编语言及计算机硬件系统的部件组成、运行原理与系统设计方法等，本文将侧重介绍<strong>逻辑设计</strong>、<strong>处理器</strong>、<strong>数据存储</strong>三大方面。</p>
+<h2 id="二-逻辑设计"><a href="#二、逻辑设计" class="headerlink" title="二、逻辑设计"></a>二、逻辑设计</h2><h3 id="1计算机表示数据的方式"><a href="#1-计算机表示数据的方式" class="headerlink" title="1.计算机表示数据的方式"></a>1.计算机表示数据的方式</h3><h4 id="11整数"><a href="#1-1整数" class="headerlink" title="1.1整数"></a>1.1整数</h4><p>​        如今的计算机使用二进制（在电路中高电平为1，低电平为0，便于实现<del>，除了苏联曾研发的三进制计算机</del>）来表示一个数，以16位的数为例，其表示范围是0~65535。</p>
+<p>​        为了能表示负数，规定数的最高位为符号位（符号位为1表示负数，为0表示正数），这样的数为有符号数，表示范围是-32767~32767，相应的前面无符号位的数称为无符号数。</p>
+<p>​        但是，引入符号位后0将有+0和-0两种不同的表示形式，这不仅不利于编程，还会加大硬件设计成本。所以，称上述表示方法为原码，此外再引入补码的概念，简单来说，正数的补码仍是原码，但负数的补码将以其最小表示范围为基（-32768=1000_0000_0000_0000对应正数的0=0000_0000_0000_0000B），当其增大到-1（-1=1111_1111_1111_1111B对应正数的最大表示范围32767=0111_1111_1111_1111B）时，-1+1=1_0000_0000_0000_0000B，因此16位的数据截断溢出的最高位1，达到-1+1=0的效果。</p>
+<p>​        因此，我们可以得到16位负数n的原码$n_原$和补码$n_补$的关系：</p>
+<p>​                $n_补=2^{16}-n_原+2^{16-1}= (\sim n_原+1)+2^{16-1}$</p>
+<blockquote>
+<p>tip: $\sim$表示按位取反；表达式中的$2^{16-1}$表示符号位为1；B表示二进制数据。</p>
+</blockquote>
+<h4 id="12小数"><a href="#1-2小数" class="headerlink" title="1.2小数"></a>1.2小数</h4><p>​        为了表示小数，引入浮点数的概念，顾名思义，浮点指的是位置浮动不定的小数点，这样可以灵活地对有限的数据位进行划分，为整数表示部分和小数表示部分动态分配位数，但不同的划分标准在工业界不便统一，现大多采用IEEE 754标准：单精度浮点数32位，双精度浮点数64位。表示形式如下：</p>
+<script type="math/tex; mode=display">
+单精度浮点数f_单=(-1)^S × 1.m × 2^{E-127}\\双精度浮点数f_双=(-1)^S × 1.m × 2^{E-1023}\\</script><p>​        其中S为数符，占据最高位；M=1.m为尾数，E为阶码，表示形式类似于科学计数法。</p>
+<p>​        关于IEEE 754有关浮点数更详细的约定在此不再赘述（<del>有空再来填坑</del>）。</p>
+<h4 id="13一些细节"><a href="#1-3一些细节" class="headerlink" title="1.3一些细节"></a>1.3一些细节</h4><h5 id="131-双符号位判断溢出"><a href="#1-3-1-双符号位判断溢出" class="headerlink" title="1.3.1 双符号位判断溢出"></a>1.3.1 双符号位判断溢出</h5><p>​        以4位有符号整数（表示范围-8~7）运算p+q为例，将p，q拓展为5位（最高位与4位有符号整数的符号位相同），便可通过最高两位来判断是否发生溢出。</p>
+<p>​        一：p，q同正。</p>
+<p>​                p=2=00_010B，q=3=00_011B，p+q=5=00_101B，未溢出。</p>
+<p>​                p=5=00_101B，q=7=00_111B，p+q=12=01_100B，溢出。</p>
+<p>​                结论：低位数据位至多向符号位进一位使00-&gt;01发生溢出。</p>
+<p>​        二：p，q同负。</p>
+<p>​                p=-2=11_110B，q=-3=11_101B，p+q=-5=11_011B，未溢出。</p>
+<p>​                p=-5=11_011B，q=-7=11_001B，p+q=-12=10_100B，溢出。</p>
+<p>​                结论：原数据补码绝对值与原码绝对值之和为8，若补码绝对值之和不向符号位进位，那么原码绝对值之和将向符号位进位从而向下溢出，即符号位11-&gt;10。</p>
+<p>​        三：p正q负（反之同理）。</p>
+<p>​                p=2=00_010B，q=-3=11_101B，p+q=1=11_011B，未溢出。</p>
+<p>​                p=7=00_111B，q=-1=11_111B，p+q=6=00_110B，未溢出。    </p>
+<p>​                结论：一正一负必不溢出，进位则符号位11-&gt;00，否则符号位保持11。            </p>
+<p>​        总结：若最高两位符号位相同，则运算未溢出，否则溢出。</p>
+<h5 id="132非数值数据的表示"><a href="#1-3-2非数值数据的表示" class="headerlink" title="1.3.2非数值数据的表示"></a>1.3.2非数值数据的表示</h5><p>​        ASCII码使用1字节编码，Unicode、CJK（国标GB13000）采用2字节编码（UCS-2），此外还有采用4字节编码的UCS-4。（<del>有空再来填坑，然而对编码方式不感兴趣，填坑多半遥遥无期</del>）        </p>
+<h3 id="2逻辑电路"><a href="#2-逻辑电路" class="headerlink" title="2.逻辑电路"></a>2.逻辑电路</h3><h4 id="21布尔代数"><a href="#2-1布尔代数" class="headerlink" title="2.1布尔代数"></a>2.1布尔代数</h4><h5 id="211逻辑运算符"><a href="#2-1-1逻辑运算符" class="headerlink" title="2.1.1逻辑运算符"></a>2.1.1逻辑运算符</h5><p>​        常见的逻辑运算类型有与（合取）、或（析取）、非（否定）。运算优先级：$()&gt; \neg &gt; \land &gt;\lor$ 。</p>
+<blockquote>
+<p>tip：{与，非}便是完备集，由完备集可以得到其他任何逻辑运算符；完备集不唯一；完备集最少可仅有一种逻辑运算符构成，如或非、与非。</p>
+</blockquote>
+<p>​        常用规则：</p>
+<ol>
+<li>交换律：$A \land B = B\land A$    ,    $A \lor B = B \lor A$</li>
+<li>结合律：$(A\land B)\land C=A\land (B\land C)$    ,    $(A\lor B)\lor C=A\lor (B\lor C)$</li>
+<li>分配律：$(A\land B)\lor C=(A\lor C) \land (B\lor C)$    ,    $(A\lor B)\land C=A\lor C \land B\lor C$ </li>
+<li>吸收律：$(A\land B)\lor A=A$    ,    $(A\lor B)\land B=B$</li>
+<li>德·摩根律：$\neg (\bigcup_{n\geq 1} A_n)=\bigcap_{n\geq 1} (\neg A_n)$    ,   $\neg (\bigcap_{n\geq 1} A_n)=\bigcup_{n\geq 1} (\neg A_n)$  </li>
+</ol>
+<h5 id="212逻辑函数的标准表达式"><a href="#2-1-2逻辑函数的标准表达式" class="headerlink" title="2.1.2逻辑函数的标准表达式"></a>2.1.2逻辑函数的标准表达式</h5><p>​        首先给出最大项和最小项的定义：</p>
+<p>​        1.最大项：设有n个变量，它们所组成的具有n个变量的“或” 项（和项）中，每个变量以原变量或反变量的形式出现且仅出现一次，则这个和项称为最大项。</p>
+<p>​        2.最小项：设有n个变量，它们所组成的具有n个变量的“与” 项（和项）中，每个变量以原变量或反变量的形式出现且仅出现一次，则这个和项称为最小项。</p>
+<p>性质1：n个变量有$2^n$个最大项，也有$2^n$个最小项。</p>
+<p>性质2：全体最小项的和为1，全体最大项的积为0。</p>
+<p>性质3：任意两个最小项的积为0，任意两个最大项的和为1。</p>
+<p>​        逻辑函数的标准表达式分两种：</p>
+<p>​                1.最大项表达式（标准或与式）：全部由最大项构成的或与式。</p>
+<p>​                2.最小项表达式（标准与或式）：全部由最小项构成的与或式。</p>
+<p>（tip：与数理逻辑中的合取范式、析取范式的概念类似。）</p>
+<p>约定俗称的简化表示方式（以三个变量A，B，C为例）：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>最大项</th>
+<th>最大项编号表示</th>
+<th>最小项</th>
+<th>最小项编号表示</th>
+<th>二进制取值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\neg A \lor \neg B \lor \neg C$</td>
+<td>$M_7$</td>
+<td>$\neg A \land \neg B \land \neg C$</td>
+<td>$m_7$</td>
+<td>111</td>
+</tr>
+<tr>
+<td>$\neg A \lor \neg B \lor C$</td>
+<td>$M_6$</td>
+<td>$\neg A \land \neg B \land  C$</td>
+<td>$m_6$</td>
+<td>110</td>
+</tr>
+<tr>
+<td>$\neg A \lor  B \lor \neg C$</td>
+<td>$M_5$</td>
+<td>$\neg A \land B \land \neg C$</td>
+<td>$m_5$</td>
+<td>101</td>
+</tr>
+<tr>
+<td>$\neg A \lor  B \lor C$</td>
+<td>$M_4$</td>
+<td>$\neg A \land  B \land  C$</td>
+<td>$m_4$</td>
+<td>100</td>
+</tr>
+<tr>
+<td>$ A \lor \neg B \lor \neg C$</td>
+<td>$M_3$</td>
+<td>$ A \land \neg B \land \neg C$</td>
+<td>$m_3$</td>
+<td>011</td>
+</tr>
+<tr>
+<td>$ A \lor \neg B \lor  C$</td>
+<td>$M_2$</td>
+<td>$ A \land \neg B \land C$</td>
+<td>$m_2$</td>
+<td>010</td>
+</tr>
+<tr>
+<td>$ A \lor B \lor \neg C$</td>
+<td>$M_1$</td>
+<td>$ A \land B \land \neg C$</td>
+<td>$m_1$</td>
+<td>001</td>
+</tr>
+<tr>
+<td>$ A \lor B \lor C$</td>
+<td>$M_0$</td>
+<td>$ A \land B \land C$</td>
+<td>$m_0$</td>
+<td>000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>示例：$F(A,B,C)=A \land \neg B \land C +\neg A \land  B \land  C+\neg A \land B \land \neg C= m_2+m_4+m_5=\Sigma m(2,4,5)$</p>
+<h5 id="213卡诺图化简逻辑函数"><a href="#2-1-3卡诺图化简逻辑函数" class="headerlink" title="2.1.3卡诺图化简逻辑函数"></a>2.1.3卡诺图化简逻辑函数</h5><p>​        为了使由逻辑函数得到的电路效率更高，应对逻辑函数进行化简。一方面可以减少所需要的硬件资源，减小电路面积与成本，另一方面可以降低电路中信号的传播延迟，提高时钟频率，提高电路工作效率。除了可以用代数方法对逻辑表达式进行化简之外，还可以用卡诺图来进行化简。示意图如下：</p>
+<p><img src="/2021/12/15/CO/卡诺图.png" alt></p>
+<p>​        在画出卡诺图后，将1×2，1×4，2×2，2×4的值为1或X的相邻项进行合并，从而消去变量。</p>
+<h4 id="22门级元器件"><a href="#2-2门级元器件" class="headerlink" title="2.2门级元器件"></a>2.2门级元器件</h4><blockquote>
+<p>tip1：高电平表示逻辑真（1），低电平表示逻辑假（0）。</p>
+<p>tip2：二极管导通时提供钳位电压$V_{钳}=0.7V$。</p>
+</blockquote>
+<h5 id="221与门"><a href="#2-2-1与门" class="headerlink" title="2.2.1与门"></a>2.2.1与门</h5><p><img src="/2021/12/15/CO/andGate.png" alt></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.3V</td>
+<td>0.3V</td>
+<td>1.0V</td>
+</tr>
+<tr>
+<td>0.3V</td>
+<td>3.0V</td>
+<td>1.0V</td>
+</tr>
+<tr>
+<td>3.0V</td>
+<td>0.3V</td>
+<td>1.0V</td>
+</tr>
+<tr>
+<td>3.0V</td>
+<td>3.0V</td>
+<td>3.7V</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li>两个高电平输入，输出$Y=V_{in}(3.0V)+V_{钳}(0.7V)=3.7V$。</li>
+<li>一个高电平输入，此时优先导通低电平输入，输出$Y=V_{in}(0.3V)+V_{钳}(0.7V)=1.0V$，反向截止高电平输入。</li>
+<li>两个低电平输入，输出$Y=V_{in}(0.3V)+V_{钳}(0.7V)=1.0V$。</li>
+</ol>
+<h5 id="222或门"><a href="#2-2-2或门" class="headerlink" title="2.2.2或门"></a>2.2.2或门</h5><p><img src="/2021/12/15/CO/orGate.png" alt></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.3V</td>
+<td>0.3V</td>
+<td>-0.4V</td>
+</tr>
+<tr>
+<td>0.3V</td>
+<td>3.0V</td>
+<td>2.3V</td>
+</tr>
+<tr>
+<td>3.0V</td>
+<td>0.3V</td>
+<td>2.3V</td>
+</tr>
+<tr>
+<td>3.0V</td>
+<td>3.0V</td>
+<td>2.3V</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li>两个高电平输入，输出$Y=V_{in}(3.0V)-V_{钳}(0.7V)=2.3V$。</li>
+<li>一个高电平输入，此时优先导通高电平输入，输出$Y=V_{in}(3.0V)-V_{钳}(0.7V)=2.3V$，反向截止低电平输入。</li>
+<li>两个低电平输入，输出$Y=V_{in}(0.3V)-V_{钳}(0.7V)=-0.4V$。</li>
+</ol>
+<h5 id="223非门"><a href="#2-2-3非门" class="headerlink" title="2.2.3非门"></a>2.2.3非门</h5><p><img src="/2021/12/15/CO/notGate.png" alt></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.3V</td>
+<td>3.7V</td>
+</tr>
+<tr>
+<td>3.0V</td>
+<td>0.3V</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li>输入低电平，三极管T截止，二极管$D_{CL}$导通，输出$Y=V_{CL}(3.0V)+V_{钳}(0.7V)=3.7V$。</li>
+<li>输入高电平，三极管T导通，$V_{CES}≈0.3V$，二极管$D_{CL}$截止，输出$Y=V_{CES}≈0.3V$。</li>
+</ol>
+<h5 id="224cmos与ttl实现"><a href="#2-2-4CMOS与TTL实现" class="headerlink" title="2.2.4CMOS与TTL实现"></a>2.2.4CMOS与TTL实现</h5><p><del>没专门学过数电就不进一步分析了，这电路有够费劲，仅贴出一些CMOS、TTL实现门级部件的电路图。</del></p>
+<ol>
+<li>CMOS实现非门：<img src="/2021/12/15/CO/cmos_not.png" alt></li>
+<li>CMOS实现或非门：<img src="/2021/12/15/CO/cmos_orNot.png" alt></li>
+<li>CMOS实现与非门：<img src="/2021/12/15/CO/cmos_andNot.png" alt></li>
+<li>TTL实现非门：<img src="/2021/12/15/CO/ttl_notGate.png" alt></li>
+<li>TTL实现与非门：<img src="/2021/12/15/CO/ttl_andNotGate.png" alt></li>
+</ol>
+<p>一些对比：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>集成电路</th>
+<th>CMOS</th>
+<th>TTL</th>
+<th>ECL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>静态功耗</td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>工作速度</td>
+<td>慢</td>
+<td>中等</td>
+<td>快</td>
+</tr>
+<tr>
+<td>抗干扰能力</td>
+<td>强</td>
+<td>中等</td>
+<td>弱</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="23组合逻辑电路"><a href="#2-3组合逻辑电路" class="headerlink" title="2.3组合逻辑电路"></a>2.3组合逻辑电路</h4><p><strong>组合逻辑电路</strong>：将各种逻辑门以一定方式进行组合，从而可以实现一定的逻辑功能的数字电路。这是一种<strong>无记忆</strong>电路，当前输出完全取决于当前输入。</p>
+<h5 id="231逻辑电路设计"><a href="#2-3-1逻辑电路设计" class="headerlink" title="2.3.1逻辑电路设计"></a>2.3.1逻辑电路设计</h5><p>利用工具设计组合逻辑电路的方法大致有三种：</p>
+<ol>
+<li><p>逻辑表达式。</p>
+</li>
+<li><p>真值表。</p>
+</li>
+<li><p>逻辑图。</p>
+</li>
+<li><p>HDL编程。</p>
+<p>对于前三者，使用Logisim（<a target="_blank" rel="noopener" href="http://www.cburch.com/logisim/">Logisim (cburch.com)</a>）进行辅助设计，从导航栏进入Window-&gt;Combinational Analysis界面，设定好Inputs和Outputs后，可以通过Table（真值表）、Expression（逻辑表达式）或者Minimized（逻辑图（卡诺图））-&gt;Build Circuit来自动化生成电路。此外，还可以通过选项限定自动生成的电路只由与非门、两输入门部件生成。</p>
+<p>Combinational Analysis界面：<img src="/2021/12/15/CO/combinational_analysis.png" alt></p>
+<p>Build Circuit界面：<img src="/2021/12/15/CO/build_circuit.png" alt></p>
+<p>对于HDL编程，这里使用Verilog语言（<a target="_blank" rel="noopener" href="https://verilog.com/">Verilog.com</a>）进行描述，用Verilog描述组合逻辑电路一般有三种形式：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里描述一个与门作为例子，输入A，B，输出C，信号位宽均为1bit</span></span><br><span class="line"><span class="keyword">module</span> andGate(</span><br><span class="line">    <span class="keyword">input</span> A,</span><br><span class="line">    <span class="keyword">input</span> B,</span><br><span class="line">    <span class="keyword">output</span> C</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1:assign持续赋值，适合描述简单逻辑，常用。</span></span><br><span class="line">	<span class="keyword">assign</span> C=(A &amp;&amp; B);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//2:always@(*)描述组合逻辑,适合描述复杂逻辑，常用。</span></span><br><span class="line">	<span class="keyword">reg</span> temp;</span><br><span class="line">	<span class="keyword">assign</span> C=temp;</span><br><span class="line">	<span class="keyword">always</span>@(*)<span class="keyword">begin</span></span><br><span class="line">	    temp=(A &amp;&amp; B);</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//3:实例化门级部件进行描述，贴近真实电路行为，可综合性强，不常用。</span></span><br><span class="line">	<span class="keyword">and</span> my_and(C, A, B); </span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p>常见的Verilog仿真工具有ISE，VCS，也可以用Vscode+iverilog<del>（vscode的具体环境配置步骤有空再介绍）</del>。</p>
+</li>
+</ol>
+<h5 id="251竞争与冒险"><a href="#2-5-1竞争与冒险" class="headerlink" title="2.5.1竞争与冒险"></a>2.5.1竞争与冒险</h5><p><strong>竞争</strong>：在组合逻辑电路中，某个输入变量通过两条或两条以上的途径传到输出端，由于每条途径延迟时间不同，到达输出门的时间就有先有后，这种现象称为<strong>竞争</strong>。  </p>
+<p><strong>冒险</strong>： 门电路因输入端的竞争，而导致输出端产生不正常的尖峰干扰冒险信号（毛刺）的现象，称为<strong>冒险</strong>。</p>
+<p><strong>竞争冒险的原因</strong>：门电路的延时。 信号在器件内部通过连线和逻辑单元时，都有一定的延时。延时的大小与连线的长短和逻辑单元的数目有关，同时还受器件的制造工艺、工作电压、温度等条件的影响。信号的高低电平转换也需要一定的过渡时间。    </p>
+<ol>
+<li>若逻辑电路对应的逻辑函数$F$在一定条件下（其它变量取特定的值1或0）可以简化为 $F=A+\overline A$或$F=A\overline A$的形式，则该逻辑电路存在冒险。$F=A+\overline A$存在“0”冒险，$F=A\overline A$存在“1”冒险 。可以通过修改逻辑设计来消除冒险</li>
+<li>在逻辑函数的卡诺图中，函数的每个与项对应卡诺图上的一个卡诺圈，若两个卡诺圈相切，相切处将存在冒险。  可以通过在相切处增加额外的卡诺圈来消除冒险。</li>
+</ol>
+<h4 id="24时序逻辑电路"><a href="#2-4时序逻辑电路" class="headerlink" title="2.4时序逻辑电路"></a>2.4时序逻辑电路</h4><p><strong>时序逻辑电路</strong>：一种<strong>有记忆</strong>电路，当前输出由当前输入与当前电路状态共同决定。结构上往往由组合逻辑电路和存储电路共同组成。</p>
+<h5 id="241锁存器和触发器"><a href="#2-4-1锁存器和触发器" class="headerlink" title="2.4.1锁存器和触发器"></a>2.4.1锁存器和触发器</h5><p>触发器（Flip-Flop， FF） 就是构成记忆功能部件的基本单元，是实现存储（记忆）功能的基本单元电路。触发器有两个互非的输入$Q$和$\overline Q$，其中$Q$称为状态变量，$Q=0$成为0态，$Q=1$称为1态。无外加信号时触发器可以保持原有状态不变，从而对信息进行存储；在外加信号的作用下则可以改变原有状态。</p>
+<h6 id="2411rs锁存器d锁存器"><a href="#2-4-1-1RS锁存器-D锁存器" class="headerlink" title="2.4.1.1RS锁存器/D锁存器"></a>2.4.1.1RS锁存器/D锁存器</h6><p>RS锁存器（Reset/Set）可用两个与非门实现：<img src="/2021/12/15/CO/RS_lock.png" alt></p>
+<p>根据功能需求规定RS锁存器的<strong>约束条件</strong>为：$\overline{R_D} +\overline{S_D} =1$。（低电平有效；$\overline{R_D}$和$\overline{S_D}$不能同时为0）</p>
+<p>得到其<strong>特性方程</strong>为$Q^{n+1}=S_{D}+\overline{R_{D}}Q^{n}$。</p>
+<blockquote>
+<p>在数字系统中，为了协调各部分电路的运行，常常要求某些锁存器在时钟信号的控制下同时动作，这就需要增加一个控制端（时钟），只有在控制端作用脉冲时，锁存器才能动作，这种有时钟控制端的锁存器叫做<strong>钟控锁存器</strong>。</p>
+<p>由于这里时钟信号为高电位（或低电位）时锁存器的状态随输入变化，因此，钟控锁存器是<strong>电位触发方式</strong>的锁存器。</p>
+<p>钟控锁存器在时钟控制下<strong>同步</strong>工作，因此也称<strong>同步锁存器</strong>。</p>
+</blockquote>
+<p>但是，可以发现在RS锁存器中，当$\overline{R_D}$与$\overline{S_D}$同时为0输出为不定态。为了解决这个问题，将钟控RS锁存器的输入由R、 S双端输入的模式，改为D单端输入的模式，即：将其S输入端改为D输入端，然后经过非门接R端  ，这样就成为了<strong>钟控D锁存器</strong>。<img src="/2021/12/15/CO/CP_D_lock.png" alt></p>
+<p>其<strong>特性方程</strong>为：$Q^{n+1}=D(CP\uparrow)$。</p>
+<h6 id="2412d触发器"><a href="#2-4-1-2D触发器" class="headerlink" title="2.4.1.2D触发器"></a>2.4.1.2D触发器</h6><p>一个D触发器可由两个反相的D锁存器构成（输入的时钟信号反相），它也是最简单的寄存器：<img src="/2021/12/15/CO/D_FF_.png" alt></p>
+<p>在时钟信号CP的上升沿0-&gt;1，Q&lt;=D（CP稳定在0时N1&lt;=D，L2断路；CP稳定在1时Q&lt;=N1）。此外，还可以根据需要为这个简单寄存器加上使能信号EN、复位功能RESET（同步、异步复位均可，复位至0）以及置位功能SET（同步、异步置位均可，置位至1）。</p>
+<p>把N个这样的D触发器”并联“，由同一个时钟信号控制，即可实现N位寄存器。</p>
+<blockquote>
+<p>锁存器与触发器：</p>
+<p>锁存器状态在时钟信号稳定时发生改变，即锁存器<strong>电平敏感</strong>；触发器状态在时钟信号变化沿发生改变，即触发器<strong>边沿敏感</strong>。</p>
+</blockquote>
+<h6 id="2413jk触发器"><a href="#2-4-1-3JK触发器" class="headerlink" title="2.4.1.3JK触发器"></a>2.4.1.3JK触发器</h6><p><strong>JK触发器</strong>是一种功能最全面，而且没有约束条件的触发器。在钟控RS寄存器的基础上，增加两条反馈线：将$Q$反馈到$R$钟控门的输入端，并把$R$改名为$K$；将$\overline{Q}$反馈到$S$钟控门的输入端，并把$S$改名为 $J$。<img src="/2021/12/15/CO/JK_FF.png" alt></p>
+<p>其<strong>特性方程</strong>为$Q^{n+1}=J\overline{Q}^{n}+\overline{K}Q^n(CP\uparrow)$。</p>
+<p>JK触发器将R=S=1的无用状态转化为了J=K=1的翻转计数功能。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>{J，K}</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>输出不变（保持）</td>
+</tr>
+<tr>
+<td>01</td>
+<td>输出为0（置零）</td>
+</tr>
+<tr>
+<td>10</td>
+<td>输出为1（置一）</td>
+</tr>
+<tr>
+<td>11</td>
+<td>分频计数（翻转）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 id="242有限状态机"><a href="#2-4-2有限状态机" class="headerlink" title="2.4.2有限状态机"></a>2.4.2有限状态机</h5><p><strong>有限状态机</strong>（Finite State Machine， FSM）： 可描述有限个状态以及这些状态之间的转移及引起转移的动作等的离散数学模型。</p>
+<p>可以通过状态转换图、状态表、转移矩阵或输出逻辑表得到次态逻辑与输出逻辑表达式，从而设计具有对应功能的有限状态机。</p>
+<p>起始状态：电路在复位后所处的初态，状态机的输入必须包含时钟信号与复位信号。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>状态编码方式</th>
+<th>特性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>二进制编码</td>
+<td>采用log2N个触发器来表示这N个状态，按二进制顺序编码，节省逻辑资源，但可能产生输出毛刺。</td>
+</tr>
+<tr>
+<td>格雷码</td>
+<td>采用log2N个触发器来表示这N个状态，但相邻状态只有一个比特位不同。节省逻辑资源，降低了输出毛刺的可能，状态转换中，相邻状态只有一个比特位产生变化。</td>
+</tr>
+<tr>
+<td>独热码</td>
+<td>采用N个触发器来表示这N个状态。逻辑资源消耗最大，但可以避免状态机产生错误的输出，并且有时可简化输出逻辑。（FPGA有丰富的寄存器资源，但缺少门逻辑资源，因此独热码值得考虑）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h6 id="2421moore状态机"><a href="#2-4-2-1Moore状态机" class="headerlink" title="2.4.2.1Moore状态机"></a>2.4.2.1Moore状态机</h6><p>Moore状态机输出仅由当前输入决定：<img src="/2021/12/15/CO/Moore_fsm.png" alt></p>
+<h6 id="2422mealy状态机"><a href="#2-4-2-2Mealy状态机" class="headerlink" title="2.4.2.2Mealy状态机"></a>2.4.2.2Mealy状态机</h6><p>Mealy状态机输出由当前输入与当前状态共同决定：<img src="/2021/12/15/CO/Mealy_fsm.png" alt></p>
+<h6 id="2423时序电路的时序"><a href="#2-4-2-3时序电路的时序" class="headerlink" title="2.4.2.3时序电路的时序"></a>2.4.2.3时序电路的时序</h6><p>对于寄存器来说，要想正常工作，其输入应在<strong>孔径时间</strong>内保持稳定：<img src="/2021/12/15/CO/T_setup_hold_ctq.png" alt></p>
+<p>建立时间$T_{Setup}$为输入信号在时钟沿到来前必须稳定的时间。</p>
+<p>保持时间$T_{Hold}$为输入信号在时钟沿到来后必须稳定的时间。</p>
+<p>$T_{孔径时间}=T_{Setup}+T_{Hold}$</p>
+<p>$T_{Clock-to-Q}=T_{ctq}$表示在时钟沿到来后寄存器Q端开始产生稳定输出的时间。</p>
+<p>另外，此处应考虑电路中由门电路引起的最长路径延时$T_{cd}$，可知时序电路的时钟周期$T_{c}$应满足：</p>
+<p>$T_{c}\geqslant T_{ctq}+T_{cd}+T_{Setup}+时钟偏移$</p>
+<blockquote>
+<p>时钟偏移：由于时钟信号源到各个寄存器部件的连线长度不同等原因所引起的各个寄存器时钟信号达到的细微时间差异， 一般忽略。  </p>
+</blockquote>
+<h4 id="25典型设计"><a href="#2-5典型设计" class="headerlink" title="2.5典型设计"></a>2.5典型设计</h4><h5 id="251并行进位加法器"><a href="#2-5-1并行进位加法器" class="headerlink" title="2.5.1并行进位加法器"></a>2.5.1并行进位加法器</h5><p>传统意义上的串行进位加法器如图所示：<img src="/2021/12/15/CO/串行进位加法器.png" alt></p>
+<p>如此设计，逻辑简单，但门电路的延迟会逐级累加，运算越复杂，即逻辑链越长，延迟累加的规模也越大，对时钟频率的限制也越大，性能显著降低。因此，考虑以更复杂的逻辑（更多的门电路）为代价，换取低延迟（并行计算），得到并行进位加法器：<img src="/2021/12/15/CO/并行进位加法器.png" alt></p>
+<h5 id="252编码器"><a href="#2-5-2编码器" class="headerlink" title="2.5.2编码器"></a>2.5.2编码器</h5><p><strong>编码器</strong>将n个输入信号压缩至$m=\lfloor\log_{2}n+1\rfloor$个输出信号，常命名为”n线-m线编码器“，常用与非门、或非门阵列电路实现。</p>
+<blockquote>
+<p>任意一时刻只能对其中一个信号进行编码，即只允许其中<strong>一个输入信号有效</strong>（低电平或高电平），而其余信号为无效电平，否则输出将发生混乱。</p>
+<p><strong>高电平输入有效</strong>： 在输入等于1时，对输入信号进行编码，则称这类编码器为高电平输入有效， 此时输出等于对应有效输入的编号的二进制编码。</p>
+<p><strong>低电平输入有效</strong>： 在输入等于0时，对输入信号进行编码，则称这类编码器为低电平输入有效。</p>
+</blockquote>
+<p><strong>优先编码器</strong>改变了普通编码器仅允许一个输入信号有效的特性，它允许多个输入信号同时有效，但仅对当前有效的优先级最高的输入信号做出响应。</p>
+<h5 id="254译码器"><a href="#2-5-4译码器" class="headerlink" title="2.5.4译码器"></a>2.5.4译码器</h5><p><strong>译码器</strong>将n个输入信号扩展至$m=2^n$个输出信号，常命名为”n线-m线译码器“，译码是编码的反操作。</p>
+<blockquote>
+<p><strong>变量译码器（二进制译码器）</strong>：实现输入变量状态全部组合的译码器，一般称为<strong>n线-$2^n$线译码器</strong>。如2线-4线译码器， 3线-8线译码器等。高电平输出有效时，每个输出都是对应的输入变量最小项；低电平输出有效时，每个输出都是对应的输入变量最小项的反，故二进制译码器也称<strong>最小项译码器</strong>。</p>
+<p><strong>码制变换译码器</strong>：将输入的某个进制代码转换成对应的其他码制输出的译码器。如8421码至十进制码译码器（简称<strong>BCD译码器</strong>）、余3码至十进制码译码器等。  </p>
+<p><strong>显示译码器</strong>：将输入代码转换成驱动7段数码显示器各段电平信号的译码器。常用的有74xx47（低电平输出有效）、 74xx49（高电平输出有效）、 74xx48（高电平输出有效）等。</p>
+</blockquote>
+<h5 id="254锁存器"><a href="#2-5-4锁存器" class="headerlink" title="2.5.4锁存器"></a>2.5.4锁存器</h5><p>锁存器是电平敏感的。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> register(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span> set,</span><br><span class="line">    <span class="keyword">input</span> EN,</span><br><span class="line">    <span class="keyword">input</span> in_data,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> out_data</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> clk <span class="keyword">or</span> reset <span class="keyword">or</span> set)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(reset)<span class="keyword">begin</span>			<span class="comment">//复位</span></span><br><span class="line">            out_data=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span>(set)<span class="keyword">begin</span></span><br><span class="line">            out_data=<span class="number">1</span>;			<span class="comment">//置位</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span>(clk)<span class="keyword">begin</span></span><br><span class="line">            out_data=in_data;	<span class="comment">//输出</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            out_data=out_data;	<span class="comment">//保持</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h5 id="255寄存器"><a href="#2-5-5寄存器" class="headerlink" title="2.5.5寄存器"></a>2.5.5寄存器</h5><p>寄存器是边沿敏感的。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> register(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span> set,</span><br><span class="line">    <span class="keyword">input</span> EN,</span><br><span class="line">    <span class="keyword">input</span> in_data,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> out_data</span><br><span class="line">);</span><br><span class="line">    <span class="comment">//同步复位、置位</span></span><br><span class="line">    <span class="keyword">always</span>@(<span class="keyword">posedge</span> clk)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(reset)<span class="keyword">begin</span></span><br><span class="line">            out_data&lt;=<span class="number">0</span>;		<span class="comment">//复位</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span>(set)<span class="keyword">begin</span></span><br><span class="line">            out_data&lt;=<span class="number">1</span>;		<span class="comment">//置位</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">if</span>(EN)<span class="keyword">begin</span></span><br><span class="line">            out_data&lt;=in_data;	<span class="comment">//输出</span></span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            out_data&lt;=out_data;	<span class="comment">//保持</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="三-处理器"><a href="#三、处理器" class="headerlink" title="三、处理器"></a>三、处理器</h2><h3 id="1整体架构"><a href="#1-整体架构" class="headerlink" title="1.整体架构"></a>1.整体架构</h3><h4 id="11简述指令"><a href="#1-1简述指令" class="headerlink" title="1.1简述指令"></a>1.1简述指令</h4><p>指令是一串01机器码，包含指令的种类、作用等信息。</p>
+<p>CPU的本质作用即处理指令：<img src="/2021/12/15/CO/cpu_system.png" alt></p>
+<p>以X86为代表的指令集系统架构使用变长指令长度（一般为字节长度整数倍），以MIPS为代表的指令集系统架构使用定长指令长度，为了言简意赅地介绍处理器地核心思想，这里使用MIPS指令集系统架构。</p>
+<p>一条指令中包含<strong>操作码</strong>（识别是何种指令），<strong>源操作数地址</strong>（从地址取数进行操作），<strong>目的操作数地址</strong>（保存操作结果地地址），<strong>下一条指令地址</strong>（大多数指令采取相对寻址方式，J型跳转指令含有此信息）。MIPS指令集系统架构中地指令分为R型、I型和J型三种类型：<img src="/2021/12/15/CO/mips_instrType.png" alt></p>
+<p>MIPS指令集：<a href="MIPS_IV_Instruction_Set.pdf">MIPS_IV_Instruction(PDF)</a></p>
+<h4 id="12数据通路"><a href="#1-2数据通路" class="headerlink" title="1.2数据通路"></a>1.2数据通路</h4><ol>
+<li>为了存储指令序列，构造指令存储器IM（Instruction Memory）。</li>
+<li>为了解析指令各字段含义，设置控制单元CU（Control Unit）。</li>
+<li>为了表示指令的相对地址，构造NPC模块用以存储。</li>
+<li>为了存取数据，设置含32个通用寄存器的通用寄存器堆GRF（General Register Files）和数据存储器DM（Data Memory）。</li>
+<li>为了对数据进行计算，设置运算模块ALU（Arithmetic and Logic Unit）。</li>
+<li>在合成数据通路的过程中还需要根据需求设置一些多路选择器（MUX）、符号拓展单元（EXT）、加法器（ADDer）等模块。</li>
+</ol>
+<h3 id="2经典cpu设计模式"><a href="#2-经典CPU设计模式" class="headerlink" title="2.经典CPU设计模式"></a>2.经典CPU设计模式</h3><h4 id="21单周期cpu"><a href="#2-1单周期CPU" class="headerlink" title="2.1单周期CPU"></a>2.1单周期CPU</h4><p><strong>单周期CPU</strong>：每条指令均在一个时钟周期内执行，也意味着时钟周期（频率）会受限于指令集中延迟最长指令的延迟时间（时钟周期以该延迟时间为准）。其余部分则将数据通路进行合并即可。<a href="CO-SingleCircleMipsCpu.circ">Logisim-CO-SingleCircleCPU(CIRC)</a></p>
+<p><img src="/2021/12/15/CO/SingleCirclePipelineCpu.png" alt></p>
+<blockquote>
+<p>采用<strong>哈佛体系结构</strong>，使用指令存储区（IM）和数据存储区（DM）分别保存指令和数据  。</p>
+</blockquote>
+<p>指令执行过程一般有以下几个步骤：</p>
+<ol>
+<li>取指令： 根据PC，访问指令存储器获得指令，然后PC+4</li>
+<li>读寄存器：根据指令格式，读取相应寄存器操作数  </li>
+<li>ALU运算：通过ALU完成相应的算术逻辑运算  </li>
+<li>数据存取： LW/SW指令访问数据存储器  </li>
+<li>写寄存器：运算类指令和LW指令要把数据写入寄存器  </li>
+</ol>
+<p>采用单周期CPU设计模式，时钟周期往往由LW指令（IM-GRF-ALU-DM-GRF）决定，但大多数指令并非需要经过所有模块，所以可以采用可变时钟周期模式，改变不同类型的指令使用的时钟周期数以增大时钟频率，提高CPU执行效率。</p>
+<h4 id="22多周期cpu"><a href="#2-2多周期CPU" class="headerlink" title="2.2多周期CPU"></a>2.2多周期CPU</h4><p><strong>多周期CPU</strong>：将指令执行分解为多个步骤，完成每一步骤需要用一个时钟周期，则指令周期为多个时钟周期，不同类型指令的指令周期包含的时钟周期数可以不一样。  <img src="/2021/12/15/CO/MultiCirclesMipsCpu.png" alt></p>
+<blockquote>
+<p>采用<strong>普林斯顿结构</strong>：指令和数据使用同一个存储器。</p>
+</blockquote>
+<h4 id="23流水线cpu"><a href="#2-3流水线CPU" class="headerlink" title="2.3流水线CPU"></a>2.3流水线CPU</h4><p><strong>流水线CPU</strong>将并行的思想发扬光大，尽可能实现多任务共同进行，减小电路资源闲置率；它不改善单个任务的处理延迟，但是可以在整体上提高工作负载的效率（<strong>提高时钟频率</strong>），但也因此带来了<strong>流水线冒险</strong>的问题。<img src="/2021/12/15/CO/PipelineCpu.png" alt></p>
+<p>这里采用五级流水线的设计模式，上图中仅显示了四级流水寄存器IF/ID、ID/EX、EX/MEM、MEM/WB，其中第五级流水寄存器与Register File合并，减少了额外的硬件开销。</p>
+<p>在对数据进行流水的过程中，除了从存取的数据、运算结果需要进行流水，由控制单元解析指令获得的各种控制信号也需要进行流水。对于控制信号的流水，分为两种主流实现方式：</p>
+<ol>
+<li><strong>集中式译码</strong>，在IM取指后进行译码并对所有控制信号进行流水，实现较复杂，但硬件开销小。</li>
+<li><strong>分布式译码</strong>，将指令流水，需要使用控制信号时使用单独的CU译码出所需信号，实现简单，但硬件开销大。</li>
+</ol>
+<p><strong>流水线冒险</strong>（Pipeline hazard：A hazard is a situation that prevents starting the next instruction in the next clock cycle）指的是当前指令的执行依赖于其同在流水级中的未完成的前序指令的执行结果。下图给出一个流水线<strong>数据冒险</strong>的例子：<img src="/2021/12/15/CO/PipelineCPU_hazard.png" alt></p>
+<p>为了解决<strong>数据冒险</strong>的问题，考虑对数据进行转发或者暂停流水线（尽可能进行转发，暂停流水线会大幅影响流水线效率）。</p>
+<p><strong>转发</strong>：若指令在进入到某流水级时必须使用来自GRF的某寄存器的数据（非零号寄存器），且该寄存器在该指令前四条指令内被改写，且<strong>改写数据已经产生</strong>，那么应将改写后的数据转发给该指令所处流水级。若该寄存器在其前四条指令中被改写多次，那么应采取”就近原则“，以距该指令最近的那次改写指令的改写数据为转发来源。</p>
+<p><strong>暂停</strong>：若转发条件中的”<strong>改写数据已经产生</strong>“失效，即改写数据不能及时产生，那么应冻结PC寄存器（暂停），冻结IF/ID流水寄存器（暂停），清空ID/EX流水寄存器（插入nop空指令），等待新数据的产生。</p>
+<h3 id="3计算机性能指标"><a href="#3-计算机性能指标" class="headerlink" title="3.计算机性能指标"></a>3.计算机性能指标</h3><p><strong>响应时间</strong>：从提交作业到完成作业所花费的时间。</p>
+<blockquote>
+<p>响应时间是完成一个任务所花的时间总和，包括：运算时间、内存访问时间、执行IO操作的时间、以及运行必要的操作系统代码所需的时间等。  </p>
+</blockquote>
+<p><strong>吞吐量</strong>：一定时间间隔内完成的作业数。</p>
+<blockquote>
+<p>多任务操作系统更侧重于优化系统的整体吞吐量，而不会特别最小化某个特定程序的响应时间。</p>
+<p>个人用户更关心响应时间，企业级计算机的管理人员更关心<br>吞吐量；对于企业级计算机以外的应用，响应时间是评价计算机性能的主要依据。  </p>
+</blockquote>
+<p>对于多任务系统，应该从响应时间中去除因为等待I/O操作而花去的时间和CPU执行其他程序所花费的时间，为此引入<strong>CPU执行时间</strong>的概念。CPU执行时间＝CPU时钟周期数 × 时钟周期长度 = 总指令数 × 每条指令的平均时间周期数。</p>
+<p>其中，<strong>指令平均执行时钟周期数</strong>称为<strong>CPI</strong>（Clock cycles Per Instruction），总指令数记作IC。</p>
+<p>于是，$CPI=\frac{\sum_{i=1}^n(CPI_i×I_i)}{IC}=\sum_{i=1}^n(CPI_i×\frac{I_i}{IC})$。</p>
+<p><strong>MIPS</strong>： Million Instruction Per Second 。$MIPS=\frac{f}{CPI×10^6}$。</p>
+<h2 id="四-数据访存"><a href="#四、数据访存" class="headerlink" title="四、数据访存"></a>四、数据访存</h2><h3 id="1存储器概述"><a href="#1-存储器概述" class="headerlink" title="1.存储器概述"></a>1.存储器概述</h3><h4 id="11存储器类型"><a href="#1-1存储器类型" class="headerlink" title="1.1存储器类型"></a>1.1存储器类型</h4><p>计算机中的存储器大致分为三个层次：</p>
+<ol>
+<li>主存储器，简称主存、内存，用于存放计算机运行期间所需的大量程序和数据，CPU可以直接随机对其进行访问，也可以和Cache及辅存进行数据交换。特点是容量较小、存取速度较快、价格较高。</li>
+<li>辅助存储器，简称辅存、外存，用来存放当前暂时不用的程序和数据，以及一些需要永久性保存的数据，它不能直接与CPU交换信息。特点是容量极大、存取速度较慢、价格较低。</li>
+<li>高速缓冲存储器，简称Cache，位于主存和CPU之间，用来存放正在执行的程序段和数据，以便CPU能高速地使用它们。Cache的存取速度可与CPU的速度相匹配，但存储容量小、价格高。</li>
+</ol>
+<p><img src="/2021/12/15/CO/存储器分类.png" alt></p>
+<p>半导体存储器从访问方式上可以分为<strong>随机访问存储器RAM</strong>（有<strong>易失性</strong>：断电后存储信息即消失）和<strong>只读存储器ROM</strong>（断电后信息仍然保持，结构简单，位密度高于RAM；有<strong>非易失性</strong>，可靠性高），其中RAM从实现原理上又分为<strong>静态随机访问存储器SRAM</strong>（Static RAM，集成度低，<strong>不必刷新</strong>，用作Cache）和<strong>动态随机访问存储器DRAM</strong>（Dynamic RAM，集成度高，<strong>需要刷新</strong>，用作主存）。</p>
+<blockquote>
+<p>U盘是只读存储器，采用Flash Memory级数，是在EEPROM的基础上发展起来的，属于ROM的一种，因其擦写速度和性价比均很可观，因此其常用作辅存。</p>
+<p>RAM和ROM都是随机存取的。</p>
+</blockquote>
+<h4 id="12存储器性能指标"><a href="#1-2存储器性能指标" class="headerlink" title="1.2存储器性能指标"></a>1.2存储器性能指标</h4><ol>
+<li><strong>存储容量</strong>=存储字数×字长。</li>
+<li><strong>单位成本</strong>：每位价格=总成本/总容量。</li>
+<li><strong>存储速度</strong>：数据传输率=数据宽度/存储周期。<ol>
+<li><strong>存取时间</strong>$T_a$是指从启动一次存储器操作到完成该操作所经历的时间。</li>
+<li><strong>存取周期</strong>$T_m$又称读写周期或访问周期，是指存储器进行一次完整的读写操作所需的全部时间（即连续两次独立访问存储器操作之间所需的最小所需的最小时间间隔）。存储周期通常大于存取时间，因为在进行读写操作后总要有一段恢复内部状态的复原时间。</li>
+<li><strong>主存带宽</strong>$B_m$又称数据传输率，表示每秒从主存进出信息的最大数量，单位为字/秒、字节/秒或位/秒。</li>
+</ol>
+</li>
+<li><strong>Cache主存系统的效率</strong>=访问Cache的时间/平均访存时间。</li>
+</ol>
+<h4 id="13存储芯片"><a href="#1-3存储芯片" class="headerlink" title="1.3存储芯片"></a>1.3存储芯片</h4><p>存储芯片容量的基本描述格式为（字单元数m×每个字单元的位数n）。</p>
+<blockquote>
+<p>寻址时是字寻址，非位寻址。</p>
+<p>使用<strong>地址复用技术</strong>可以减少所需地址线条数。</p>
+</blockquote>
+<p>存储位元个数：$m×n$</p>
+<p>所需地址线条数：$\lceil \log_2 m \rceil$（+片选信号地址线数）</p>
+<p>所需数据线条数：$n$（位扩展后，数据线条数以扩展后位宽为准）</p>
+<p>当所需存储器规模（p×q）大于已有存储芯片规模（m×n）时，混合使用位扩展（n&lt;q时）和字扩展（m＜p时）来满足需求，同时还应添加片选信号对存储芯片进行选择，当片选信号$\overline{CS}$与使能信号$\overline{WE}$均有效时使用该存储芯片。</p>
+<p>在进行字扩展时常使用高位地址线产生片选信号有线选法（不常用，浪费地址资源）和译码片选法（常用）两种方式。</p>
+<p><strong>DRAM的刷新问题</strong>：<img src="/2021/12/15/CO/DRAM_refresh.png" alt></p>
+<blockquote>
+<p>1.在保持状态下， T管截止， Cs与外部隔开，但Cs两极间存在漏电流，所以， Cs上的电荷也会出现变化。 必须在一个时间内重写数据，这个时间称为单元电路的刷新周期，一般为<strong>2ms</strong>、4ms、 8ms。  </p>
+<p>2.读出操作是一种<strong>破坏性操作</strong>，读1时， Cs放电；读0时， Cs充电；所以读出操作后，原保存在Cs上的数据（电荷）被破坏。 应该立即进行恢复（重写或刷新） 。  </p>
+<p>3.<strong>DRAM是按行刷新</strong>，因为执行刷新操作仅需行地址，也不需要选片，它对整个存储器中的所有芯片同时进行刷新。</p>
+<p>4.若<strong>刷新</strong>在不需要访问寄存器的阶段，那么既不会延长存取周期，也不会产生死区时间，这样的刷新称为<strong>透明刷新</strong>。<strong>刷新对CPU是透明的</strong>，因为它只发生在主存内部，在外部访问看来主存仅是一个功能性黑箱。</p>
+<p>5.一次刷新占用一整个存取周期。</p>
+</blockquote>
+<p>DRAM常用的刷新方式有三种：</p>
+<ol>
+<li><strong>集中刷新</strong>：在刷新周期内取一段固定的时间作为刷新时间，这段时间也被称为死区时间；它的优势在于读写时不需进行额外操作，劣势在于死区时间内无法访问存储器。</li>
+<li><strong>分散刷新</strong>：把对每行的刷新分散到工作周期中（即利用工作周期专门来进行刷新），虽然这不会引起机制上的问题，但这样延长系统的存取周期显然降低了系统的工作效率。</li>
+<li><strong>异步刷新</strong>：在一个存储周期内将所有行刷新一遍，两次行刷新的时间间隔可以相等（刷新周期/行数）也可以不等，这可以大幅度减少死区时间，提高性能。</li>
+</ol>
+<h3 id="2访存机制与cache"><a href="#2-访存机制与Cache" class="headerlink" title="2.访存机制与Cache"></a>2.访存机制与Cache</h3><h4 id="21访存的局部性原理与cache工作原理"><a href="#2-1访存的局部性原理与Cache工作原理" class="headerlink" title="2.1访存的局部性原理与Cache工作原理"></a>2.1访存的局部性原理与Cache工作原理</h4><h5 id="211局部性原理"><a href="#2-1-1局部性原理" class="headerlink" title="2.1.1局部性原理"></a>2.1.1局部性原理</h5><p><strong>局部性原理</strong>（principle of locality）： 大量典型程序的运行情况分析结果表明， 无论是存取指令或存取数据， 所访问的存储单元都趋于聚集在一个较小的连续存储区域中。  </p>
+<ol>
+<li><strong>时间局部性</strong>(temporal locality)： 刚被访问过的存储单元可能不久又将被访问。</li>
+<li><strong>空间局部性</strong>(spatial locality)： 刚被访问过的存储单元的临近单位可能不久被访问。</li>
+</ol>
+<p>之所以会产生这种局部性，是因为指令按顺序排放，且内存空间连续分配，一定时间内在一段代码附近对同一元素进行多次操作的概率较大。</p>
+<h5 id="212cache工作原理"><a href="#2-1-2Cache工作原理" class="headerlink" title="2.1.2Cache工作原理"></a>2.1.2Cache工作原理</h5><p>综合考虑到程序的局部性原理以及CPU与主存的运行速度之间的不匹配，引入<strong>Cache</strong>作为CPU与内存之间的中转媒介，可以有效提高CPU的运行效率，从而在速度、容量与成本三者之间找到平衡点。（Cache由SRAM构成，主存由DRAM构成）<img src="/2021/12/15/CO/CPU_Cache.png" alt></p>
+<p>Cache的结构如下图所示，基本的Cache一般分为若干组，每组又分若干行，每行含一个有效位（图中v），一个标记（图中Tag），一个数据块（图中Data Block）。<img src="/2021/12/15/CO/Cache_Stucture.png" alt></p>
+<p>当CPU需要访问主存时，首先通过Tag标记访问Cache，查看其所需数据是否在Cache中有备份，有则直接使用Cache中数据（此时称<strong>命中</strong>），无则等待从主存将数据块装入Cache后再调用或直接访问主存进行调用（此时称<strong>未命中</strong>）。</p>
+<p><strong>术语</strong>：</p>
+<ol>
+<li><strong>数据块</strong>（block）：Cache与主存的基本划分单位，也是主存与Cache一次交换数据的最小单位，由多个字节（字）组成，取决于主存一次读写操作所能完成的数据字节数，也表明主存与Cache之间局部总线的宽度。</li>
+<li><strong>标记</strong>（tag）：每一Cache数据块有一个标记字段，用来保存该Cache数据块对应的主存数据块的地址信息。</li>
+<li><strong>有效位</strong>（valid bit）：Cache中每一Block有一个有效位，用于指示相应数据块中是否包含有效数据。</li>
+<li><strong>行</strong>（line )：Cache中一个block及其tag、valid bit构成1行。</li>
+<li><strong>组</strong>（set）：若干块(Block)构成一个组，地址比较一般能在组内各块间同时进行。</li>
+<li><strong>路</strong>（way）：Cache相关联的等级，每一路具有独立的地址比较机构，各路地址比较能同时进行（一般与组结合），路数即指一组内的块数。</li>
+<li><strong>命中率</strong>（hit rate）：目标数据在Cache中的存储访问的比例。</li>
+<li><strong>缺失率</strong>（miss rate）：目标数据不在Cache中的存储访问的比例。</li>
+</ol>
+<h4 id="22cache映射机制"><a href="#2-2Cache映射机制" class="headerlink" title="2.2Cache映射机制"></a>2.2Cache映射机制</h4><p>Cache的映射，即把主存的局部区域映射到Cache中。为此，将主存划分为若干个主存块（block），将Cache划分为若干个Cache块（block），这些块的大小均相等。</p>
+<h5 id="221全相联映射"><a href="#2-2-1全相联映射" class="headerlink" title="2.2.1全相联映射"></a>2.2.1全相联映射</h5><p>在<strong>全相联映射</strong>机制下，每一个主存块都可能被映射到任意Cache块，没有限制。</p>
+<p>主存的地址格式为Tag（块地址）+Offset（块内偏移量，即块内地址）。</p>
+<p>全相联映射在比较时同时与所有Cache的Tag进行比较，因此比较速度较慢，实现成本也较高（因此仅在Cache容量小时使用），但空间利用率、命中率也高；同时，全相联映射的数据访问与Tag比较是并行执行的，这也是其高效的原因之一。<img src="/2021/12/15/CO/全相联映射.png" alt></p>
+<h5 id="222直接映射"><a href="#2-2-2直接映射" class="headerlink" title="2.2.2直接映射"></a>2.2.2直接映射</h5><p> 在<strong>直接映射</strong>机制下，每一个主存块只能映射到Cache中的唯一位置，若该位置已有内容，则强行进行替换（不使用替换算法，此时为<strong>块冲突</strong>）。具体的映射方式为：将Cache内存块与主存块分别进行分区（一般分为$\lceil 主存块数/Cache块数 \rceil$个区），在细分的区内再次使用类似全相联映射的机制进行映射。</p>
+<p>该机制下主存的地址格式为Tag（区地址）+Index（区内块地址，即Cache行号）+Offset（块内偏移量，即块内地址）。</p>
+<p>此时仅需进行一次Tag（区地址）比较，但是，直接映射的映射关系不灵活，因为每个主存块只能固定地对应某个确定的Cache块，会出现Cache有很多空闲，但新块不能直接写入而需要替换的现象， Cache空间的利用不充分。 <img src="/2021/12/15/CO/直接映射.png" alt></p>
+<h5 id="223组相联映射"><a href="#2-2-3组相联映射" class="headerlink" title="2.2.3组相联映射"></a>2.2.3组相联映射</h5><p>在<strong>组相联映射</strong>机制下，Cache分成K组，每组分成L块；主存的块J以<strong>$I=J\mod K$</strong>的原则映射到Cache的组I中的任何一块。</p>
+<p>该机制下的地址格式为Tag（组内块地址）+Set（组地址）+Offset（块内地址）。</p>
+<p>对于组相联映射，每次访存需和一个组内所有块的Tag进行比较，数据访问和Tag比较是并行执行的，它综合了全相联映射和直接映射两者，兼顾了成本与灵活性。</p>
+<p><img src="/2021/12/15/CO/组相联映射.png" alt></p>
+<h4 id="23cache替换策略"><a href="#2-3Cache替换策略" class="headerlink" title="2.3Cache替换策略"></a>2.3Cache替换策略</h4><p>在全相联映射或组相联映射机制下，当Cache中的空间或Cache组中的空间被占满时，即需要使用替换算法置换Cache行。（采用直接映射时，若发生块冲突则强制进行替换，所以不需要专门的替换算法）</p>
+<p>常见替换算法：</p>
+<ol>
+<li>最近最少使用法（<strong>LRU</strong>， Least-Recently Used） ：记录每一个数据块的相对使用情况，最近没有被使用的块被替换  。</li>
+<li>先进先出法（<strong>FIFO</strong>， First-In-First-Out） ：最先装入数据的块被替换。</li>
+<li>最小使用频率法 （<strong>LFU</strong>， Least-Frequently Used）：记录每一个数据块的使用频率，使用次数最少的被替换。  </li>
+<li>随机法（<strong>RAND</strong>， Random）：随机选择一个数据块进行替换。</li>
+</ol>
+<blockquote>
+<p>在选择替换算法时，偏好于逻辑简单、便于电路实现的算法。</p>
+</blockquote>
+<p><strong>LRU</strong>实现：</p>
+<p>为了将近期使用频率最低的块淘汰出去（被替换），给Cache的每一个块设置一个计数器，被调入的块对应的计数器清零，其余计数器加一；当访问命中时，为所有值小于被命中块计数器的计数器加一，其余计数器的值保持不变；当访问未命中时，若有空闲行则新装入行的计数器置0，其余计数器全加一，若无空闲行，将当前计数器值最大的块淘汰，换上新块，计数器置零，其余计数器全加一。</p>
+<p><strong>FIFO</strong>实现：</p>
+<p>为所有块设置一个两位计数器，当某块被替换或被命中时该块计数器清零，其余计数器加一，每次选择计数器值最大的块进行替换。这种替换策略容易实现，开销小，但也容易将频繁使用的块替换出去。</p>
+<h4 id="24cache性能分析"><a href="#2-4Cache性能分析" class="headerlink" title="2.4Cache性能分析"></a>2.4Cache性能分析</h4><p>一般来说，Cache的容量指的是所有Cache数据块的总容量（包括Tag，Valid Bit，Data）。</p>
+<p>记主存储器的访问周期为$T_m$，Cache的访问周期为$T_c$，$H$为Cache命中率（命中次数/总访问次数），显然，整个存储系统的等效访问周期$T=T_c\times H+T_m\times (1-H)$。</p>
+<blockquote>
+<p>上述计算基于对主存和Cache的并行访问。</p>
+</blockquote>
+<p>定义存储系统的加速比$S_p$（Speed Up）为：$S_p=\frac{T_m}{T}=\frac{T_m}{T_c\times H+T_m\times (1-H)}=\frac{1}{1+H\times (\frac{T_c}{T_m}-1)}$</p>
+<h3 id="3虚拟存储系统"><a href="#3-虚拟存储系统" class="headerlink" title="3.虚拟存储系统"></a>3.虚拟存储系统</h3><h4 id="31辅助存储器"><a href="#3-1辅助存储器" class="headerlink" title="3.1辅助存储器"></a>3.1辅助存储器</h4><p>辅助存储器是主存的后援设备，不直接与CPU交换信息，又称外存，主要分为磁表面存储器（硬盘、软盘、磁带）和光介质存储器（光盘） ，它们的特点是存储容量大、单位成本低、访问速度慢。</p>
+<p>对于<strong>磁表面存储器</strong>而言，其编码主要是通过记录写入电流的变化方式来实现的，主要有归零制（RZ）、不归零制（NRZ）、调相制（PM）和调频制（FM）四种实现方式（常用调相制与调频制，信号不易产生歧义、易分辨）。<img src="/2021/12/15/CO/磁记录编码方式.png" alt></p>
+<p><strong>编码效率</strong>：记录一位信息的最大磁化翻转次数的倒数，如RZ与NRZ的编码效率为1，PM与FM的编码效率为2。</p>
+<p>以<strong>硬磁盘存储器</strong>为例，有下列性能指标：</p>
+<ol>
+<li><strong>道密度</strong>：磁盘沿半径方向单位长度的磁道数。</li>
+<li><strong>位密度</strong>：单位长度磁道记录二进制的位数。</li>
+<li><strong>存储容量</strong>=盘面数(磁头数) ×每盘面的磁道数×每磁道的扇区数×扇区容量。</li>
+<li>其<strong>访问时间</strong>（也称寻址时间）由寻道时间和寻区时间两部分共同构成；寻道时间是磁头从当前位置定位到目标磁道所需时间（平均值）；寻区时间是磁头定位到目标磁道后，等待目标扇区旋转到磁头下所需的时间（平均值，一般认为平均旋转半圈）。</li>
+<li><strong>数据传输率</strong>$D_r$：单位时间内传输的数据位数（b/s）。</li>
+</ol>
+<p><img src="/2021/12/15/CO/硬盘图解.png" alt></p>
+<p><strong>廉价磁盘冗余阵列</strong>（Reduntant Array of Inexpensive Disks，简称<strong>RAID</strong>），由多个物理磁盘构成，但被操作系统当成一个逻辑磁盘，数据分布在不同的物理磁盘上，冗余磁盘用于保存数据校验信息，校验信息保证在出现磁盘损坏时能够有效地恢复数据，分为RAID 0,  RAID1, RAID2，RAID3,  RAID4，RAID5这几种模式。</p>
+<ol>
+<li>RAID 0不带任何冗余。</li>
+<li>RAID 1为镜像结构，将磁盘均分为两组同时进行相同的读写操作，出现磁盘损坏时可以立即恢复，但磁盘空间利用率仅为50%。</li>
+<li>RAID 2使用带海明校验，让数据按较小的条带（一个字或一个字节）分布在不同的磁盘上，成本略低于RAID 1，但仍较高。</li>
+<li>RAID 3使用奇偶校验码，在RAID 2的基础上实现数据的并行传送，一位的奇偶校验码保存在独立的冗余磁盘对应位置上。</li>
+<li>RAID 4在RAID 3的基础上采用独立访问技术让每个磁盘独立工作，这样分散的IO请求可以被并行处理，此外它还让数据按较大的条带分布在不同的磁盘上。这样的做法，在每次执行写操作后都需要重新计算校验码。</li>
+<li>RAID 5采用分布式奇偶校验的独立磁盘结构，与RAID 4的差别仅在于校验信息的保存位置；数据校验码作为条带的一部分保存在磁盘组不同的磁盘中，不再使用独立的冗余硬盘专门存储数据校验码。</li>
+</ol>
+<h4 id="32虚拟存储器理论"><a href="#3-2虚拟存储器理论" class="headerlink" title="3.2虚拟存储器理论"></a>3.2虚拟存储器理论</h4><p>在实际情况中，计算机中往往同时有多个进程同时执行，它们对内存的使用需求之和常常会超过计算机实际的内存容量。为了应对这种情况，并解除主存容量对编程的限制，在内存管理时会使用交换机制（由硬件和操作系统实现），将进程保存在辅存中，进程执行时，只将其活跃部分调入内存（局部性原理）。此时，可以将主存可以视为辅存的“高速缓存”，这就是虚拟存储（virtual memory）技术。</p>
+<p><strong>虚存空间与物理空间</strong><br><strong>用户编程空间</strong>：用户编制程序时使用的地址称为<strong>虚地址</strong>或逻辑地址，其对应的存储空间称为<strong>虚存空间</strong>或<strong>逻辑地址空间</strong>。虚存空间的用户程序按照虚地址编程并存放在辅存中。<br><strong>物理内存空间</strong>：计算机物理内存的访问地址称为<strong>实地址</strong>或<strong>物理地址</strong>，其对应的存储空间称为<strong>物理空间</strong>或<strong>主存空间</strong>。</p>
+<p>虚拟存储器有三种调度方式（类似Cache的映射机制）：</p>
+<ol>
+<li><strong>页式调度</strong>：将虚存空间和物理空间都分成固定大小的页。主存按页顺序编号；每个独立编址的程序空间也按自己的页顺序编号。虚存空间和物理空间按页进行交换。</li>
+<li><strong>段式调度</strong>：把物理空间分成页；按程序的逻辑结构将程序空间划分为若干段，段的长度是随意的，虚存空间和物理空间按段进行交换。</li>
+<li><strong>段页式调度</strong>：上述两种方法的结合。把物理空间分成页；程序按模块先分段，每个段再分成与物理空间页同样大小的页面。虚存空间和物理空间按页进行交换。</li>
+</ol>
+<p>这里仅介绍页式调度机制下的页式虚拟存储器。<del>（埋坑：段式虚拟存储器）</del></p>
+<h4 id="33页式虚拟存储器"><a href="#3-3页式虚拟存储器" class="headerlink" title="3.3页式虚拟存储器"></a>3.3页式虚拟存储器</h4><p>虚存空间和主存空间（物理空间）分页后，虚存页简称<strong>虚页</strong>，主存页简称<strong>实页</strong>。</p>
+<p>虚地址格式为虚页号+页内地址，实地址格式为实页号+页内地址。</p>
+<p>为了记录实地址与虚地址之间的对应关系，操作系统会在主存中为每一道程序建立一个<strong>页表</strong>，它用虚页号作为索引，索引所对应的页表项包含索引对应的<strong>实页号</strong>、<strong>脏位</strong>（修改位）与<strong>有效位</strong>。每个程序都有一个<strong>页表寄存器</strong>，用于保存页表在内存中的首地址，在程序运行过程中访问页表时，首先按程序的虚地址在页表中找到对应的虚页号索引，若有效位为1则将页表项中的实页号（高位）拼上虚地址的页内地址（低位）得到实地址，若有效位为0则按缺页处理。<img src="/2021/12/15/CO/页式虚拟存储器地址变换.png" alt></p>
+<p>页式虚拟存储器的优点是页面的长度固定，页表简单，调入方便。缺点是由于程序不可能正好是页面的整数倍，最后一页的零头将无法利用而造成浪费，并且页式调度忽视了程序内在的逻辑性，难以充分利用局部性原理，效率上不如段式调度。</p>
+<p>从上述过程中，发现使用虚拟存储器访问主存的次数变多了，为了提高效率，再引入一级对页表的高速缓存——<strong>快表</strong>（TLB），对应的在主存中的页表也成为<strong>慢表</strong>（Page），在查询页表时先查快表，未命中再查慢表。</p>
+<p>TLB一般采用全相联映射或组相联映射机制。</p>
+<p>在一个同时具有Cache和TLB的多级存储系统中，快表和慢表的访问是并行的（TLB命中则停止慢表访问，未命中则启用慢表访问结果），TLB和Cache的访问是有逻辑顺序（通过页表项将虚地址转换为实地址后，才能通过Cache访问实地址）。<img src="/2021/12/15/CO/Cache_TLB_system.png" alt></p>
+<p>横向对比Cache与虚拟存储器：</p>
+<p>相同之处：</p>
+<ol>
+<li>都是为了提高系统整体性能，在成本、速度和容量之间寻求平衡。</li>
+<li>都将数据分块（分块、分页）进行处理。</li>
+<li>都涉及相关的更新策略、替换算法等。</li>
+<li>都是基于局部性原理的设计。</li>
+</ol>
+<p>不同之处：</p>
+<ol>
+<li>Cache注重于平衡CPU与主存的速度，虚拟存储器注重于弥补主存容量不足的缺陷。</li>
+<li>Cache由全硬件实现，对所有程序员透明；虚拟存储器由操作系统和硬件共同实现，仅对应用程序员透明。</li>
+<li>CPU速度约为Cache的10倍，主存速度是硬盘的100倍以上，因此虚拟存储器不命中的影响要大于Cache。</li>
+<li>Cache不命中时CPU可以直接访问主存，但虚拟存储器不命中时CPU不能直接访问硬盘，需等待数据从硬盘装入主存再访问主存。</li>
+</ol>
+<h3 id="4总线与io"><a href="#4-总线与I-O" class="headerlink" title="4.总线与I/O"></a>4.总线与I/O</h3><h4 id="41总线及其控制方式"><a href="#4-1总线及其控制方式" class="headerlink" title="4.1总线及其控制方式"></a>4.1总线及其控制方式</h4><p>计算机由多个部件共同构成，通过<strong>总线</strong>将所有部件连接在一起，总线是各部件共享的数据传输介质，用于彼此的、与外界的信息交换。</p>
+<p>总线大致分为三种：</p>
+<ol>
+<li>片内总线：CPU内部的公共信道。</li>
+<li>系统总线：计算机内部的公共信道（含数据总线、地址总线和控制总线）。</li>
+<li>通信总线：用于计算机系统与其他系统（可以不是计算机系统）之间的通信。</li>
+</ol>
+<p>总线的性能指标：</p>
+<ol>
+<li>总线宽度： 指数据总线的位数（根数），如32位， 64位。</li>
+<li>标准传输率： 每秒传输的最大字节量(B/s)，与总线宽度和频率相关。</li>
+<li>同步/异步方式： 总线上的数据与时钟同步工作的总线为同步总线，与时钟异步的总线为异步总线。</li>
+<li>信号线数： 所有信号线的总数。</li>
+<li>总线控制方式： 指总线上各部件使用总线的仲裁方式。</li>
+<li>总线复用： 地址总线与数据总线是否复用。</li>
+</ol>
+<p>总线的通信过程：</p>
+<ol>
+<li>请求总线：由需要使用总线的部件或设备， 提出总线使用申请。</li>
+<li>总线仲裁：仲裁器决定下一传输周期的总线使用权是否授予该部件或设备。</li>
+<li>寻址: 获得总线使用权的部件或设备，发出地址和有关命令。</li>
+<li>信息传送：进行数据传输。</li>
+<li>状态返回：该部件或设备有关信息从总线上撤除，让出总线使用权 。</li>
+</ol>
+<p>对于异步通信控制方式，没有特定的总线周期（相对同步通信控制方式而言），它采取请求/应答的方式进行数据传输，有全互锁、半互锁和不互锁三种时序。<img src="/2021/12/15/CO/总线通信异步时序.png" alt></p>
+<h4 id="42io接口与中断"><a href="#4-2I-O接口与中断" class="headerlink" title="4.2I/O接口与中断"></a>4.2I/O接口与中断</h4><p><strong>I/O接口</strong>：外部设备并不直接挂接在系统总线上,而是通过I/O接口为桥梁实现与系统总线的连接。</p>
+<p><strong>中断</strong>：机器出现紧急事务，CPU不得不停下当前正在执行的程序，转去处理紧急事务，事务处理完后，再继续执行被中断的程序。</p>
+<h2 id="五-相关资料"><a href="#五、相关资料" class="headerlink" title="五、相关资料"></a>五、相关资料</h2><ol>
+<li><a href="Digital+Design+and+Computer+Architecture+2nd+edition.pdf">Digital+Design+and+Computer+Architecture+2nd+edition(PDF)</a></li>
+<li><a href="CO-BUAA-CoursePDF.zip">CO-BUAA-CoursePDF(ZIP)</a></li>
+<li><a href="See_MIPS_Run_Linux.pdf">See_MIPS_Run_Linux(PDF)</a></li>
+</ol>
+</toc>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/CO/"># CO</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/12/16/RealityCapture%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA%E5%88%86%E6%9E%90/">RealityCapture三维重建分析</a>
+            
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <!--🌞 Zry |-->
+        <span>🔗 iszry@foxmail.com </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

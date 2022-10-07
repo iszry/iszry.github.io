@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zry">
+
+
+    <meta name="subtitle" content="Simple Life">
+
+
+
+
+<title>OOP - Java | Matcha Flavor</title>
+
+
+
+    <link rel="icon" href="/mesh.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Matcha Flavor</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Matcha Flavor</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">OOP - Java</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zry</a>      
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 25, 2022&nbsp;&nbsp;19:32:40</a>      
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/CS/">CS</a>
+                                  
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <toc>
+
+<h1 id="oop-java"><a href="#OOP-Java" class="headerlink" title="OOP - Java"></a>OOP - Java</h1><h2 id="一-面向对象程序设计"><a href="#一、面向对象程序设计" class="headerlink" title="一、面向对象程序设计"></a>一、面向对象程序设计</h2><h3 id="11-面向对象程序设计"><a href="#1-1-面向对象程序设计" class="headerlink" title="1.1 面向对象程序设计"></a>1.1 面向对象程序设计</h3><p>面向对象程序设计（Object-Oriented Programming）是一种基于对象的编程范式。相对面向过程程序设计（Procedure-Oriented Programming）而言，OOP 不 ”注重“ 代码实现细节，而更强调对象所具备的功能。从这个角度来看，OOP  要更为抽象，它将程序设计的重点放在了对象与对象的交互上，将对象内部的功能实现（POP）隐藏起来。</p>
+<h3 id="12-类和对象"><a href="#1-2-类和对象" class="headerlink" title="1.2 类和对象"></a>1.2 类和对象</h3><p><strong>类</strong>（Class）：类是描述一类对象的状态（data：attributes）和行为（code：methods）的模板。</p>
+<p><strong>对象</strong>（Object）：对象是某一个类的实例。</p>
+<p>众所周知，万物皆对象，那么就拿手边的书举个简单例子。现在有一个 Book 类，它长这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> pages;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String bookName;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String writer;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Book</span><span class="params">(<span class="keyword">int</span> pages, String bookName, String writer)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.pages = pages;</span><br><span class="line">        <span class="keyword">this</span>.bookName = bookName;</span><br><span class="line">        <span class="keyword">this</span>.writer = writer;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPages</span><span class="params">()</span></span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.pages; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getBookName</span><span class="params">()</span></span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.bookName; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getWriter</span><span class="params">()</span></span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.writer; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，页码数（pages）、书名（bookName）和作者（writer）就是 Book 类的 attributes，而获取页码数、书名与作者名便是 Book 类所支持的 methods。</p>
+<p>现在，我们用构造器（constructor）实例化一本书 book：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Book book = <span class="keyword">new</span> Book(<span class="number">10</span>, <span class="string">&quot;OOP-Java&quot;</span>, <span class="string">&quot;Zry&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>然后我们就得到了一本由 Zry 写的10页的名为 OOP-Java 的书了。</p>
+<p>接下来，我们就可以使用这本书所支持的方法了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> pages = book.getPages();			<span class="comment">//pages = 10</span></span><br><span class="line">String bookName = book.getBookName();	<span class="comment">//bookName = &quot;OOP-Java&quot;</span></span><br><span class="line">String writer = book.getWriter();		<span class="comment">//writer = &quot;Zry&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="13-继承与接口"><a href="#1-3-继承与接口" class="headerlink" title="1.3 继承与接口"></a>1.3 继承与接口</h3><p><strong>继承</strong>（Inheritance）：子类继承父类的特征和行为，使得子类具有父类的实例域和方法。</p>
+<p>几乎所有面向对象程序设计语言都支持<strong>继承</strong>，它提高了代码的复用性，即子类不用再去父类已实现的特征与行为，那么，上面的例子就可以变成：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProgramBook</span> <span class="keyword">extends</span> <span class="title">Book</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String language;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ProgramBook</span><span class="params">(<span class="keyword">int</span> pages, String bookName, String writer, String language)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(pages, bookName, writer, language);</span><br><span class="line">        <span class="keyword">this</span>.language = language;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLanguage</span><span class="params">()</span></span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.language; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ProgramBook 类较 Book 类增加了编程语言（language）这一属性以及对应的 getLanguage 这一方法。构造方式变为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ProgramBook programBook = <span class="keyword">new</span> ProgramBook(<span class="number">10</span>, <span class="string">&quot;OOP-Java&quot;</span>, <span class="string">&quot;Zry&quot;</span>, <span class="string">&quot;Java&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>接口</strong>（Interface）：是一系列抽象方法的集合，可以被类实现。</p>
+<p>Java 不支持多继承（C++支持多继承），但 Java 可以用 多个接口辅以单继承来达到类似多继承的效果。一旦我们知道类 A 实现了接口 B，那么便可以直接对类 A 的实例（对象）调用接口 B 中的方法。此外，我们还可以用接口来引用实现了它的对象（但不能实例化一个接口，接口没有构造器！）。</p>
+<h2 id="二-问题重述"><a href="#二、问题重述" class="headerlink" title="二、问题重述"></a>二、问题重述</h2><p><del>至此，你已经完全掌握面向对象程序设计的基本内容了！我们来试试吧！</del></p>
+<h3 id="21-多项式化简-amp-bnf-表述"><a href="#2-1-多项式化简-amp-BNF-表述" class="headerlink" title="2.1 多项式化简 &amp; BNF 表述"></a>2.1 多项式化简 &amp; BNF 表述</h3><p>（以下问题描述中，下划线为新增需求模拟）</p>
+<p><strong>输入</strong>：一行字符串形式的关于自变量 x 的多项式。</p>
+<p>​            <u>至多三个自定义函数。</u></p>
+<p><strong>输出</strong>：展开多项式中所有不必要括号。</p>
+<p><strong>BNF 表述</strong>：</p>
+<ul>
+<li>表达式 $\rightarrow$ [加减] 项 | 表达式 加减 项</li>
+<li>项 $\rightarrow$ [加减] 因子 | 项 * 因子</li>
+<li>因子 $\rightarrow$ 变量因子 | 常数因子 | 表达式因子</li>
+<li>变量因子 $\rightarrow$ 幂函数 | <u>自定义函数调用</u> | <u>三角函数</u> | <u>求和函数</u></li>
+<li>常数因子 $\rightarrow$ 带符号整数</li>
+<li>表达式因子 $\rightarrow$ ‘(‘ 表达式 ‘)’ [指数]</li>
+<li>幂函数 $\rightarrow$ ‘x’ [指数]</li>
+<li>指数 $\rightarrow$ ‘**’  [‘+’] 允许前导零的整数</li>
+<li>带符号整数 $\rightarrow$ [加减] 允许前导零的整数</li>
+<li>允许前导零的整数 $\rightarrow$ (0|1|2|…|9){0|1|2|…|9}</li>
+<li>加减 $\rightarrow$ ‘+’ | ‘-‘</li>
+<li><p><u>三角函数 $\rightarrow$ ‘sin’ ‘(‘ 因子 ‘)’ [指数] | ‘cos’ ‘(‘ 因子 ‘)’ [指数]</u></p>
+</li>
+<li><p><u>自定义函数定义 $\rightarrow$ 自定义函数名 ‘(‘  函数自变量  [‘,’  函数自变量  [‘,’  函数自变量 ]] ‘)’  ‘=’  函数表达式</u></p>
+</li>
+<li><u>函数自变量 $\rightarrow$ ‘x’ | ‘y’ | ‘z’</u></li>
+<li><u>自定义函数调用 $\rightarrow$ 自定义函数名  ‘(‘  因子  [‘,’  因子  [‘,’  因子 ]] ‘)’</u></li>
+<li><u>自定义函数名 $\rightarrow$ ‘f’ | ‘g’ | ‘h’</u></li>
+<li><u>求和函数 $\rightarrow$ ‘sum’ ‘(‘  ‘i’ ‘,’  常数因子  ‘,’  常数因子  ‘,’  求和表达式  ‘)’</u></li>
+<li><u>函数表达式 $\rightarrow$ 表达式</u></li>
+<li><u>求和表达式 $\rightarrow$ 因子</u></li>
+</ul>
+<p>其中</p>
+<ul>
+<li><code>&#123;&#125;</code> 表示允许存在 0 个、1 个或多个。</li>
+<li><code>[]</code> 表示允许存在 0 个或 1 个。</li>
+<li><code>()</code> 内的运算拥有更高优先级，类似数学中的括号。</li>
+<li><code>|</code> 表示在多个之中选择一个。</li>
+<li>上述表述中使用单引号包裹的串表示字符串字面量，如 ‘(‘ 表示字符 <code>(</code>。</li>
+</ul>
+<p><u>函数形式说明</u>：</p>
+<blockquote>
+<ul>
+<li><strong>自定义函数</strong><ul>
+<li>自定义函数的<strong>定义</strong>形如 <code>f(x, y, z) = 函数表达式</code> ，比如 <code>f(y) = y**2</code>，<code>g(x, y) = sin(x)*cos(y)</code>，<code>h(x, y, z) = x + y + z</code> 。</li>
+<li><code>f</code> 、<code>g</code>、<code>h</code> 是函数的<strong>函数名</strong>，函数名<strong>只使用 <code>f</code> ，<code>g</code>，<code>h</code></strong>，且<strong>不出现同名函数的重复定义</strong>。</li>
+<li><code>x</code>、<code>y</code>、<code>z</code> 为函数的<strong>形参</strong>，<strong>形参个数为 1~3 个</strong>。</li>
+<li>函数表达式为一个关于形参的表达式。函数表达式的一般形式参见<strong>形式化定义</strong>。</li>
+<li>自定义函数的<strong>调用</strong>形如 <code>f(因子, 因子, 因子)</code> ，<code>因子</code> 为函数调用时的<strong>实参</strong>。</li>
+<li>函数调用的结果中应只包含自变量 <code>x</code>。</li>
+</ul>
+</li>
+<li><strong>求和函数</strong><ul>
+<li>求和函数的一般形式为 <code>sum(i, s, e, t)</code>，其含义为 $\sum_{i=s}^et$。</li>
+<li><strong>循环变量</strong>只能是字符 <code>i</code> 。</li>
+<li><code>s</code> 与 <code>e</code> 为求和的下限和上限，二者都是<strong>常数因子</strong>。在循环时，循环变量 <code>i</code> 的初值为 <code>s</code>，每次迭代 <code>i</code> 自增 1 并计算表达式的值，当 <code>i</code> <strong>大于</strong> <code>e</code> 时停止计算，并将计算结果求和。（若初始 <code>s &gt; e</code>，则该函数结果为 <code>0</code>）。</li>
+<li>求和表达式 <code>t</code> 是一个因子，其中可以包含循环变量 <code>i</code> 。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>输入输出示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Basic version</span><br><span class="line">Input:</span><br><span class="line">(<span class="number">3</span><span class="operator">*</span>x<span class="operator">+</span><span class="number">1</span>)<span class="operator">*</span><span class="operator">*</span><span class="operator">+</span><span class="number">2</span><span class="operator">+</span>x<span class="operator">*</span><span class="operator">*</span><span class="number">2</span><span class="operator">*</span><span class="number">-9</span></span><br><span class="line">Output:</span><br><span class="line"><span class="number">6</span><span class="operator">*</span>x<span class="operator">+</span><span class="number">1</span></span><br><span class="line"></span><br><span class="line">Enhanced verison</span><br><span class="line">Input:</span><br><span class="line"><span class="number">3</span></span><br><span class="line">f(y,x,z)<span class="operator">=</span>(x)<span class="operator">*</span><span class="operator">*</span><span class="number">2</span><span class="operator">+</span>y<span class="operator">*</span>z</span><br><span class="line">g(y,z)<span class="operator">=</span>y<span class="operator">*</span><span class="operator">*</span><span class="number">2</span><span class="operator">*</span>z</span><br><span class="line">h(x)<span class="operator">=</span>x<span class="operator">*</span><span class="operator">*</span><span class="number">0</span></span><br><span class="line">f(g(<span class="built_in">sin</span>(x),<span class="built_in">cos</span>(<span class="built_in">sin</span>(x))),<span class="built_in">sum</span>(i,<span class="number">1</span>,<span class="number">2</span>,<span class="built_in">sin</span>(i)),f(<span class="number">2</span>,<span class="number">4</span>,<span class="number">1</span>))<span class="operator">+</span><span class="built_in">sum</span>(i,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>)<span class="operator">*</span>h(<span class="number">0</span>)</span><br><span class="line">Output:</span><br><span class="line"><span class="built_in">sin</span>(<span class="number">1</span>)<span class="operator">*</span><span class="operator">*</span><span class="number">2</span><span class="operator">+</span><span class="built_in">sin</span>(<span class="number">2</span>)<span class="operator">*</span><span class="operator">*</span><span class="number">2</span><span class="operator">+</span><span class="number">18</span><span class="operator">*</span><span class="built_in">sin</span>(x)<span class="operator">*</span><span class="operator">*</span><span class="number">2</span><span class="operator">*</span><span class="built_in">cos</span>(<span class="built_in">sin</span>(x))<span class="operator">+</span><span class="number">2</span><span class="operator">*</span><span class="built_in">sin</span>(<span class="number">1</span>)<span class="operator">*</span><span class="built_in">sin</span>(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="22-需求分析-amp-设计思路"><a href="#2-2-需求分析-amp-设计思路" class="headerlink" title="2.2 需求分析 &amp; 设计思路"></a>2.2 需求分析 &amp; 设计思路</h3><p>拿到基础问题描述后，第一想法自然是：这题我熟！写了一年半的 C 换成 Java 不还是一样写吗？逆波兰表达式、表达式树、分治之类的做法一股脑全涌了上来。但仔细一想，之前做过的表达式解析都是数值计算， ” 维护 “ 计算结果（这里隐藏的问题是同类项合并，所有数值计算结果均为数字，即同一类）。但这里涉及到未知数 x 就意味着更多的数据类型，意味着要为每一种数据类型 ” 维护 “ 一个计算结果， 意味着每种数据类型都是一个类。</p>
+<p>繁琐的数据类型，终归不如大一统理论看着心情舒畅。于是乎， Base 类应运而生。只要将所有数据类型的数据形式囊括进 Base 类，就能抓住主线，将问题 ” 化繁为简 “ ！</p>
+<p>对于基础需求来说，Base 类的数据域如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Base</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> coefficient;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> index;</span><br><span class="line">    <span class="comment">// data format:coefficient * x ** index</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样一来，就初步形成了 Expression -&gt; Base 的数据形式。</p>
+<p>表达式类 Expression 的数据类如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Expression</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> ArrayList&lt;Base&gt; bases;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数据结构层次如下：</p>
+<p><img src="/2022/03/25/OOP-Java/image-20220324112434776.png" alt="image-20220324112434776"></p>
+<h2 id="三-求解-amp-迭代开发"><a href="#三、求解-amp-迭代开发" class="headerlink" title="三、求解 &amp; 迭代开发"></a>三、求解 &amp; 迭代开发</h2><h3 id="31-试错面向过程"><a href="#3-1-试错：面向过程" class="headerlink" title="3.1 试错：面向过程"></a>3.1 试错：面向过程</h3><p>较 C 而言，Java 有正则表达式这一强大的工具，这就为我的面向过程程序设计提供了一大助力。</p>
+<p>首先，用正则表达式处理括号：</p>
+<ol>
+<li>识别表达式因子：表达式因子 $\rightarrow$ ‘(‘ 表达式 ‘)’ [指数]，按其指数展开为若干’(‘ 表达式 ‘)’ * ‘(‘ 表达式 ‘)’ 的形式。</li>
+<li>识别内层括号：获取最底层的无括号表达式，自底向上逐级递归处理。</li>
+</ol>
+<p>至此，括号问题被解决了，问题被简化成了仅含 + 、 - 、 <em> 与 **  运算符的表达式化简问题，无论是按 \</em> 与 + -进行分治还是中缀转后缀表达式再求解，整个问题都被转变为了字符串处理——一个面向过程程序设计问题。</p>
+<p><strong>然而</strong>，这是一个庞大的字符串处理问题。为了处理括号，我在 Coding 中使用了大量（超过十个）长正则表达式进行模式匹配。为了处理各种数据类型，我又使用了数十个诸如 replace 的小 tricks 来简化步骤。这样一来，各式各样的 Bug 层出不穷，因为一旦场景枚举出现了考虑不周的情况，便会引起一系列相应问题。</p>
+<p>此外，在面对需求可能会灵活变动的问题时，采用这种对问题针对性极强的设计方案是非常不明智的。</p>
+<h3 id="32-重构面向对象"><a href="#3-2-重构：面向对象" class="headerlink" title="3.2 重构：面向对象"></a>3.2 重构：面向对象</h3><p>喜闻乐见，在问题新增了三角函数、自定义函数与求和函数后，我便开始了重构之旅。</p>
+<p>同时看着自己基础版的代码和新增需求，其实硬要写，依旧可以继续面向过程一路到底，只是需要分类讨论的情况数会随着需求的线性增加而成指数级变化，这意味着可能要修改 / 加入数十个长正则表达式，也意味着无穷无尽的 Bug 。</p>
+<p>痛定思痛，与其在面向过程的道路上一错到底，不如推倒重来，加入 <strong>递归下降</strong> 的队伍，按照 BNF 表述按部就班地建立对应的类，逐步进行解析。这样一来，重建好文法、词法分析的框架后，增加新需求便只要增加、修改新数据类型对应的类以及 Base 类对应的新增的运算法则与存储逻辑就 OK 了。</p>
+<h2 id="四-浅析程序结构"><a href="#四、浅析程序结构" class="headerlink" title="四、浅析程序结构"></a>四、浅析程序结构</h2><h3 id="41-从类图看整体框架"><a href="#4-1-从类图看整体框架" class="headerlink" title="4.1 从类图看整体框架"></a>4.1 从类图看整体框架</h3><p><img src="/2022/03/25/OOP-Java/image-20220325150029803.png" alt="image-20220325150029803"></p>
+<p>从所有类的整体关系来看，所有数据类（Number：整数；Power：幂函数；Sum：求和函数；TriFunc：三角函数；SelfFunc：自定义函数）均实现了 Factor 接口。因此，在递归下降对表达式进行解析时，可以使用工厂模式来进行类的创建。此外，在 Term、Base 和 Expr 三个类构成的三角关系中，Term 与 Expr 分别为形式化表述中的项与表达式，而 Base 为项 Term 的化简版（合并 Term 中因子后的结果，为统一存储的数据形式）。</p>
+<p>因此，在拿到输入 Input 后，FuncTable 类将对自定义函数进行解析，Scan -&gt; Expand 将对输入表达式进行预解析（主要为处理连续正负号与部分指数的展开）。然后，将形式规范的解析结果送入 Lexer 与 Parser 进行解析，获得表达式的内部结构。</p>
+<p><img src="/2022/03/25/OOP-Java/image-20220325145200191.png" alt="image-20220325145200191"></p>
+<p>部分关键类的内部定义如上图。其中，Base 类中定义了对各类因子的加减乘的运算与合并法则；Parser 类中的 peekToFactor 方法使用工厂模式创建数据类；Expr 类中的 combineBases 方法与 Term 类中的 sortFactors 方法则关联了 Expr、Term 和 Base 三者，将解析与化简进行串联。</p>
+<h3 id="42-从-oo-度量看内聚与耦合"><a href="#4-2-从-OO-度量看内聚与耦合" class="headerlink" title="4.2 从 OO 度量看内聚与耦合"></a>4.2 从 OO 度量看内聚与耦合</h3><p><strong>OCavg</strong>：平均操作复杂度。</p>
+<p><strong>OMax</strong>：最大操作复杂度。</p>
+<p><strong>WMC</strong>：加权操作复杂度。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>OCavg</th>
+<th>OMax</th>
+<th>WMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Power</td>
+<td>1.3</td>
+<td>2.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>FuncTable</td>
+<td>1.4</td>
+<td>3.0</td>
+<td>7.0</td>
+</tr>
+<tr>
+<td>TriFunc</td>
+<td>1.6</td>
+<td>4.0</td>
+<td>8.0</td>
+</tr>
+<tr>
+<td>MainClass</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Parser</td>
+<td>2.6</td>
+<td>5.0</td>
+<td>13.0</td>
+</tr>
+<tr>
+<td>Term</td>
+<td>2.6</td>
+<td>8.0</td>
+<td>13.0</td>
+</tr>
+<tr>
+<td>Scan</td>
+<td>3.2</td>
+<td>12.0</td>
+<td>19.0</td>
+</tr>
+<tr>
+<td>Lexer</td>
+<td>3.3</td>
+<td>7.0</td>
+<td>23.0</td>
+</tr>
+<tr>
+<td>Sum</td>
+<td>3.3</td>
+<td>5.0</td>
+<td>10.0</td>
+</tr>
+<tr>
+<td>Expr</td>
+<td>3.4</td>
+<td>15.0</td>
+<td>24.0</td>
+</tr>
+<tr>
+<td>Base</td>
+<td>3.6</td>
+<td>11.0</td>
+<td>51.0</td>
+</tr>
+<tr>
+<td>SelfFunc</td>
+<td>3.7</td>
+<td>5.0</td>
+<td>11.0</td>
+</tr>
+<tr>
+<td>Expand</td>
+<td>7.0</td>
+<td>18.0</td>
+<td>28.0</td>
+</tr>
+<tr>
+<td>Total</td>
+<td></td>
+<td></td>
+<td>216.0</td>
+</tr>
+<tr>
+<td>Average</td>
+<td>3.04</td>
+<td>7.00</td>
+<td>15.43</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这里看出所有 <strong>数据类</strong> 的基本复杂度（如 Power、Number、TriFunc等）均较低，而在 Sum、SelfFunc 等类中，因为在个人设计中仍然使用了一定量的字符串替换（写起来简单粗暴），所以操作复杂度平均高了一到两个操作数。而 Expand 和 Scan 这样用于对字符串进行预处理的类（基于来自基础需求的设计经验，还是使用了大量的字符串替换及部分正则表达式），虽然可以保证正确性，但确实会增加固定的操作次数。最后，内含各种数据类型合并、计算功能的 Base 类的加权操作复杂度较高，考虑到其运算功能本身的复杂性，所以也是可以接受的。</p>
+<p>在整体设计过程中，因为以数据为主线，所以各个负责解析的类之间存在表达式数据的数据耦合，各个数据类之间无耦合关系，数据结构类与数据类之间存在数据耦合。总的来说，除了数据耦合，各类之间不存在其他耦合关系，而是将自己负责的功能完全内聚在类内部，<del>真是神奇的面向对象</del>。</p>
+<h2 id="五-测试-amp-bug-分析"><a href="#五、测试-amp-Bug-分析" class="headerlink" title="五、测试 &amp; Bug 分析"></a>五、测试 &amp; Bug 分析</h2><h3 id="51-功能测试"><a href="#5-1-功能测试" class="headerlink" title="5.1 功能测试"></a>5.1 功能测试</h3><p>写完代码第一件事，自然是用最 ” 简单 “ 的测试数据来检查代码是否能跑通基本流程，手动构造一些测试数据来确保所有数据类型都能被正确解析、合并。然后，就可以着手构造一些边界条件附近的测试数据，并随机生成测试数据 + 自动化评测来 ” 轰炸 “ 代码了，<del>随机数据测个几千上万条就差不多了</del>。</p>
+<h3 id="52-从复杂度看-bug-高发路段"><a href="#5-2-从复杂度看-Bug-高发路段" class="headerlink" title="5.2 从复杂度看 Bug 高发路段"></a>5.2 从复杂度看 Bug 高发路段</h3><p><strong>CogC</strong>：认知复杂度。</p>
+<p><strong>ev(G)</strong>：基本圈复杂度。</p>
+<p><strong>iv(G)</strong>：设计复杂度。</p>
+<p><strong>v(G)</strong>：圈复杂度。</p>
+<p>首先，节选几个复杂度最高的方法。（Average 和 Total 表项均计算整个项目中的所有方法）</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>CogC</th>
+<th>ev(G)</th>
+<th>iv(G)</th>
+<th>v(G)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base.addFactor(Factor)</td>
+<td>17.0</td>
+<td>1.0</td>
+<td>11.0</td>
+<td>11.0</td>
+</tr>
+<tr>
+<td>Base.baseEqual(Base)</td>
+<td>17.0</td>
+<td>10.0</td>
+<td>9.0</td>
+<td>14.0</td>
+</tr>
+<tr>
+<td>Expand.findIndex()</td>
+<td>19.0</td>
+<td>4.0</td>
+<td>5.0</td>
+<td>9.0</td>
+</tr>
+<tr>
+<td>Base.toString()</td>
+<td>21.0</td>
+<td>2.0</td>
+<td>11.0</td>
+<td>11.0</td>
+</tr>
+<tr>
+<td>Expr.combineBases(ArrayList)</td>
+<td>25.0</td>
+<td>3.0</td>
+<td>15.0</td>
+<td>17.0</td>
+</tr>
+<tr>
+<td>Term.sortFactors()</td>
+<td>25.0</td>
+<td>1.0</td>
+<td>8.0</td>
+<td>8.0</td>
+</tr>
+<tr>
+<td>Scan.triFuncScan()</td>
+<td>41.0</td>
+<td>1.0</td>
+<td>12.0</td>
+<td>16.0</td>
+</tr>
+<tr>
+<td>Expand.indexExpand()</td>
+<td>67.0</td>
+<td>10.0</td>
+<td>19.0</td>
+<td>24.0</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>343.0</td>
+<td>101.0</td>
+<td>218.0</td>
+<td>248.0</td>
+</tr>
+<tr>
+<td>Average</td>
+<td>4.83</td>
+<td>1.42</td>
+<td>3.07</td>
+<td>3.49</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中，</p>
+<p>Expand 类中的 findIndex 和 indexExpand 方法负责表达式因子的指数展开，Scan 类中的 triFuncScan 方法负责三角函数的括号匹配，这些方法均使用了面向过程程序设计方法进行字符串处理；</p>
+<p>Expr 类中的 combineBases -&gt; Term 类中的 sortFactors -&gt; Base 类中的 baseEqual 和 toString ，是一揽子同类项合并方案，考虑到本项目对算法的低需求（能跑就行，不 care 时间），我在设计时也就一切从简——使用暴力搜索匹配的方式进行化简，因而复杂度较高。</p>
+<p>最后是 Base 类中的 addFactor 方法，它本质上是 Parser 中 peekToFactor 方法的延拓，是工厂模式的具体实现部分。为了使用 Base 类对所有数据进行统一处理，我认为这部分复杂度的牺牲是值得的。</p>
+<p>找到了抬高复杂度的 “ 祸害 ”，它们又会产生什么样的 Bug 呢？</p>
+<p>其实，后两类方法虽然复杂度较高，但其实逻辑清晰，换句话说，它们复杂得情有可原，其实并不容易出 Bug （实际测试过程中也确实如此）。问题主要集中在第一部分——字符串处理。</p>
+<p>到头来，还是面向过程的锅。正则 + replace 真是简单，“有效” 而又粗暴，例如直接删去 “1<em>” 、将 “ sin(- “替换为 “ -sin( “ 、将 “ -1” 替换为 “ -1\</em>1”，诸如此类的取巧其实可能暗中破坏了表达式的结构，从而使之不符合 BNF 表述。此外，考虑到 String 是不可变对象，每次替换会造成额外的开销，而且字符串处理的代码普遍可读性较差，操作次数也较多。在阅读他人代码的过程中，也往往是在字符串替换和数据范围限制上发现问题。</p>
+<p>那么，如果当初在设计时就考虑完备，完全不使用字符串替换会怎么样呢？别的部分不提，仅刨除 Scan 和 Expand 两个专门用替换进行预处理的类，那么：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>OCavg</th>
+<th>OMax</th>
+<th>WMC</th>
+<th>CogC</th>
+<th>ev(G)</th>
+<th>iv(G)</th>
+<th>v(G)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Old</td>
+<td>3.04</td>
+<td>7.00</td>
+<td>15.43</td>
+<td>4.83</td>
+<td>1.42</td>
+<td>3.07</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>New</td>
+<td>2.77</td>
+<td>5.67</td>
+<td>14.08</td>
+<td>3.51</td>
+<td>1.30</td>
+<td>2.84</td>
+<td>3.11</td>
+</tr>
+<tr>
+<td>Rate</td>
+<td>9.7%</td>
+<td>23.5%</td>
+<td>9.6%</td>
+<td>37.6%</td>
+<td>9.2%</td>
+<td>8.1%</td>
+<td>12.2%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>显然，从 Rate 表项中可以看出优化效果显著。</p>
+<p>总结：字符串替换害人害己。</p>
+<blockquote>
+<p>字符串替换带来的便捷，早已在暗中标好了价格。                </p>
+</blockquote>
+<h2 id="六-架构设计总结"><a href="#六、架构设计总结" class="headerlink" title="六、架构设计总结"></a>六、架构设计总结</h2><h3 id="61-面向过程-gt-面向对象"><a href="#6-1-面向过程-gt-面向对象" class="headerlink" title="6.1 面向过程 -&gt; 面向对象"></a>6.1 面向过程 -&gt; 面向对象</h3><p>从面向过程到面向对象的转变是较为困难的，因为实际项目往往不是一个个独立的算法题。面对总是不断变化的实际需求，我们要尽量用同一份代码做最小的改动来应对。在我看来，这其实是抽象程度和可拓展性之间的博弈。以最简单的  a + b 为例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cpp</span></span><br><span class="line"><span class="keyword">int</span> a,b;</span><br><span class="line">cin &gt;&gt; a &gt;&gt; b;</span><br><span class="line">cout &lt;&lt; a + b &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Java</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Num</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Num</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123; <span class="keyword">this</span>.val = val; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getVal</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.val; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> other)</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.val + other.getVal(); &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        Scanner scan = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        Num a = <span class="keyword">new</span> Num(scan.nextInt());</span><br><span class="line">        Num b = <span class="keyword">new</span> Num(scan.nextInt());</span><br><span class="line">        System.out.println(a.add(b));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仅从纯粹的结果导向来看，我只需要一个32位数值 a，那么面向过程做法就纯粹地用了一个32位变量 a 来进行维护，简单干脆。相比而言，面向对象做法会想办法告诉我 a 是谁（一个 Num 对象）、a 有什么属性（一个32位数值val）以及 a 能做什么（能获得数值 val、能做加法），复杂且多余。</p>
+<p>可是如果从长远来看，没有注释，第一种面向过程的代码的生命周期是十分短暂的，大概率写完代码后过个几天自己都忘了它的功能以及与其它代码之间的联系了（当然，不是特指 a + b 这种简单程序，在程序复杂起来，几百上千行甚至更多时，写大量注释显然也是不可能的。此外，这种代码 debug 也很是头痛）。但从第二种面向对象的写法中，我们选择为解决某类通用的问题建立一种通用的结构，这便可以提高代码的复用性（譬如凡是数字相关的问题都可以用Num 类进行处理，<del>虽然 Java 有 int 类型</del>），这种做法的优越性会随着数据特征与行为的增加而越来越明显。</p>
+<p>这也是我为什么称在表达式化简中率先使用面向过程程序设计是一种试错了。无论是解析表达式时有大量相似功能的堆砌代码，还是面对复杂字符串时陷入细节泥沼招致的频发 Bug，都让我心力憔悴。这次是亲身体会到：代码行数上去了，<strong>可读性</strong>和<strong>可拓展性</strong>才是重中之重。</p>
+<h3 id="62-重构-amp-补丁"><a href="#6-2-重构-amp-补丁" class="headerlink" title="6.2 重构 &amp; 补丁"></a>6.2 重构 &amp; 补丁</h3><p><del>能补就补，不能补就重构</del></p>
+<p>事实证明，好的架构完全可以从容不迫地应对需求变更，而重构 &amp; 补丁均是维护一个良好架构的手段。</p>
+<p>我们在设计架构时，往往需要预测未来的需求变动，对于可预测的需求变化方向，必须提前考虑在内才能尽可能保持良好的可拓展性（比如表达式化简中的括号嵌套与新增三角函数）。</p>
+<p>而对于不可预测的那部分（比如表达式化简中的自定义函数与求和函数），首先应考虑原架构的逻辑与新需求是否兼容。如若不兼容，则说明之前对需求预测的方向 “ 跑偏 ” 了，需要及时根据新增的已知需求预测新的需求变化趋势设计新架构并进行重构。如果新需求与原架构是兼容的，那么既可以为新需求建构新的架构再整合至原架构（比如可以设计一个专门的函数类，为所有函数进行统一构建），也可以选择在原架构的基础上缝缝补补（新增函数 = 新增类）。至于具体如何选，则要看新需求和已实现需求之间的共性多寡，共性多则重构，共性少则打补丁（此类判断要结合主客观因素共同决定，<del>多靠经验</del>）。</p>
+</toc>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/OO/"># OO</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/03/27/OO-Multithreaded/">OO-Multithreaded</a>
+            
+            
+            <a class="next" rel="next" href="/2021/12/28/C-X86%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/">C_X86混合编程</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <!--🌞 Zry |-->
+        <span>🔗 iszry@foxmail.com </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

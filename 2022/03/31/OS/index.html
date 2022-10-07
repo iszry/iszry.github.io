@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zry">
+
+
+    <meta name="subtitle" content="Simple Life">
+
+
+
+
+<title>OS | Matcha Flavor</title>
+
+
+
+    <link rel="icon" href="/mesh.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Matcha Flavor</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Matcha Flavor</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">OS</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zry</a>      
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 31, 2022&nbsp;&nbsp;9:49:02</a>      
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD/">持续更新中</a>
+                                  
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <toc>
+
+<h1 id="os"><a href="#OS" class="headerlink" title="OS"></a>OS</h1><p>操作系统（Operating System）是计算机系统中最基本的系统软件，它负责控制管理计算机的所有软硬件资源，对工作、资源进行调度和分配，并为用户和其他软硬件提供相应接口。它提供了三个基本的抽象：1）文件是对 I / O 设备的抽象；2）虚拟内存是对主存和磁盘的抽象；3）进程是对处理器、主存和 I / O 设备的抽象。</p>
+<p>本文将着重记述 <strong>进程管理</strong>、<strong>存储管理</strong>、<strong>文件系统</strong> 及 <strong>输入/输出</strong> 相关内容。</p>
+<h2 id="一-进程管理"><a href="#一、进程管理" class="headerlink" title="一、进程管理"></a>一、进程管理</h2><p><strong>进程</strong> （Process）是操作系统对一个正在运行的程序的一种抽象（通俗来说，是程序的一次执行）。系统使用 <strong>进程控制块 PCB</strong>（Process Control Block，也称 process table）来描述进程的基本情况和运行状态，从而对各进程进行控制和管理。创建、撤销进程的本质是创建、撤销 PCB，因此 <strong>PCB 是进程存在的唯一标志</strong>。</p>
+<p><strong>进程映像</strong>（进程实体）= 程序段 + 相关数据段 + PCB</p>
+<p>一个 CPU 看上去在并发地执行多个进程，其实是通过处理器在进程间的切换来实现的（一个进程的指令和另一个进程的指令是交错执行的）。进程间的转换是由操作系统 <strong>内核</strong>（kernel）进行管理的，这个内核是操作系统代码常驻主存的部分。当应用程序需要操作系统的某些操作时，它将通过执行特殊的 <strong>系统调用</strong>（system call）指令，将控制权传递给内核，内核执行完相应操作后再将权限归还。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>并发（concurrency）</th>
+<th>并行（parallelism）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指一个同时具有多个活动的系统</td>
+<td>指用并发来使一个系统运行得更快</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="11-进程-amp-线程"><a href="#1-1-进程-amp-线程" class="headerlink" title="1.1 进程 &amp; 线程"></a>1.1 进程 &amp; 线程</h3><p>在现代操作系统中，一个进程实际上可以由多个称为 <strong>线程</strong> （Thread）的执行单元组成，线程也是程序执行流的最小单元。每个线程都共享相同的代码和全局数据，因而多线程之间往往比多进程之间更容易共享数据（线程一般也比进程更为高效）。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>进程（Process）</th>
+<th>线程（Thread）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>为了更好地使多道程序并发执行，提高资源利用率和系统吞吐量；是 <strong>拥有资源</strong> 的基本单位</td>
+<td>减小程序在并发执行时所付出的时空开销，提高操作系统的并发性能；是 <strong>独立调度</strong> 的基本单位</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>因为进程拥有资源而线程不持有资源，所以切换线程的时空开销要小于切换进程</p>
+<p>创建一个线程较创建一个进程要快10~100倍</p>
+</blockquote>
+<p>线程的实现分为 <strong>用户级线程</strong>（User-Level Thread，ULT） 和 <strong>内核级线程</strong> （Kernel-Level Thread，KLT）两种。在用户级线程中，有关线程管理的所有工作都由应用程序完成；在内核级线程中，线程管理的所有工作都由内核完成。</p>
+<p>在同时支持用户线程和内核线程的系统中，有多种多线程模型，统一形式为将 n 个用户级线程映射到 m 个内核级线程上（m ≤ n）。</p>
+<h3 id="12-进程控制之-fork-amp-execve-unix"><a href="#1-2-进程控制之-fork-amp-execve-（UNIX）" class="headerlink" title="1.2 进程控制之 fork &amp; execve （UNIX）"></a>1.2 进程控制之 fork &amp; execve （UNIX）</h3><blockquote>
+<p>每个进程都有一个唯一的正数进程 ID （PID，Process ID）。使用 pid_t getpid(void) 和 pid_t getppid(void)可以分别获得进程和其父进程的 PID（在Linux系统中 pid_t 在 types.h 中被定义为 int。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">pid_t</span> <span class="title">fork</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><strong>父进程</strong> 可以通过调用 fork 函数创建一个新的运行的 <strong>子进程</strong>，子进程获得父进程持有的所有资源的副本，两者的最大区别在于它们有不同的 PID。</p>
+<p>特别的，fork 函数被父进程调用一次，将会返回两次，它在父进程中返回子进程的 PID，在子进程中返回 0。</p>
+<p><strong>回收子进程</strong>：当一个进程终止时（被称为 zombie process），内核并不会立即将其清除，而是等待它被父进程 <strong>回收</strong>（reaped）后再将其抛弃。如果一个父进程没有回收其 zobime 子进程就终止了，那么内核会安排 init 进程去回收它们。父进程可以通过调用 waitpid 函数来等待它的子进程终止或停止。</p>
+<blockquote>
+<p>init 进程的 PID 为1，它是在系统启动时由内核创建的，它不会终止，是所有进程的祖先。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="comment">//成功则不返回，错误则返回-1</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">execve</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *filename, <span class="keyword">const</span> <span class="keyword">char</span> *argv[], <span class="keyword">const</span> <span class="keyword">char</span> *envp[])</span></span>;</span><br></pre></td></tr></table></figure>
+<p>调用 execve 函数将基于当前进程的 context 加载并运行一个新程序；与 fork 调用一次返回两次不同，execve 调用一次从不返回（特指 PID）。在 execve 加载了 filename 并调用启动代码设置栈后，将会把控制权交给新程序的主函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[], <span class="keyword">char</span> *envp[])</span></span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>程序与进程：进程是执行中程序的一个具体实例；程序总是运行在某个进程的 context 中。</p>
+<p>fork 函数在新的子进程中运行与父进程相同的程序；execve 函数在当前进程的 context 中加载并运行一个新的程序（<strong>没有创建新进程</strong>）。</p>
+</blockquote>
+<h3 id="13-进程调度"><a href="#1-3-进程调度" class="headerlink" title="1.3 进程调度"></a>1.3 进程调度</h3><p>在多道程序系统中，进程的数量往往多于处理机的数量，因此就需要在多进程竞争处理机时采用一定的算法进行调度以实现进程的并发执行。</p>
+<blockquote>
+<p>由于 CPU 在各进程之间来回快速切换，所以每个进程执行其运算的速度是不确定的。通常，进程的运算速度与时序是难以复现的，所以，在对进程编程时不能对时序做任何假设。</p>
+</blockquote>
+<p><strong>（1）先来先服务（FCFS）调度算法</strong></p>
+<p>在进程调度中，FCFS 调度算法每次从就绪队列中选择<strong>最先进入该队列</strong>的进程。该算法的特点是算法简单但效率低；对长作业比较有利，但对短作业不利（相对 SJF 和高响应比）；有利于 CPU 繁忙型作业，而不利于 I/O 繁忙型作业。</p>
+<p><strong>（2）短作业优先（SJF）调度算法</strong></p>
+<p>短作业优先（SJF）调度算法从后备队列中选择一个或若干估计<strong>运行时间最短</strong>的作业，将它们调入内存运行。该算法的特点是对长作业不利（可能导致 “饥饿” 现象——长作业长期不被调度）；完全未考虑作业的紧迫程度，因而不能保证紧迫性作业会被及时处理。优点是：SJF 调度算法的<strong>平均等待时间</strong>和<strong>平均周转时间</strong>最少。</p>
+<p><strong>（3）优先级调度算法</strong></p>
+<p>该算法中的优先级用于描述作业的紧迫程度。优先级调度算法每次从后备作业队列中选择<strong>优先级最高</strong>的一个或几个作业，将它们调入内存运行。（又可细分为非抢占式优先级与抢占式优先级调度算法、静态优先级与动态优先级）</p>
+<p>一些进程优先级的设置原则（供参考）：</p>
+<ol>
+<li>系统进程 ＞ 用户进程</li>
+<li>交互型进程 ＞ 非交互型进程</li>
+<li>I/O 型进程 ＞ 计算型进程</li>
+</ol>
+<p><strong>（4）高相应比优先调度算法</strong></p>
+<p>高响应比优先调度算法是对 FCFS 调度算法和 SJF 调度算法的一种综合平衡，同时考虑了每个作业的等待时间和估计的运行时间。</p>
+<p>响应比的变化规律可描述为：$响应比\ R_P\ =\frac{等待时间+要求服务时间}{要求服务时间}$</p>
+<ol>
+<li>作业的等待时间相同时，要求服务时间越短，响应比越高</li>
+<li>要求服务时间相同时，作业的响应比由其等待时间决定，等待时间越长其响应比越高</li>
+<li>对于长作业，作业的响应比可以随等待时间的增加而提高，一定程度上克服了 “饥饿” 现象</li>
+</ol>
+<p><strong>（5）时间片轮转调度算法</strong></p>
+<p>时间片轮转调度算法主要适用于分时系统。系统将所有就绪进程按 FCFS 策略排成一个就绪队列，调度程序总是选择就绪队列中的第一个进程执行，但仅让其运行一个时间片（如 50ms），在使用完一个时间片后如果进程未运行完成则被剥夺并加入就绪队列队尾等待再次运行。</p>
+<p>时间片的长短往往对系统性能影响很大（在进程间进行频繁的切换会增大处理机的开销），它通常由系统的响应时间、就绪队列中的进程数目和系统的处理能力共同确定。</p>
+<p><strong>（6）多级队列调度算法</strong></p>
+<p>该算法在系统中设置多个就绪队列，将不同类型或性质的进程固定分配到不同的就绪队列中，每个队列可以实施不同的调度算法。</p>
+<p><strong>（7）多级反馈队列调度算法</strong></p>
+<p>多级反馈队列调度算法是时间片轮转调度算法和优先级调度算法的综合和发展，它可以动态调整进程优先级和时间片的大小。</p>
+<p><img src="/2022/03/31/OS/image-20220603202555200.png" alt="multiQueue"></p>
+<p>该算法实现思想如下：</p>
+<ol>
+<li>设置多个就绪队列，为每个队列赋予不同的优先级</li>
+<li>赋予各个队列的进程运行时间片的大小各不相同，在优先级越高的队列中，每个进程的时间片就越小（例如第 i+1 级队列的时间片要比第 i 级队列的时间片长 1 倍）</li>
+<li>每个队列都采用 FCFS 算法。当新进程进入内存后首先将其放入第一级队列的队尾，若第 i 次执行未在时间片内完成，则将其加入第 i+1 级就绪队列的末尾，以此类推，在被降到最后的 n 级队列后便采用单纯的时间片轮转算法进行调度</li>
+<li>按队列优先级调度。仅当第 1 级队列为空时才调度第 2 级队列中的进程运行；仅当第 1 至 i-1 级队列均为空时才调度第 i 级队列中的进程运行。若处理机正在执行第 i 级队列中的某进程时，又有新进程进入任一优先级较高的队列，此刻须立即把正在运行的进程放回到第 i 级队列的末尾，把处理机分配给这个新的高优先级进程</li>
+</ol>
+<p>该算法的优势如下：</p>
+<ol>
+<li>终端型作业用户：短作业优先</li>
+<li>短批处理作业用户：周转时间较短</li>
+<li>长批处理作业用户：经过前面几个队列得到部分执行，不会长期完全得不到处理</li>
+</ol>
+<p><strong>常见进程调度算法的横向对比</strong></p>
+<p><img src="/2022/03/31/OS/image-20220603210726674.png" alt="schedCompare"></p>
+<h3 id="14-同步互斥"><a href="#1-4-同步互斥" class="headerlink" title="1.4 同步互斥"></a>1.4 同步互斥</h3><p><strong>临界资源</strong>：一次仅允许一个进程使用的资源称为临界资源。</p>
+<p><strong>同步</strong>：等待获取资源（待同步进程间存在逻辑关联）</p>
+<p><strong>互斥</strong>：等待使用资源（互斥进程间无逻辑关联）</p>
+<p><strong>软件实现临界区互斥（Peterson’s Algorithm）</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Process_i&#123;</span><br><span class="line">    flag[i] = TRUE;</span><br><span class="line">    turn = j;</span><br><span class="line">    <span class="keyword">while</span>(flag[j] &amp;&amp; turn == j);</span><br><span class="line">    process(i);</span><br><span class="line">    flag[i] = FALSE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Process_j&#123;</span><br><span class="line">    flag[j] = TRUE;</span><br><span class="line">    turn = i;</span><br><span class="line">    <span class="keyword">while</span>(flag[i] &amp;&amp; turn == i);</span><br><span class="line">    process(j);</span><br><span class="line">    flag[j] = FALSE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>硬件实现方法</strong></p>
+<ol>
+<li>中断屏蔽方法</li>
+<li>硬件指令方法（硬件指令为原子操作，可以有效实现互斥）</li>
+</ol>
+<p><strong>信号量（semaphore）</strong></p>
+<p>信号量机制可以用来解决互斥与同步问题，它只能被两个标准的 <strong>原语</strong> wait(S) 和 signal(S) 访问，也可以分别记作 P 操作 和 V 操作。</p>
+<blockquote>
+<p>信号量是 E.W.Dijkstra 在1965年提出的一种方法，它使用一个整型变量来累计唤醒次数。其中，检查数值、修改变量值以及可能发生的睡眠操作均为由硬件实现的单一的、不可分割的原子操作完成。</p>
+<p>在 Dijkstra 原来的论文中，他分别使用名称 P（Proberen：尝试） 和 V（Verhogen 增加） 来表示对信号量的操作，P 操作将信号量减一（占用），V 操作将信号量加一（释放）。</p>
+</blockquote>
+<p><strong>管程（monitor）</strong></p>
+<p>利用共享数据结构抽象地表示系统中的共享资源，而把对该数据结构实施的操作定义为一组过程，这种数据结构与对应的操作被合称为 <strong>管程</strong>。</p>
+<p>当一个进程进入管程后被阻塞，直到阻塞原因解除之前其他进程都无法进入管程。为此，将阻塞原因定义为<strong>条件变量</strong> condition，对条件变量只能进行两种操作：wait 和 signal。</p>
+<p>条件变量和信号量的异同：</p>
+<ul>
+<li>相似点：wait/signal 与 P/V 均可实现进程的阻塞/唤醒</li>
+<li>不同点：信号量用其数值表示剩余资源数，而条件变量仅实现 ”排队等待“ 功能，没有数值，管程种的剩余资源数用共享数据结构来进行记录</li>
+</ul>
+<h3 id="15-死锁问题"><a href="#1-5-死锁问题" class="headerlink" title="1.5 死锁问题"></a>1.5 死锁问题</h3><p>死锁，是指多个进程因竞争资源而造成的一种僵局（互相等待），若无外力作用，这些进程都将无法向前推进。</p>
+<p>死锁的四个必要条件：</p>
+<ol>
+<li><strong>互斥条件</strong>：指进程对所分配的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。</li>
+<li><strong>请求和保持条件</strong>：指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。</li>
+<li><strong>不可剥夺条件</strong>：指进程已获得的资源，在未使用完之前，不能被剥夺，只能在使用完时由自己释放。</li>
+<li><strong>环路等待条件</strong>：指在发生死锁时，必然存在一个进程——资源的环形链，即进程集合{P0，P1，P2，···，Pn}中的P0正在等待一个P1占用的资源；P1正在等待P2占用的资源，……，Pn正在等待已被P0占用的资源。</li>
+</ol>
+<h2 id="二-存储管理"><a href="#二、存储管理" class="headerlink" title="二、存储管理"></a>二、存储管理</h2><p>鉴于此部分内容与 <strong>CO</strong> 有些许重叠，故不再赘述整体框架，这里只记述一些特别的内容。</p>
+<h3 id="21-多级页表-amp-自映射"><a href="#2-1-多级页表-amp-自映射" class="headerlink" title="2.1 多级页表 &amp; 自映射"></a>2.1 多级页表 &amp; 自映射</h3><p>首先来看看多级页表，考虑一个采用二级页表机制的 $32$ 位虚拟存储系统，字长 $4$ 字节，虚拟地址结构如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>一级页表（页目录）</th>
+<th>二级页表</th>
+<th>页内偏移</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$22-31$位</td>
+<td>$12-21$位</td>
+<td>$0-11$位</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>可见，这样的页式虚拟存储系统页面大小为 $ 2^{12}B=4KB $ ，每一级页表 $10$ 位，每个页表项占一个字，即页表大小和页面大小相同，也为 $4KB$。此外，有一页一级页表，有 $2^{10}=1K$ 页二级页表，由此可知一级页表共占据内存空间 $4KB$，二级页表共占据内存空间 $4MB$。</p>
+<p>那么这些页表该存放在哪儿呢？如果将一级页表与二级页表分别存储，显然，就需要引入额外的 <strong>判断</strong> 逻辑来区分当前地址含义为1）普通页面；2）二级页表页面；3）一级页表页面，这不仅会增加硬件设计的复杂性，也会使用额外的位来存储页面种类信息；同时，如果要在位宽更大的虚拟存储系统中使用更多级的页表（比如 RISC-V SV39分页硬件机制在 $64$ 位机器上使用 $39$ 位虚拟地址和三级页表（ $9×3+12$ ）来进行内存管理），就意味着随页表级数线性增加的额外开销，系统的复杂性也随着提升。</p>
+<p>因此，为了统一虚实地址转换机制（使之可以共用一套映射硬件），一些 OS 采用了 <strong>自映射</strong> 的方式，将 $K$ 级页表嵌入 $K + 1$ 级页表，即在连续存储的 $K+1$ 级页表中有一页表的所有页表项所映射页面依次为连续存储的 $K+1$ 级页表，它就是 $K$ 级页表（$K$ 级页表中的首个页表项映射到连续存储的 $K+1$ 级页表中的首个 $K+1$ 级页表）。</p>
+<p>下图以一个进程有 $4GB$ 地址空间为例，记所有二级页表所在的连续的 $4MB$ 空间的起始地址为 $PT_{Base}$ （Base Address of Page Table），一级页表（也称页目录）的起始地址为 $PD_{Base}$ （Base Address of Page Directory）。</p>
+<p><img src="/2022/03/31/OS/image-20220419093050484.png" alt="二级页表"></p>
+<p>于是，根据 <strong>自映射</strong> 的定义，就可以得到 $PT_{Base}$ 和 $PD_{Base}$ 之间的关系：</p>
+<p>$ PT_{Base}&gt;&gt;22&lt;&lt;(10+2)=PT_{Base}&gt;&gt;10=PD_{Base}-PT_{Base}$</p>
+<p>即：$PD_{Base}=PT_{Base}+(PT_{Base}&gt;&gt;10)$</p>
+<p>这里对上述关系的推导稍作解释：</p>
+<ol>
+<li>$PT_{Base}&gt;&gt;22$ 得到映射到首个二级页表的二级页表页表号</li>
+<li>$PT_{Base}&gt;&gt;22&lt;&lt;(10+2)$ 得到上述页表号对应二级页表相对首个二级页表的地址偏移（$2$ 为页表项位宽，此处一个字表示一个页表项，位宽为 $\log_24=2$ ；$10$ 为二级页表位宽）</li>
+<li>所得即为 $PD_{Base}$ 相对 $PT_{Base}$ 的偏移量</li>
+</ol>
+<h3 id="22-页面置换算法"><a href="#2-2-页面置换算法" class="headerlink" title="2.2 页面置换算法"></a>2.2 页面置换算法</h3><p>有几种典型的页面置换算法：FIFO、LRU 、OPT 和 CLOCK。</p>
+<ol>
+<li><strong>FIFO:</strong> First In First Out，优先换出最早进入内存的页面</li>
+<li><strong>LRU:</strong>  Least Recently Used，优先换出最后一次使用时间距今最长的页面</li>
+<li><strong>OPT:</strong> Optimal，优先换出以后再不使用的页面，若无则换出下次使用距今时间最长的页面（理想算法）</li>
+<li><strong>CLOCK：</strong>又称 <strong>最近未用（NRU）</strong> 算法，为每个页面设置一个访问位，换入时置1，初次换出将访问位置0，若访问位为0则换出（为每个页面提供 ”第二条命“ ）；CLOCK 算法的改进版在此基础上加上修改位，根据修改位和访问位的几种情况分别设置页面换出优先级</li>
+</ol>
+<p>用 C 简单实现 FIFO、LRU 和 OPT，并以 $100$ 个页面请求、$1-10$ 个页框为例计算缺页次数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> npage 10</span></span><br><span class="line"><span class="keyword">int</span> request[] = &#123;<span class="number">0</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">8</span>, <span class="number">5</span>,</span><br><span class="line">				 <span class="number">3</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">9</span>, <span class="number">4</span>,</span><br><span class="line">				 <span class="number">7</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">9</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">1</span>,</span><br><span class="line">				 <span class="number">1</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">4</span>, <span class="number">3</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> requestNum = <span class="keyword">sizeof</span>(request) / <span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line"><span class="keyword">int</span> pn;</span><br><span class="line"><span class="keyword">int</span> opt_ans[npage];</span><br><span class="line"><span class="keyword">int</span> opt_pages[npage];</span><br><span class="line"><span class="keyword">int</span> lru_ans[npage];</span><br><span class="line"><span class="keyword">int</span> lru_pages[npage];</span><br><span class="line"><span class="keyword">int</span> fifo_ans[npage];</span><br><span class="line"><span class="keyword">int</span> fifo_pages[npage];</span><br><span class="line"><span class="keyword">int</span> opt_cnt, lru_cnt, fifo_cnt;</span><br><span class="line"><span class="keyword">int</span> lru_weight[npage];</span><br><span class="line"><span class="keyword">int</span> lru_order[npage];</span><br><span class="line"><span class="keyword">int</span> fifo_order[npage];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">opt_find</span><span class="params">(<span class="keyword">int</span> cur)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> pos = requestNum - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> book[npage], i;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pn;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(request[cur]==opt_pages[i])&#123;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(opt_pages[i]==<span class="number">-1</span>)&#123;</span><br><span class="line">			book[i] = __INT_MAX__;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			book[i] = requestNum + <span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (; pos &gt; cur; pos--)&#123;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pn;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(opt_pages[i]==request[pos])&#123;</span><br><span class="line">				book[i] = pos;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> tag = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; pn;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(book[tag] &lt; book[i])&#123;</span><br><span class="line">			tag = i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	opt_pages[tag] = request[cur];</span><br><span class="line">	opt_cnt++;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">lru_find</span><span class="params">(<span class="keyword">int</span> cur)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pn;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(lru_pages[i]==request[cur])&#123;</span><br><span class="line">			lru_weight[i]++;</span><br><span class="line">			lru_order[i] = cur;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> tag = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; pn;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(lru_order[i]&lt;lru_order[tag])&#123;</span><br><span class="line">			tag = i;</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(lru_order[i] == lru_order[tag] &amp;&amp; lru_weight[i]&lt;lru_weight[tag])&#123;</span><br><span class="line">			tag = i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	lru_weight[tag] = <span class="number">-1</span>;</span><br><span class="line">	lru_pages[tag] = request[cur];</span><br><span class="line">	lru_order[tag] = cur;</span><br><span class="line">	lru_cnt++;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fifo_find</span><span class="params">(<span class="keyword">int</span> cur)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pn;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(fifo_pages[i]==request[cur])&#123;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> tag;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pn;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(fifo_order[i]&lt;fifo_order[tag])&#123;</span><br><span class="line">			tag = i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fifo_order[tag] = <span class="number">2</span> + cur;</span><br><span class="line">	fifo_pages[tag] = request[cur];</span><br><span class="line">	fifo_cnt++;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">resetPages</span><span class="params">(<span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> j;</span><br><span class="line">	<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; npage;j++)&#123;</span><br><span class="line">		opt_pages[j] = val;</span><br><span class="line">		lru_pages[j] = val;</span><br><span class="line">		fifo_pages[j] = val;</span><br><span class="line">		lru_weight[j] = val;</span><br><span class="line">		lru_order[j] = val;</span><br><span class="line">		fifo_order[j] = val;</span><br><span class="line">	&#125;</span><br><span class="line">	opt_cnt = <span class="number">0</span>;</span><br><span class="line">	lru_cnt = <span class="number">0</span>;</span><br><span class="line">	fifo_cnt = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> curRequest)</span></span>&#123;</span><br><span class="line">	opt_find(curRequest);</span><br><span class="line">	lru_find(curRequest);</span><br><span class="line">	fifo_find(curRequest);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printAns</span><span class="params">()</span></span>&#123;</span><br><span class="line">	FILE *opt_output = fopen(<span class="string">&quot;opt_ans.txt&quot;</span>, <span class="string">&quot;w&quot;</span>);</span><br><span class="line">	FILE *lru_output = fopen(<span class="string">&quot;lru_ans.txt&quot;</span>, <span class="string">&quot;w&quot;</span>);</span><br><span class="line">	FILE *fifo_output = fopen(<span class="string">&quot;fifo_ans.txt&quot;</span>, <span class="string">&quot;w&quot;</span>);</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; npage;i++)&#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(opt_output, <span class="string">&quot;%d\n&quot;</span>, opt_ans[i]);</span><br><span class="line">		<span class="built_in">fprintf</span>(lru_output, <span class="string">&quot;%d\n&quot;</span>, lru_ans[i]);</span><br><span class="line">		<span class="built_in">fprintf</span>(fifo_output, <span class="string">&quot;%d\n&quot;</span>, fifo_ans[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	fclose(opt_output);</span><br><span class="line">	fclose(lru_output);</span><br><span class="line">	fclose(fifo_output);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> curRequest;</span><br><span class="line">	<span class="keyword">for</span> (pn = <span class="number">1</span>; pn &lt;= npage;pn++)&#123;</span><br><span class="line">		resetPages(<span class="number">-1</span>);</span><br><span class="line">		<span class="keyword">for</span> (curRequest = <span class="number">0</span>; curRequest &lt; requestNum; curRequest++)&#123;</span><br><span class="line">			find(curRequest);</span><br><span class="line">		&#125;</span><br><span class="line">		opt_ans[pn - <span class="number">1</span>] = opt_cnt;</span><br><span class="line">		lru_ans[pn - <span class="number">1</span>] = lru_cnt;</span><br><span class="line">		fifo_ans[pn - <span class="number">1</span>] = fifo_cnt;</span><br><span class="line">	&#125;</span><br><span class="line">	printAns();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>缺页次数统计：</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>页框数</th>
+<th>OPT</th>
+<th>LRU</th>
+<th>FIFO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>90</td>
+<td>90</td>
+<td>90</td>
+</tr>
+<tr>
+<td>2</td>
+<td>64</td>
+<td>79</td>
+<td>80</td>
+</tr>
+<tr>
+<td>3</td>
+<td>48</td>
+<td>71</td>
+<td>67</td>
+</tr>
+<tr>
+<td>4</td>
+<td>37</td>
+<td>58</td>
+<td>59</td>
+</tr>
+<tr>
+<td>5</td>
+<td>29</td>
+<td>52</td>
+<td>47</td>
+</tr>
+<tr>
+<td>6</td>
+<td>22</td>
+<td>42</td>
+<td>39</td>
+</tr>
+<tr>
+<td>7</td>
+<td>16</td>
+<td>28</td>
+<td>30</td>
+</tr>
+<tr>
+<td>8</td>
+<td>12</td>
+<td>17</td>
+<td>20</td>
+</tr>
+<tr>
+<td>9</td>
+<td>11</td>
+<td>13</td>
+<td>12</td>
+</tr>
+<tr>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>简单做个图对比一下：</strong></p>
+<p><img src="/2022/03/31/OS/image-20220418215511036.png" alt="页面置换算法对比"></p>
+<h3 id="23-段式存储管理"><a href="#2-3-段式存储管理" class="headerlink" title="2.3 段式存储管理"></a>2.3 段式存储管理</h3><p>段式管理方式按照用户进程中的自然段划分逻辑空间。用户进程被划分为多段（如主程序段、子程序段、栈段和数据段），每一段都从 0 开始编址，并分配一段连续的地址空间（段内要求连续，段间不要求连续），其逻辑地址由段号 S 与段内偏移量 W 两部分组成。</p>
+<p>分段系统中段的共享是通过两个作业的段表中相应表项指向被共享的段的同一物理副本来实现的。其中，不能修改的代码称为<strong>纯代码</strong>或<strong>可重入代码</strong>（不属于临界资源）只有这种代码和不能被修改的数据可以被共享。</p>
+<p>由于段的长度不固定，需要同时给出段号和段内偏移才可确定对应地物理地址。</p>
+<blockquote>
+<p>分页存储管理可以有效提高内存利用率，而分段存储管理可以反映程序的逻辑结构并有利于段的共享和保护</p>
+<p>在段页式系统中，段表只有一个，而页表可能有多个</p>
+</blockquote>
+<h3 id="24-其他内容"><a href="#2-4-其他内容" class="headerlink" title="2.4 其他内容"></a>2.4 其他内容</h3><p><strong>内存抖动</strong></p>
+<p>在页面置换过程中，如果刚换出的页面立刻又要换入主存，而刚换入的页面立刻又要换出主存，这种频繁的页面调度行为称为<strong>抖动</strong>或<strong>颠簸</strong>。</p>
+<blockquote>
+<p>缺页率（缺页率高即为抖动）是影响虚拟存储器性能地主要因素</p>
+</blockquote>
+<p>内存抖动的解决方案：将分配给进程的物理块的集合称为<strong>驻留集</strong>，在驻留集中设置<strong>工作集</strong>（通常远小于驻留集大小），工作集反映了进程在接下来一段时间内很有可能会频繁访问的页面集合（基于局部性原理），工作集中的页面被换出则会调入驻留集中的非工作集部分，只有驻留集中非工作集部分的页面才会被真正换出主存。</p>
+<p><strong>内存映射文件（Memory-Mapped Files）</strong></p>
+<p>将磁盘文件的全部或部分内容与进程虚拟地址空间的某个区域建立映射关系便可以直接访问被映射的文件。多个进程允许并发地映射同一文件以便数据共享，进程也可以通过共享内存来进行通信。</p>
+<h2 id="三-文件系统"><a href="#三、文件系统" class="headerlink" title="三、文件系统"></a>三、文件系统</h2><p>在系统运行时，计算机以进程为基本单位进行资源的调度和分配；而在用户进行的输入、输出中，则以文件为基本单位。</p>
+<p>操作系统通过<strong>文件控制块（File Control Block，FCB）</strong>来维护文件元数据，FCB 的有序集合称为文件目录，一个 FCB 就是一个文件目录项，其主要包含&lt;基本信息（如文件名、文件的物理位置、文件的逻辑与物理结构等），存取控制信息（如不同用户的存取权限），使用信息（如文件的建立时间、最近修改时间）&gt;。</p>
+<p>有些系统（如 UNIX）会采用文件名和文件描述信息分开的方法，使文件描述信息单独形成一个称为<strong>索引节点</strong>的数据结构，简称 i 结点（inode）。在文件目录中的每个目录项仅由文件名和指向该文件所对应的 i 结点的指针构成。</p>
+<h3 id="31-文件的组织结构"><a href="#3-1-文件的组织结构" class="headerlink" title="3.1 文件的组织结构"></a>3.1 文件的组织结构</h3><p><strong>逻辑结构</strong></p>
+<p>文件的逻辑结构是指在文件的内部，数据逻辑上是如何组织起来的，按逻辑结构，文件可划分为无结构文件和有结构文件两大类。</p>
+<p>无结构文件又称流式文件，将数据按顺序组织成记录并积累保存，以字节为单位。</p>
+<p>有结构文件又称记录式文件，分为<strong>顺序文件</strong>、<strong>索引文件</strong>、<strong>索引顺序文件</strong>（在索引顺序文件中，将 $N$ 条记录分为 $\sqrt{N}$ 组，索引表中有 $\sqrt{N}$ 个表项，每组有 $\sqrt{N}$ 条记录，在查找某关键字的记录时，先顺序查找索引表平均 $\frac{\sqrt{N}}{2}$ 次，然后在主文件对应的组中顺序查找平均 $\frac{\sqrt{N}}{2}$ 次，平均  $\sqrt{N}$ 次查找即可；本质上为分块查找）及<strong>散列文件</strong>（利用 Hash 的特性，缺点是需要处理 Hash 冲突）。</p>
+<p><strong>物理组织</strong></p>
+<p>文件的物理组织关注文件数据在物理存储设备上的分布和组织方式，分为<strong>文件的分配方式</strong>和<strong>文件存储空间的管理</strong>两个方面。</p>
+<p>常用的磁盘空间分配方法有三种：连续分配、链接分配和索引分配。</p>
+<ol>
+<li>连续分配方法要求每个文件在磁盘上占有一组连续的块，逻辑文件中的记录顺序也存储在相邻接的块中。其缺点是文件长度不宜动态增加；反复增删文件会产生外部碎片；很难确定未知文件所需空间大小，因而只适用于长度固定的文件。</li>
+<li>链接分配可以动态地为文件分配盘块，消除了磁盘的外部碎片，但增加了内部碎片。它有分为隐式链接（只适合顺序访问）和显式链接（采用文件分配表 File Allocation Table，FAT 用于记录文件各块之间的先后链接关系，并对空闲磁盘块进行标记，该方法还可显著减少访问磁盘的次数，但 FAT 需要占用较大的内存空间）。</li>
+<li>索引分配将每个文件所有的盘块号都集中放在一起构成索引表，一般采用多级索引或者混合索引的访问方式来尽可能减小索引表对系统存储空间的开销。</li>
+</ol>
+<h3 id="32-文件目录"><a href="#3-2-文件目录" class="headerlink" title="3.2 文件目录"></a>3.2 文件目录</h3><p><strong>单级目录结构</strong>：整个文件系统只建立一张目录表，每个文件占一个目录项。</p>
+<p><strong>两级目录结构</strong>：将文件目录分为主文件目录（Master File Directory，MFD）和用户文件目录（User File Directory，UFD）两级，这种结构解决了多用户之间的文件重名问题，但不能对文件进行分类。</p>
+<p><strong>树形目录结构</strong>：可以显著提高对目录的检索速度和文件系统的性能，从根目录出发的路径为绝对路径，从当前目录出发的路径为相对路径。树形目录的缺点是在查找文件时需要按路径名逐级访问中间节点，增加了磁盘访问次数。目前，大多数操作系统采（UNIX，Linux 和 Windows）用树形文件目录。</p>
+<p><strong>无环图目录结构</strong>：在树形目录结构的基础上增加一些指向同一结点的有向边，使整个目录成为一个有向无环图，便可以较为容易地实现文件共享，这种结构为每个共享结点设置一个共享计数器来判断多用户的增删操作以决定是否真正删除该共享结点。无环图目录结构方便地实现了文件的共享，但使得系统的管理变得更加复杂。</p>
+<h3 id="33-文件共享"><a href="#3-3-文件共享" class="headerlink" title="3.3 文件共享"></a>3.3 文件共享</h3><p>文件共享使多用户共享同一文件，系统中只需保留文件的一个副本以节省存储空间。</p>
+<p><strong>基于索引节点的共享方式（硬链接）</strong></p>
+<p>在树形结构目录中，将共享文件的索引节点链接到多个用户的目录中，在索引节点中设置链接计数器来判断多用户下共享文件的持有者数目。</p>
+<p><strong>利用符号链实现文件共享（软链接）</strong></p>
+<p>在进行文件共享时，系统为用户创建一个 LINK 类型的新文件写入用户目录，LINK 文件记录了共享文件的路径，用户在删除文件时只需删除自己的 LINK 文件即可，多用户对共享文件的访问路径互不相同。这样的链接方式被称为<strong>符号链接</strong>。</p>
+<blockquote>
+<p>硬链接和软链接都是文件系统中的静态共享方法，在文件系统中还存在着另外的共享需求，即两个进程同时对一个文件进行操作，这样的共享称为动态共享。此外，硬链接的查找速度要快于软链接。</p>
+</blockquote>
+<h2 id="四-输入输出"><a href="#四、输入-输出" class="headerlink" title="四、输入/输出"></a>四、输入/输出</h2><h3 id="41-io-设备"><a href="#4-1-IO-设备" class="headerlink" title="4.1 IO 设备"></a>4.1 IO 设备</h3><p>按信息交换单位可划分为 <strong>块设备</strong> 与 <strong>字符设备</strong>，前者以数据块为单位进行信息交换，可寻址即随机读写任一块，后者以字符为单位进行信息交换，不可寻址并时常采用中断 IO 方式。前者的传输速率较后者更高。</p>
+<p><strong>IO 接口</strong>（设备控制器）位于 CPU 与设备之间，用于沟通彼此。该接口主要由三部分组成：</p>
+<ol>
+<li>设备控制器与 CPU 的接口：数据线、地址线和控制线。</li>
+<li>设备控制器与设备的接口：每个设备对应一个此类接口，存在数据、控制和状态三种类型的信号。</li>
+<li>IO 逻辑：对 CPU 的命令进行译码并据此实现对设备的控制。</li>
+</ol>
+<p><strong>IO 端口</strong>指设备控制器中可以被 CPU 直接访问的寄存器，分为三类：</p>
+<ol>
+<li>数据寄存器：缓冲 CPU 与外设之间的数据。</li>
+<li>状态寄存器：获取执行结果与设备状态信息。</li>
+<li>控制寄存器：由 CPU 写入以执行启动命令或更改设备模式。</li>
+</ol>
+<h3 id="42-io-控制方式"><a href="#4-2-IO-控制方式" class="headerlink" title="4.2 IO 控制方式"></a>4.2 IO 控制方式</h3><p>IO 控制方式主要分为四类：<strong>程序直接控制方式</strong>、<strong>中断驱动方式</strong> 、 <strong>DMA 方式 </strong>和 <strong>通道控制方式</strong> 。</p>
+<p>程序直接控制方式即简单的串行执行：CPU 向 IO 设备发出读写命令后一直轮询 IO 设备的状态检查命令是否完成，直到完成再执行下一条指令。考虑到 IO 设备的速度远低于 CPU 的速度，这样会大量浪费 CPU 资源。</p>
+<p>中断驱动方式较程序直接控制方式稍好一些：CPU 向 IO 设备发出读写命令后便转去执行其他程序，IO 设备在完成以字为单位的读写任务后会向 CPU 发出中断信号表示数据已准备好，所以 CPU 需在每个指令周期的末尾检查是否有中断信号。然而，中断驱动方式下的数据传输必须经过 CPU，其实还是会消耗较多的 CPU 时间。</p>
+<p>DMA 方式下的数据传输不再经过 CPU，相较中断驱动方式仅使用寄存器存取以字为单位的 IO 数据而言，DMA 方式在其 DMA 控制器中使用了更多的寄存器存取了更多的数据——以块为单位的 IO 数据、数据长度（字数）、内存地址。因此， DMA 控制器将独立于 CPU 完成与存储器的数据交互，并在完成读写任务后采用与中断驱动方式一致的方式——发送中断信号来通知 CPU。整个过程，CPU 仅需在数据传输的起始与结束阶段进行干预（不包括每个指令周期末尾检查中断信号）。</p>
+<p>IO 通道方式是 DMA 方式的进一步发展，它将进一步减少 CPU 的干预。某种程度上来说，IO 通道方式引入了 IO 通道作为 CPU 与 DMA 控制器之间的缓存，原先在 DMA 方式中需要由 CPU 给出数据块大小、传输内存位置等信息，但 IO 通道方式使用了 IO 通道来统一完成这部分工作及后续 DMA 控制器的工作。此外，每个 DMA 控制器仅对应一台外设，而一个 IO 通道可以对应多台外设。</p>
+<h3 id="43-磁盘高速缓存与缓冲区"><a href="#4-3-磁盘高速缓存与缓冲区" class="headerlink" title="4.3 磁盘高速缓存与缓冲区"></a>4.3 磁盘高速缓存与缓冲区</h3><p><strong>磁盘高速缓存（Disk Cache）：</strong>利用内存中的存储空间暂存从磁盘中读出的信息（逻辑上属于磁盘，物理上则是驻留在内存中的盘块）</p>
+<p><strong>缓冲区（Buffer）：</strong>分为单缓冲、双缓冲、循环缓冲与缓冲池几种模式。</p>
+<p>引入缓冲区的主要目的：</p>
+<ol>
+<li>缓和 CPU 与 I/O 设备间速度不匹配的矛盾</li>
+<li>减少对 CPU 的中断频率，放宽对 CPU 中断响应时间的限制</li>
+<li>解决基本数据单元大小（即数据粒度）不匹配的问题</li>
+<li>提高 CPU 和 I/O 设备之间的并行性</li>
+</ol>
+<p>约定：从磁盘中把一块数据输入到缓冲区的时间为 T ，操作系统将该缓冲区中的数据传送到用户区的时间为 M，CPU 对这一块数据处理的时间为 C ，通常认为缓冲区的大小与工作区的大小相等。</p>
+<p><img src="/2022/03/31/OS/image-20220603131942384.png" alt="buffer"></p>
+<p><strong>单缓冲</strong></p>
+<p>单缓冲区处理每块数据的用时为 $max(C,T)+M$</p>
+<p>（图为 T ＞ C 的示意图）</p>
+<p><img src="/2022/03/31/OS/image-20220603132752082.png" alt="singleBuffer"></p>
+<p><strong>双缓冲</strong></p>
+<p>双缓冲区处理每块数据的用时为 $max(C+M,T)$</p>
+<p>（图为 T &gt; C + M 的示意图）</p>
+<p><img src="/2022/03/31/OS/image-20220603133149647.png" alt="doubleBuffer"></p>
+<p><strong>循环缓冲</strong></p>
+<p>包含多个大小相等的缓冲区，每个缓冲区中有一个链接指针指向下一个缓冲区，最后一个缓冲区指针指向第一个缓冲区，多个缓冲区构成一个环形。此外，循环缓冲还需要两个指针 in 和 out，in 指向第一个空缓冲区，out 指向第一个装满数据的缓冲区。</p>
+<p><strong>缓冲池</strong></p>
+<p>缓冲池有三个队列（空缓冲队列、输入缓冲队列和输出缓冲队列），有四种缓冲区（用于收容输入数据、用于提取输入数据、用于收容输出数据、用于提取输出数据），示意图如下：</p>
+<p><img src="/2022/03/31/OS/image-20220603133747116.png" alt="bufferPool"></p>
+<p><strong>高速缓存与缓冲区的对比</strong></p>
+<p><img src="/2022/03/31/OS/image-20220603133923267.png" alt="bufferCompare"></p>
+<h3 id="44-设备分配与回收"><a href="#4-4-设备分配与回收" class="headerlink" title="4.4 设备分配与回收"></a>4.4 设备分配与回收</h3><p>设备使用方式分三种：</p>
+<ol>
+<li><strong>独占式使用设备</strong>。进程分配到独占设备后，便由其独占，直至该进程释放该设备。</li>
+<li><strong>分时式共享使用设备</strong>。对于共享设备，可同时分配给多个进程，通过分时共享使用。</li>
+<li><strong>以 SPOOLing 方式使用外部设备</strong>。SPOOLing 技术实现了虚拟设备功能，可以将设备同时分配给多个进程，这种技术实质上就是实现了对设备的 I/O 操作的批处理。</li>
+</ol>
+<p>SPOOLing 技术（假脱机技术）是操作系统中采用的一项将独占设备改造成共享设备的技术。</p>
+<p><img src="/2022/03/31/OS/image-20220603135226216.png" alt="SPOOLing"></p>
+<p>在磁盘上开辟 <strong>输入井</strong> 和 <strong>输出井</strong> 分别用于模拟脱机时输入、输出的磁盘。</p>
+<p>在内存中开辟两个缓冲区分别暂存由输入设备、输出井送来的数据。</p>
+<p>输入/输出进程用于模拟脱机输入/输出时的外围控制机。</p>
+<blockquote>
+<p>共享打印机是使用 SPOOLing 技术的一个实例</p>
+</blockquote>
+<p>SPOOLing 系统的特点如下：</p>
+<ol>
+<li>提高了 I/O 的速度，将对低速 I/O 设备执行的 I/O 操作演变为对磁盘缓冲区中数据的存取，如同脱机输入/输出一样，缓和了 CPU 和低速 I/O 之间的速度不匹配的矛盾。</li>
+<li>将独占设备改造为共享设备，在假脱机打印系统中，实际上并没有为任何进程分配设备。</li>
+<li>实现了虚拟设备功能，对每个进程而言，它们都认为自己独占了一个设备。</li>
+</ol>
+<p>SPOOLing 技术是一种用空间换时间的技术，因为 CPU 向磁盘输出数据的速度要快于向打印机等低速设备输出数据的速度。</p>
+<h3 id="45-磁盘工作原理"><a href="#4-5-磁盘工作原理" class="headerlink" title="4.5 磁盘工作原理"></a>4.5 磁盘工作原理</h3><p><strong>磁盘</strong>（Disk）是表面涂有磁性物质的物理盘片，通过一个称为 <strong>磁头</strong> 的导体线圈从磁盘存取数据。磁盘盘面上的数据存储在一组同心圆中，称为 <strong>磁道</strong>，每个磁道又划分为几百个 <strong>扇区</strong>（每个扇区的数据区域大小通常为 512B），每个扇区固定存储大小，一个扇区又称为一个 <strong>盘块</strong>。由于扇区按圆心角划分，所以密度从最外道向内道增加，磁盘的存储能力受限于最内道的最大记录密度。<strong>磁盘地址</strong> 用 ”柱面号-盘面号-扇区号“ 表示。</p>
+<p>一次磁盘读写操作的时间由寻道时间、旋转延迟时间和传输时间决定。</p>
+<ol>
+<li>寻道时间 $T_s=m\times n+s$。指活动头磁盘在读写信息前将磁头移动到指定磁道所需的时间。n 为跨越磁道数，m 为磁盘驱动器速度有关的常数，约为 0.2ms，s 为磁臂启动时间，约 2ms。</li>
+<li>旋转延迟时间 $T_r=\frac{1}{2r}$。指磁头定位道某一磁道的扇区所需的时间。r 为磁盘的旋转速度，对硬盘来说，典型的旋转速度为 5400 转/分，相当于一周 11.1ms，$T_r=5.55ms$；对软盘来说，其旋转速度约为 300-600 转/分，$T_r$ 为 50-100 ms。</li>
+<li>传输时间 $T_t=\frac{b}{rN}$。指从磁盘读出或向磁盘写入数据所经历的时间。其中，b 为每次读写的字节数，r 为磁盘每秒的转速，N 为一个磁道上的字节数。</li>
+</ol>
+<p>综上可得出总平均存取时间 $T_a=T_s+\frac{1}{2r}+\frac{b}{rN}$</p>
+<p>然而在实际的磁盘 I/O 操作中，存取时间和磁盘调度算法密切相关。</p>
+<h3 id="46-磁盘调度算法"><a href="#4-6-磁盘调度算法" class="headerlink" title="4.6 磁盘调度算法"></a>4.6 磁盘调度算法</h3><p><strong>（1）先来先服务（First Come First Served，FCFS）算法</strong></p>
+<p>优点是具有公平性，但若有大量进程需要访问，该算法在性能上往往接近于随机调度。</p>
+<p><strong>（2）最短寻找时间优先（Shortest Seek Time First, SSTF）算法</strong></p>
+<p>SSTF 算法选择处理当前距离磁头最近的磁道，使每次的寻道时间最短，这种算法的缺点是会产生 ”饥饿“ 现象。</p>
+<p><strong>（3）扫描（SCAN）算法</strong></p>
+<p>SCAN 算法在磁头当前移动方向上选择与当前磁头所在的磁道距离最近的请求作为下一次服务的对象，在到达最外（内）侧时调转磁头移动方向。</p>
+<p><strong>（4）循环扫描（Circular SCAN, C-SCAN）算法</strong></p>
+<p>在 SCAN 算法的基础上规定磁头到达最外侧时径直返回起始端（途中不处理任何访问请求），重复执行单向扫描。</p>
+<p><strong>（5）LOOK 算法</strong></p>
+<p>在 SCAN 算法的基础上规定磁头无需移动到最外（内）侧再调转方向，而是在相应距最外（内）侧最近的请求后调转磁头移动方向。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>Computer Systems: A Programmer’s Perspective (3rd Edition)</li>
+<li>Modern Operating Systems (4th Edition)</li>
+<li>See Mips Run Linux (2nd Edition)</li>
+</ol>
+</toc>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/OS/"># OS</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/04/06/Game-Theory/">Game-Theory</a>
+            
+            
+            <a class="next" rel="next" href="/2022/03/27/OO-Multithreaded/">OO-Multithreaded</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <!--🌞 Zry |-->
+        <span>🔗 iszry@foxmail.com </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

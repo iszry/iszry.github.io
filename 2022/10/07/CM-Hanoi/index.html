@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Zry">
+
+
+    <meta name="subtitle" content="Simple Life">
+
+
+
+
+<title>Hanoi | Matcha Flavor</title>
+
+
+
+    <link rel="icon" href="/mesh.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Matcha Flavor</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Matcha Flavor</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Hanoi</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Zry</a>      
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 7, 2022&nbsp;&nbsp;15:30:00</a>      
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Math/">Math</a>
+                                  
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <toc>
+
+<h1 id="hanoi-in-concrete-mathematics"><a href="#Hanoi-in-Concrete-Mathematics" class="headerlink" title="Hanoi in Concrete Mathematics"></a>Hanoi in Concrete Mathematics</h1><h2 id="question"><a href="#Question" class="headerlink" title="Question"></a>Question</h2><p>Suppose we have M pegs $(p_1,p_2,\cdots,p_M)$ and all N disks are on $p_1$. We need to move them to $p_M$ under the <em>Lucas rule</em>. How many moves are required at least? </p>
+<h2 id="basic-solution"><a href="#Basic-solution" class="headerlink" title="Basic solution"></a>Basic solution</h2><p>The Frame-Stewart Algorithm’s pipeline is as followed:</p>
+<ol>
+<li>Move $T$ disks from $p_i$ to $p_j$, where $j\neq M$</li>
+<li>Move $N-T$ disks from $p_i$ to $p_M$</li>
+<li>Move $T$ disks from $p_j$ to $p_M$</li>
+</ol>
+<p>This algorithm divides the solution into three stages, which actually divides the Hanoi tower into a main-tower(the lower $N-T$ disks) and a sub-tower(the upper $T$ disks).</p>
+<p><img src="/2022/10/07/CM-Hanoi/image-20220911164413342.png" alt="image-20220911164413342"></p>
+<p>For example, the Hanoi tower with 3 disks can be divided into a main-tower in the first peg with only one disk, the sub-tower is in the third peg with two disks. In this way, a Hanoi problem with more disks can be transferred into a solved Hanoi problem with less disks(the sub-tower’s move is a solved problem). When there are more than three pegs, the Hanoi tower can be divided into many sub-towers recursively. Finally, we can get the recursive formula: $Hanoi[M][N]:=\min_{1\leq r&lt;N}(2Hanoi[M][r]+Hanoi[M-1][N-r])$, the initial condition is $Hanoi[3][n]=2^n-1,\ \ Hanoi[n][1]=1$</p>
+<blockquote>
+<p>The proof of the Frame-Stewart Algorithm used in four pegs can be found in <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1508.04272.pdf">A new lower bound for the Towers of Hanoi problem</a></p>
+</blockquote>
+<h2 id="thinking-of-sub-minimum-moves"><a href="#Thinking-of-sub-minimum-moves" class="headerlink" title="Thinking of sub-minimum moves"></a>Thinking of sub-minimum moves</h2><p>We know the minimum amount of necessary moves to finish a Hanoi task of $Hanoi[3][n]$ is $2^n-1$. But what’s the sub-minimum moves of it? </p>
+<p>We can consider it in the same way as the optimal method: Think back from the last step, we must move the sub-tower with upper n - 1 disks to the buffer peg then move the disk at bottom from the start peg to the target peg. Finally, we need to move the sub-tower with upper n - 1 disks to the target peg. The process indicates that the extra move compared with the optimal solution comes from the moving of the sub-tower, which means it’s also a recursive process.</p>
+<p>However, there is a limitation that we can’t move the same disk continuously, which means we need to start from $Hanoi[3][2]$ (Define: $Hanoi[n][1]$ doesn’t have a sub-minimum solution). I enumerate all cases where the distribution of disks are the same to find the sub-optimal solution of $Hanoi[3][2]$ as followed.</p>
+<p>The optimal solution:</p>
+<p><img src="/2022/10/07/CM-Hanoi/image-20220911184114398.png" alt="image-20220911184114398"></p>
+<p>The sub-optimal solution(two moves more than the optimal one):</p>
+<p><img src="/2022/10/07/CM-Hanoi/image-20220911184211854.png" alt="image-20220911184211854"></p>
+<p>Also, I have verified nine moves in $Hanoi[3][3]$ by hand, which is also two moves more than the optimal solution. It indicates that when there are three pegs, the sub-minimal solution might have two moves more than the optimal solution at the most. Then I get the formula: $subHanoi[3][n]=2^n+1,\ \ where \ \ n\geq2$.</p>
+<p>Finally, I guess I can extend the result to the situation where has more pegs, the recursive formula of sub-minimum moves is </p>
+<script type="math/tex; mode=display">subHanoi[M][N]:=\min_{1\leq r < N}(min(Hanoi[M][r]+subHanoi[M][r]+Hanoi[M-1][N-r],\\2Hanoi[M][r]+subHanoi[M-1][N-r]))</script><p>Furthermore, I calculate the exact number for $Hanoi[7][23]$ matrix and $subHanoi[7][23]$ with my computer, the source codes in C are in the appendix. The outputs are as followed:</p>
+<p><img src="/2022/10/07/CM-Hanoi/image-20220911174822210.png" alt="image-20220911174822210"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>M pegs</th>
+<th>N disks</th>
+<th>minimum moves</th>
+<th>sub-minimum moves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>13</td>
+<td>55</td>
+<td>57</td>
+</tr>
+<tr>
+<td>7</td>
+<td>13</td>
+<td>39</td>
+<td>41</td>
+</tr>
+<tr>
+<td>5</td>
+<td>19</td>
+<td>103</td>
+<td>105</td>
+</tr>
+<tr>
+<td>7</td>
+<td>19</td>
+<td>63</td>
+<td>65</td>
+</tr>
+<tr>
+<td>5</td>
+<td>23</td>
+<td>159</td>
+<td>161</td>
+</tr>
+<tr>
+<td>7</td>
+<td>23</td>
+<td>87</td>
+<td>89</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="appendix-source-code-c"><a href="#Appendix-Source-Code-C" class="headerlink" title="Appendix: Source Code (C)"></a>Appendix: Source Code (C)</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> M (7)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N (23)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> minof(x,y) (((x)&gt;(y))?(y):(x))</span></span><br><span class="line"><span class="keyword">int</span> hanoi[M + <span class="number">1</span>][N + <span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> subHanoi[M + <span class="number">1</span>][N + <span class="number">1</span>];</span><br><span class="line"><span class="comment">//M pegs with N disks</span></span><br><span class="line"><span class="comment">//Hanoi[M][N] := min&#123;2Hanoi[M][r]+Hanoi[M-1][N-r]&#125; when integer r in [1,N)</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hanoiInitialize</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>;i &lt;= N;i++)&#123;</span><br><span class="line">        hanoi[<span class="number">3</span>][i] = (<span class="number">1</span> &lt;&lt; i) - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(i != <span class="number">1</span>)&#123;</span><br><span class="line">            subHanoi[<span class="number">3</span>][i] = hanoi[<span class="number">3</span>][i] + <span class="number">2</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            subHanoi[<span class="number">3</span>][i] = __INT_MAX__/<span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>;i &lt;= M;i++)&#123;</span><br><span class="line">        hanoi[i][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        subHanoi[i][<span class="number">1</span>] = __INT_MAX__/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ansPrint</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Answer format [M:N]-&gt;X,Y\nrefers M pegs with N disks need X moves at least&quot;</span></span><br><span class="line">    <span class="string">&quot; while the sub-minimum solution is Y\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[7:23]-&gt;%d,%d\n&quot;</span>,hanoi[<span class="number">7</span>][<span class="number">23</span>],subHanoi[<span class="number">7</span>][<span class="number">23</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[5:23]-&gt;%d,%d\n&quot;</span>,hanoi[<span class="number">5</span>][<span class="number">23</span>],subHanoi[<span class="number">5</span>][<span class="number">23</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[7:19]-&gt;%d,%d\n&quot;</span>,hanoi[<span class="number">7</span>][<span class="number">19</span>],subHanoi[<span class="number">7</span>][<span class="number">19</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[5:19]-&gt;%d,%d\n&quot;</span>,hanoi[<span class="number">5</span>][<span class="number">19</span>],subHanoi[<span class="number">5</span>][<span class="number">19</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[7:13]-&gt;%d,%d\n&quot;</span>,hanoi[<span class="number">7</span>][<span class="number">13</span>],subHanoi[<span class="number">7</span>][<span class="number">13</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[5:13]-&gt;%d,%d\n&quot;</span>,hanoi[<span class="number">5</span>][<span class="number">13</span>],subHanoi[<span class="number">5</span>][<span class="number">13</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quiryMore</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> quitOrNot = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\nInput two numbers separated by blank as M and N to represent M pegs with N disks(m &lt; 3 or n &lt; 1 to quit)\n&quot;</span></span><br><span class="line">        <span class="string">&quot;-1 refers no solution\n-&gt;INPUT:&quot;</span>);</span><br><span class="line">        <span class="keyword">int</span> m, n;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;m, &amp;n);</span><br><span class="line">        <span class="keyword">if</span>(m &lt; <span class="number">3</span>||n &lt; <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;-&gt;OUTPUT:M pegs with N disks need %d moves at least\n-&gt;OUTPUT:while the sub-minimum solution is %d\n&quot;</span>, hanoi[m][n], subHanoi[m][n]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">renewSubHanoi</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>;i &lt;= M;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">1</span>;j &lt;= N;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(subHanoi[i][j] == __INT_MAX__/<span class="number">2</span>)&#123;</span><br><span class="line">                subHanoi[i][j] = <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    hanoiInitialize();</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">4</span>;i &lt;= M;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">2</span>;j &lt;= N;j++)&#123;</span><br><span class="line">            <span class="keyword">int</span> min = __INT_MAX__, k, subMin = __INT_MAX__;</span><br><span class="line">            <span class="keyword">for</span>(k = <span class="number">1</span>;k &lt; j;k++)&#123;</span><br><span class="line">                <span class="keyword">int</span> curMin = <span class="number">2</span> * hanoi[i][k] + hanoi[i - <span class="number">1</span>][j - k];</span><br><span class="line">                <span class="keyword">int</span> curSubMin = minof(hanoi[i][k] + subHanoi[i][k] + hanoi[i - <span class="number">1</span>][j - k], <span class="number">2</span> * hanoi[i][k] + subHanoi[i - <span class="number">1</span>][j - k]);</span><br><span class="line">                <span class="keyword">if</span>(curMin &lt; min)&#123;</span><br><span class="line">                    min = curMin;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(curSubMin &lt; subMin)&#123;</span><br><span class="line">                    subMin = curSubMin;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            hanoi[i][j] = min;</span><br><span class="line">            subHanoi[i][j] = subMin;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    renewSubHanoi();</span><br><span class="line">    ansPrint();</span><br><span class="line">    quiryMore();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></toc>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/CM/"># CM</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2022/09/03/Compiler%20Techniques/">Compiler Techniques</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <!--🌞 Zry |-->
+        <span>🔗 iszry@foxmail.com </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
