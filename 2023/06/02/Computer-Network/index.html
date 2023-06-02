@@ -260,13 +260,50 @@
 
         <div class="post-content">
             <h1 id="速览计算机网络"><a href="#速览计算机网络" class="headerlink" title="速览计算机网络"></a>速览计算机网络</h1><p>结合 OSI 参考模型与 TCP/IP 模型，采用具有五层协议的计算机网络体系结构（物理层、数据链路层、网络层、传输层和应用层）。</p>
-<h2 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h2><p>按比特传输数据流，体现在电路接口协议规定（网线接口、规定传输信号的意义、交换电路数量及排列等）。</p>
-<h2 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h2><p>按帧传输数据，将网络层传来的 IP 数据报组装成帧，功能包括帧组装、差错控制、流量控制和传输管理等。</p>
+<p><img src="/2023/06/02/Computer-Network/image-20230602144959108.png" alt="OSI"></p>
+<p><img src="/2023/06/02/Computer-Network/image-20230602145036518.png" alt="TCPIP"></p>
+<p><img src="/2023/06/02/Computer-Network/image-20230602145100311.png" alt="OSI与TCPIP对应关系"></p>
+<h2 id="1-物理层"><a href="#1-物理层" class="headerlink" title="1 物理层"></a>1 物理层</h2><p>传输单位是<strong>比特</strong>，体现在电路接口协议规定（网线接口、规定传输信号的意义、交换电路数量及排列等）。</p>
+<h3 id="11-电路交换"><a href="#1-1-电路交换" class="headerlink" title="1.1 电路交换"></a>1.1 电路交换</h3><h3 id="12-报文交换与分组交换"><a href="#1-2-报文交换与分组交换" class="headerlink" title="1.2 报文交换与分组交换"></a>1.2 报文交换与分组交换</h3><h3 id="13-数据报与虚电路"><a href="#1-3-数据报与虚电路" class="headerlink" title="1.3 数据报与虚电路"></a>1.3 数据报与虚电路</h3><h2 id="2-数据链路层"><a href="#2-数据链路层" class="headerlink" title="2 数据链路层"></a>2 数据链路层</h2><p>传输单位是<strong>帧</strong>，将网络层传来的 IP 数据报组装成帧，功能包括帧组装、差错控制、流量控制和传输管理等。</p>
 <p>协议有 PPP、STP、帧中继等。</p>
-<h2 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h2><p>按数据报传输数据，关注通信子网的运行控制，把网络层数据单元从源端传到目的端，为不同主机提供通信服务。功能包括路由选择、流量控制、拥塞控制、差错控制和网际互连等。</p>
+<blockquote>
+<p>组帧需要为数据添加首部和尾部，分组（ IP 数据报）是帧中的数据部分，不需要添加尾部</p>
+</blockquote>
+<h3 id="21-滑动窗口机制"><a href="#2-1-滑动窗口机制" class="headerlink" title="2.1 滑动窗口机制"></a>2.1 滑动窗口机制</h3><ol>
+<li>接收窗口向前滑动时发送窗口才有可能向前滑动</li>
+<li>接收窗口的大小为1时，可以保证帧的有序接收</li>
+<li>数据链路层滑动窗口协议中窗口的大小在传输过程中是固定的</li>
+</ol>
+<p><img src="/2023/06/02/Computer-Network/image-20230602135651229.png" alt="数据链路层滑动窗口"></p>
+<h3 id="22-随机访问介质访问控制"><a href="#2-2-随机访问介质访问控制" class="headerlink" title="2.2 随机访问介质访问控制"></a>2.2 随机访问介质访问控制</h3><p>载波侦听多路访问/碰撞检测（Carrier Sense Multiple Access with Collision Detection，CSMA/CD）协议：在发送数据前先侦听共用信道，发现信道空闲再发送数据，并在发送数据时继续侦听信道。</p>
+<p>$最小帧长=总线传播时延\times 数据传输速率 \times 2$，最小帧长用于争用信道，在此之后的数据一定不会发生冲突（因为已经成功抢占信道）。</p>
+<p>CSMA/CD 采用二进制指数退避算法避免碰撞：</p>
+<ol>
+<li>确定基本退避时间，一般取两倍总线端到端传播时延 $2d$</li>
+<li>定义参数 <strong>k=min[重传次数，10]</strong></li>
+<li>从离散整数集 $\{0,1,\cdots,2^k-1\}$ 中随机抽取一个数 r，重传所需的退避时间为 r 倍基本退避时间：$2rd$</li>
+<li>当重传达16次仍不成功时，说明网络过于拥挤，认为此帧永远无法正确发出，抛弃此帧并向高层报错</li>
+</ol>
+<blockquote>
+<p>CSMA/CA 用于无线局域网，CSMA/CD 用于有线连接的局域网</p>
+</blockquote>
+<h2 id="3-网络层"><a href="#3-网络层" class="headerlink" title="3 网络层"></a>3 网络层</h2><p>传输单位是<strong>数据报</strong>，关注通信子网的运行控制，把网络层数据单元从源端传到目的端，为不同主机提供通信服务。功能包括路由选择、流量控制、拥塞控制、差错控制和网际互连等。</p>
 <p>协议有 IP、ICMP、ARP、OSPF 等。</p>
-<h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><p>传输单位是<strong>报文段 TCP</strong> 或用户<strong>数据报 UDP</strong>，</p>
-<h2 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h2>
+<h3 id="31-路由算法"><a href="#3-1-路由算法" class="headerlink" title="3.1 路由算法"></a>3.1 路由算法</h3><p>RIP 与 OSPF</p>
+<h3 id="32-ip-amp-nat"><a href="#3-2-IP-amp-NAT" class="headerlink" title="3.2 IP &amp; NAT"></a>3.2 IP &amp; NAT</h3><p>各类 IP 地址中有些 IP 地址用作特殊用途，不用做主机的 IP 地址：</p>
+<ul>
+<li>主机号全0表示网络本身</li>
+<li>主机号全1表示网络的广播地址</li>
+<li>环回地址的 IP 数据不会出现在任何网络上</li>
+<li>32位全为0表示本网络上的本主机</li>
+<li>32位全为1表示整个 TCP/IP 网络的广播地址</li>
+</ul>
+<p><img src="/2023/06/02/Computer-Network/image-20230602144207608.png" alt="三类IP地址"></p>
+<p>网络地址转换（NAT）将专用网络地址转换为公用地址，NAT 转换表中存放着<strong>{本地IP地址：端口}</strong>到<strong>{全球IP地址：端口}</strong>的映射。</p>
+<h3 id="33-子网划分与子网掩码-cidr"><a href="#3-3-子网划分与子网掩码、CIDR" class="headerlink" title="3.3 子网划分与子网掩码、CIDR"></a>3.3 子网划分与子网掩码、CIDR</h3><h2 id="4-传输层"><a href="#4-传输层" class="headerlink" title="4 传输层"></a>4 传输层</h2><p>传输单位是<strong>报文段 TCP</strong> 或用户<strong>数据报 UDP</strong>，负责主机中两个进程之间的通信，为端到端连接提供可靠的传输服务，如流量控制、差错控制、服务质量、数据传输管理等服务。</p>
+<p>协议有 TCP、UDP。</p>
+<h2 id="5-应用层"><a href="#5-应用层" class="headerlink" title="5 应用层"></a>5 应用层</h2><p>负责用户与网络的交互，提供<strong>所有高层协议</strong>，如 FTP、DNS、SMTP、HTTP。</p>
+
         </div>
 
         
