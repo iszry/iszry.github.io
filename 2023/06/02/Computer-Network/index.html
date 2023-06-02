@@ -383,7 +383,7 @@
 <p>UDP与TCP校验机制一样。</p>
 </blockquote>
 <p><img src="/2023/06/02/Computer-Network/image-20230602172128376.png" alt="UDP首部"></p>
-<h3 id="43-tcp"><a href="#4-3-TCP" class="headerlink" title="4.3 TCP"></a>4.3 TCP</h3><p>首部长度20B+4NB（4N字节视需求扩展）。</p>
+<h3 id="43-tcp"><a href="#4-3-TCP" class="headerlink" title="4.3 TCP"></a>4.3 TCP</h3><p>TCP首部长度20B+4NB（4N字节视需求扩展）。</p>
 <p><img src="/2023/06/02/Computer-Network/image-20230602172622115.png" alt="TCP首部"></p>
 <p>建立TCP连接（连接两个套接字）有三个阶段：连接建立、数据传送和连接释放。这一过程采用客户/服务器模式，主动发起连接建立的应用进程称为客户（Client），被动等待连接建立的应用进程称为服务器（Server）。</p>
 <p>TCP连接管理要确保：</p>
@@ -400,8 +400,44 @@
 <p>TCP连接释放时经历的四个步骤称为<strong>四次挥手</strong>。</p>
 <p><img src="/2023/06/02/Computer-Network/image-20230602173258687.png" alt="image-20230602173258687"></p>
 <p><strong>超时</strong>和<strong>冗余ACK</strong>这两种事件会导致TCP对报文段进行重传。</p>
+<ol>
+<li>超时重传：TCP每发送一个报文段就对这个报文段设置一次计时器，在计时器到期但还未收到确认时就要重传这一报文段。（保留报文段往返时间Round-Trip Time，$RTT$ 的加权平均往返时间 $RTT_s$，超时重传时间 Retransmission Time-out，$RTO$ 应该比 $RTT_s$ 略大）</li>
+<li>冗余确认：接收方在收到失序报文段后会向发送方回复一个冗余ACK指明期望收到的报文序号，当发送方收到三个对于同一序号的冗余ACK时，即认为该序号报文已经丢失，可以立刻进行重传（这么做是因为超时触发重传的超时周期往往较长，所以冗余确认技术也被称为<strong>快速重传</strong>）</li>
+</ol>
+<p>TCP提供<strong>流量控制</strong>服务来平衡发送方的快速发送速率与接收方缓冲区空间有限的矛盾，这种服务基于<strong>滑动窗口协议</strong>的流量控制机制。</p>
+<p>接收方将<strong>接收窗口rwnd</strong>的大小写入TCP报文段首部来限制发送方注入报文的速率，同时，发送方根据对当前网络拥塞程度的估计而确定的窗口值称为<strong>拥塞窗口cwnd</strong>。</p>
+<p>拥塞控制是全局过程，让网络能够承受现有的网络负荷；流量控制是指点对点的通信量的控制。</p>
+<p>拥塞控制有四种算法：</p>
+<ol>
+<li>慢开始</li>
+<li>拥塞避免</li>
+<li>快重传</li>
+<li>快恢复</li>
+</ol>
+<p>接收窗口rwnd与拥塞窗口cwnd由发送方进行维护，实际的<strong>发送窗口的上限值</strong> $=min[rwnd, cwnd]$。</p>
+<p><strong>慢开始算法</strong>率先设置cwnd=1，随后每经过一个传输轮次（往返时延RTT），cwnd翻倍，直到超过慢开始门限ssthresh，改用拥塞避免算法。</p>
+<p><strong>拥塞避免算法</strong>在每个传输轮次后将cwnd加一。</p>
+<p>发送方一旦判断出网络拥塞（未按时收到确认），就将慢开始门限ssthresh设置为出现拥塞时发送方的cwnd的一半（但不小于2），并将拥塞窗口cwnd重新设置为1，并使用慢开始算法。</p>
+<p><img src="/2023/06/02/Computer-Network/image-20230602235628840.png" alt="慢开始和拥塞避免算法"></p>
+<p><strong>快重传算法</strong>在发送方连续收到三个重复的ACK报文时直接重传对方尚未收到的报文（使用冗余ACK）。</p>
+<p><strong>快恢复算法</strong>在发送方连续收到三个冗余ACK时将慢开始门限ssthresh设置为发送方cwnd的一半，并将cwnd设置为修改后的ssthresh值，并使用拥塞避免算法。</p>
+<p><img src="/2023/06/02/Computer-Network/image-20230602235608043.png" alt="快恢复算法"></p>
 <h2 id="5-应用层"><a href="#5-应用层" class="headerlink" title="5 应用层"></a>5 应用层</h2><p>负责用户与网络的交互，提供<strong>所有高层协议</strong>，如 FTP、DNS、SMTP、HTTP。</p>
-
+<p>网络应用有<strong>客户服务器C/S</strong>模型和<strong>P2P模型</strong>。</p>
+<h3 id="51-dns"><a href="#5-1-DNS" class="headerlink" title="5.1 DNS"></a>5.1 DNS</h3><p>域名系统（Domain Name System，DNS）采用C/S模型，使用<strong>53号端口</strong>，分为层次域名空间、域名服务器和解析器。</p>
+<ol>
+<li>标号不超过63个字符，总长不超过255个字符</li>
+<li>域名从左到右级别逐次提升</li>
+</ol>
+<p>分布式设计DNS主要有四种类型的域名服务器：</p>
+<ol>
+<li>根域名服务器，共十三个，每个都知道所有的顶级域名服务器</li>
+<li>顶级域名服务器，负责管理在该顶级域名服务器注册的所有二级域名</li>
+<li>授权（权限）域名服务器，每台主机都必须在该类型服务器处登记</li>
+<li>本地域名服务器，本机中的DNS地址即为该类型服务器地址</li>
+</ol>
+<p><strong>域名解析</strong>是指把域名映射成IP地址或把IP地址映射成域名的过程，前者为<strong>正向解析</strong>，后者为<strong>反向解析</strong>。</p>
+<h3 id="52-ftp"><a href="#5-2-FTP" class="headerlink" title="5.2 FTP"></a>5.2 FTP</h3><h3 id="53-电子邮件"><a href="#5-3-电子邮件" class="headerlink" title="5.3 电子邮件"></a>5.3 电子邮件</h3><h3 id="54-www"><a href="#5-4-WWW" class="headerlink" title="5.4 WWW"></a>5.4 WWW</h3>
         </div>
 
         
