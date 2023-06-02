@@ -289,7 +289,35 @@
 </blockquote>
 <h2 id="3-网络层"><a href="#3-网络层" class="headerlink" title="3 网络层"></a>3 网络层</h2><p>传输单位是<strong>数据报</strong>，关注通信子网的运行控制，把网络层数据单元从源端传到目的端，为不同主机提供通信服务。功能包括路由选择、流量控制、拥塞控制、差错控制和网际互连等。</p>
 <p>协议有 IP、ICMP、ARP、OSPF 等。</p>
-<h3 id="31-路由算法"><a href="#3-1-路由算法" class="headerlink" title="3.1 路由算法"></a>3.1 路由算法</h3><p>RIP 与 OSPF</p>
+<h3 id="31-路由算法"><a href="#3-1-路由算法" class="headerlink" title="3.1 路由算法"></a>3.1 路由算法</h3><p>自治系统（Autonomous System，AS）：一个AS的所有路由器在本自治系统内必须连通。一个AS需要在AS内部和AS之间选择协议。</p>
+<p><strong>路由信息协议</strong>（Routing Information Protocol，<strong>RIP</strong>）是一种基于距离向量的路由选择协议（距离由跳数定义）。</p>
+<ol>
+<li>优点是实现简单、开销小、收敛过程快</li>
+<li>缺点是<strong>限制网络规模</strong>；开销随网络规模成正比（路由器间交换的信息为完整路由表）；网络出现故障时会出现<strong>慢收敛</strong>现象。</li>
+<li>一条路径最多只能包含<strong>15个路由器</strong>，距离更远则视为不可达</li>
+<li>两个RIP路由器之间默认每30S广播一次RIP路由更新信息</li>
+<li>仅相邻路由器交换信息</li>
+<li>RIP路由器将持续180S及以上时间没收到更新路由表的相邻路由器标记为不可达路由器（设置距离为16）</li>
+<li>RIP是应用层协议，使用UDP传送数据（<strong>端口520</strong>）</li>
+</ol>
+<p><strong>开放最短路径优先协议（OSPF）</strong>使用链路状态路由算法，特点如下：</p>
+<ol>
+<li>OSPF向本AS中所有路由器发送信息，RIP仅向邻居发送</li>
+<li>OSPF发送的信息是与本路由器相邻所有路由器的<strong>链路状态信息</strong>，RIP发送自己的路由表</li>
+<li>只有链路状态发生变化时OSPF路由器才向所有路由器发送信息</li>
+<li>OSPF是网络层协议，不使用UDP或TCP，而直接使用IP数据报传送（<strong>首部协议字段89</strong>）</li>
+<li>如果到同一个目的网络有多条相同代价的路径，那么可以将通信量分配给这几条路径，实现<strong>多路径间的负载平衡</strong></li>
+<li>每个链路状态都带上一个32位的序号，序号越大状态越新</li>
+<li>OSPF路由器使用Dijkstra计算到各目的网络的最优路径（仅存储下一跳，而非完整路径）</li>
+</ol>
+<p><strong>边界网关协议（BGP）</strong>是不同AS间的路由器之间交换路由信息的外部网关协议，常用于互联网的网关之间。</p>
+<ol>
+<li>BGP力求找到无环可达的路径，并不保证是最佳路由</li>
+<li>是基于TCP的应用层协议</li>
+<li>BGP交换路由信息的结点数量级即为AS的数量级</li>
+<li>在BGP刚运行时，BGP的邻站交换整个BGP路由表，后续仅针对变动进行更新</li>
+</ol>
+<p><img src="/2023/06/02/Computer-Network/image-20230602164333724.png" alt="三种路由协议对比"></p>
 <h3 id="32-ip-amp-nat"><a href="#3-2-IP-amp-NAT" class="headerlink" title="3.2 IP &amp; NAT"></a>3.2 IP &amp; NAT</h3><p>各类 IP 地址中有些 IP 地址用作特殊用途，不用做主机的 IP 地址：</p>
 <ul>
 <li>主机号全0表示网络本身</li>
@@ -300,8 +328,78 @@
 </ul>
 <p><img src="/2023/06/02/Computer-Network/image-20230602144207608.png" alt="三类IP地址"></p>
 <p>网络地址转换（NAT）将专用网络地址转换为公用地址，NAT 转换表中存放着<strong>{本地IP地址：端口}</strong>到<strong>{全球IP地址：端口}</strong>的映射。</p>
-<h3 id="33-子网划分与子网掩码-cidr"><a href="#3-3-子网划分与子网掩码、CIDR" class="headerlink" title="3.3 子网划分与子网掩码、CIDR"></a>3.3 子网划分与子网掩码、CIDR</h3><h2 id="4-传输层"><a href="#4-传输层" class="headerlink" title="4 传输层"></a>4 传输层</h2><p>传输单位是<strong>报文段 TCP</strong> 或用户<strong>数据报 UDP</strong>，负责主机中两个进程之间的通信，为端到端连接提供可靠的传输服务，如流量控制、差错控制、服务质量、数据传输管理等服务。</p>
+<blockquote>
+<p>IPv6主要特点：</p>
+<ol>
+<li>地址空间更大，从32位变成128位</li>
+<li>灵活，可扩展</li>
+<li>即插即用自配置，支持资源预分配</li>
+<li>安全性更好</li>
+<li>IPv6首部长度必须为8B的整数倍，IPv4首部是4B的整数倍</li>
+<li>与IPv4不兼容</li>
+</ol>
+</blockquote>
+<h3 id="33-子网划分与子网掩码-cidr"><a href="#3-3-子网划分与子网掩码、CIDR" class="headerlink" title="3.3 子网划分与子网掩码、CIDR"></a>3.3 子网划分与子网掩码、CIDR</h3><p>子网划分下的$三级IP地址：\{&lt;网络号&gt;，&lt;子网号&gt;，&lt;主机号&gt;\}$。</p>
+<blockquote>
+<p>子网主机号不能被指派全0与全1的地址，其中全0地址为子网的网络号，全1地址为子网的广播地址。</p>
+</blockquote>
+<p>主机IP逐位&amp;子网掩码=网络号</p>
+<p>在CIDR中，$IP::=\{&lt;网络前缀&gt;，&lt;主机号&gt;\}$</p>
+<h3 id="34-地址解析协议arp"><a href="#3-4-地址解析协议（ARP）" class="headerlink" title="3.4 地址解析协议（ARP）"></a>3.4 地址解析协议（ARP）</h3><p>IP地址是网络层使用的地址，硬件地址是数据链路层使用的MAC地址，在不同抽象层次中地址可见性不同。地址解析协议（Address  Resolution Protocol，ARP）用于完成IP地址到MAC地址的映射。</p>
+<p>ARP协议工作在网络层，用于解决同一局域网的主机与路由器的IP地址与硬件地址的映射问题，如果目标不在该局域网，则需要找到本局域网的某个路由器由其转发至下一个网络。</p>
+<h3 id="35-路由表"><a href="#3-5-路由表" class="headerlink" title="3.5 路由表"></a>3.5 路由表</h3><p>路由表表项一般包含：</p>
+<ol>
+<li>目的网络IP地址</li>
+<li>子网掩码</li>
+<li>下一条IP地址</li>
+<li>接口</li>
+</ol>
+<blockquote>
+<p><strong>转发</strong>是路由器根据转发表把IP数据报从合适的端口转发出去，仅涉及一个路由器；<strong>路由选择</strong>则涉及多个路由器，路由表是许多路由器协同工作的结果。</p>
+</blockquote>
+<h2 id="4-传输层"><a href="#4-传输层" class="headerlink" title="4 传输层"></a>4 传输层</h2><p>传输单位是<strong>报文段 TCP</strong> 或用户<strong>数据报 UDP</strong>，负责主机中两个<strong>进程之间</strong>的通信，为端到端连接提供可靠的传输服务，如流量控制、差错控制、服务质量、数据传输管理等服务。</p>
 <p>协议有 TCP、UDP。</p>
+<h3 id="41-传输层服务"><a href="#4-1-传输层服务" class="headerlink" title="4.1 传输层服务"></a>4.1 传输层服务</h3><p>较网络层而言，传输层会提供对报文的差错检测服务，以及面向连接的TCP和无连接的UDP两种传输协议。</p>
+<p><strong>端口</strong>（软件端口）是传输层服务访问点（SAP），用于标识主机中的应用进程。</p>
+<blockquote>
+<p>数据链路层的SAP是MAC地址；网络层的SAP是IP地址；传输层的SAP是端口。</p>
+</blockquote>
+<ol>
+<li><p>端口号长度为16bit，可以表示65536个不同的端口号</p>
+</li>
+<li><p>服务器端使用的端口号分为两类，熟知端口号（0~1023）被IANA（互联网地址指派机构）指派给TCP/IP最重要的一些应用程序；登记端口号（1024~49151）供没有熟知端口号的应用程序使用，使用时必须在IANA登记</p>
+<p><img src="/2023/06/02/Computer-Network/image-20230602170853543.png" alt="熟知端口号"></p>
+</li>
+<li><p>客户端端口号（49152~65535）仅在客户端进程运行时才动态选择，在通信结束后即被释放</p>
+</li>
+</ol>
+<p><strong>套接字</strong> $Socket=(IP地址: 端口号)$ 是一个通信端点，唯一地标识了网络中的一台主机和其上的一个应用（进程）。</p>
+<p>面向连接服务TCP主要适用于可靠性较重要的场合，如文件传输协议（FTP）、超文本传输协议（HTTP）、远程登录（TELNET）等。</p>
+<p>UDP在IP之上提供多路复用和对数据的错误检查两个附加服务，速度较快，实时性好，主要适用于小文件传送协议（TFTP）、DNS、SNMP和实时传输协议（RTP）。</p>
+<h3 id="42-udp"><a href="#4-2-UDP" class="headerlink" title="4.2 UDP"></a>4.2 UDP</h3><p>UDP不保证可靠交付，可靠性由用户在应用层完成。</p>
+<p>UDP可以应用于一对一、一对多、多对一、多对多交互通信。</p>
+<p>UDP数据报包含首部和用户数据。首部有8B共4个字段，每个字段长度2B，在计算校验和时需要提供12B的伪首部（可以检查源端口号、目的端口号、源IP、目的地址和数据报数据部分）。</p>
+<blockquote>
+<p>UDP与TCP校验机制一样。</p>
+</blockquote>
+<p><img src="/2023/06/02/Computer-Network/image-20230602172128376.png" alt="UDP首部"></p>
+<h3 id="43-tcp"><a href="#4-3-TCP" class="headerlink" title="4.3 TCP"></a>4.3 TCP</h3><p>首部长度20B+4NB（4N字节视需求扩展）。</p>
+<p><img src="/2023/06/02/Computer-Network/image-20230602172622115.png" alt="TCP首部"></p>
+<p>建立TCP连接（连接两个套接字）有三个阶段：连接建立、数据传送和连接释放。这一过程采用客户/服务器模式，主动发起连接建立的应用进程称为客户（Client），被动等待连接建立的应用进程称为服务器（Server）。</p>
+<p>TCP连接管理要确保：</p>
+<ol>
+<li>每一方能够知道对方的存在</li>
+<li>允许双方协商一些参数（最大窗口值等）</li>
+<li>能够对运输实体资源（缓存大小等）进行分配</li>
+</ol>
+<p>TCP连接建立时经历的三个步骤称为<strong>三次挥手</strong>。</p>
+<blockquote>
+<p>服务器端资源在第二次握手时分配，客户端资源在第三次握手时分配</p>
+</blockquote>
+<p><img src="/2023/06/02/Computer-Network/image-20230602173142559.png" alt="TCP三次握手"></p>
+<p>TCP连接释放时经历的四个步骤称为<strong>四次挥手</strong>。</p>
+<p><img src="/2023/06/02/Computer-Network/image-20230602173258687.png" alt="image-20230602173258687"></p>
+<p><strong>超时</strong>和<strong>冗余ACK</strong>这两种事件会导致TCP对报文段进行重传。</p>
 <h2 id="5-应用层"><a href="#5-应用层" class="headerlink" title="5 应用层"></a>5 应用层</h2><p>负责用户与网络的交互，提供<strong>所有高层协议</strong>，如 FTP、DNS、SMTP、HTTP。</p>
 
         </div>
