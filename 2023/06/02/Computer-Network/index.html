@@ -263,6 +263,8 @@
 <p><img src="/2023/06/02/Computer-Network/image-20230602144959108.png" alt="OSI"></p>
 <p><img src="/2023/06/02/Computer-Network/image-20230602145036518.png" alt="TCPIP"></p>
 <p><img src="/2023/06/02/Computer-Network/image-20230602145100311.png" alt="OSI与TCPIP对应关系"></p>
+<p><strong>分层原因</strong>：实现信息在网络中传输非常复杂，分层是将复杂问题简单化、局部化的有效方法。</p>
+<p>按覆盖范围将网络分为<strong>广域网</strong>（WAN）与<strong>局域网</strong>（LAN）两类。</p>
 <h2 id="1-物理层"><a href="#1-物理层" class="headerlink" title="1 物理层"></a>1 物理层</h2><p>传输单位是<strong>比特</strong>，体现在电路接口协议规定（网线接口、规定传输信号的意义、交换电路数量及排列等）。</p>
 <p>从通信双方信息交互方式来看有三种通信方式：</p>
 <ol>
@@ -272,11 +274,24 @@
 </ol>
 <p>数据报与虚电路：</p>
 <p><img src="/2023/06/02/Computer-Network/image-20230603105645816.png" alt="数据报与虚电路"></p>
+<p>Nyquist定理：理想低通信道最大数据传输率 $=2Hlog_2(V)$</p>
+<ul>
+<li>$H$：信道带宽</li>
+<li>$V$：信号电平级数（信号状态数）</li>
+</ul>
+<p><strong>香农定理</strong>：信道极限传输速率 $C=Wlog_2(1+\frac{S}{N})$</p>
+<ul>
+<li>$W$：信道带宽，单位赫兹</li>
+<li>$S$：信道内所传信号的平均功率</li>
+<li>$N$：信道内高斯噪声功率</li>
+</ul>
+<p>信噪比 $=10log_{10}(\frac{S}{N})$</p>
 <h2 id="2-数据链路层"><a href="#2-数据链路层" class="headerlink" title="2 数据链路层"></a>2 数据链路层</h2><p>传输单位是<strong>帧</strong>，将网络层传来的 IP 数据报组装成帧，功能包括帧组装、差错控制、流量控制和传输管理等。</p>
 <p>协议有 PPP、STP、帧中继等。</p>
 <blockquote>
 <p>组帧需要为数据添加首部和尾部，分组（ IP 数据报）是帧中的数据部分，不需要添加尾部</p>
 </blockquote>
+<p>IEEE局域网的数据链路层分为<strong>逻辑链路控制</strong>和<strong>介质访问控制</strong>两个子层。</p>
 <h3 id="21-组帧"><a href="#2-1-组帧" class="headerlink" title="2.1 组帧"></a>2.1 组帧</h3><p>组帧主要解决帧定界、帧同步、透明传输等问题，通常有四种方法：</p>
 <ol>
 <li><strong>字符计数法</strong>：在帧头部使用一个计数字段标明帧内字符数，最大的问题在于一旦计数出错则收发双方后续交流全部失去同步。</li>
@@ -349,7 +364,7 @@
 <li>32位全为0表示本网络上的本主机</li>
 <li>32位全为1表示整个 TCP/IP 网络的广播地址</li>
 </ul>
-<p><img src="/2023/06/02/Computer-Network/image-20230602144207608.png" alt="三类IP地址"></p>
+<p><img src="/2023/06/02/Computer-Network/image-20230603145747325.png" alt="IP地址分类"></p>
 <p>网络地址转换（NAT）将专用网络地址转换为公用地址，NAT 转换表中存放着<strong>{本地IP地址：端口}</strong>到<strong>{全球IP地址：端口}</strong>的映射。</p>
 <blockquote>
 <p>IPv6主要特点：</p>
@@ -368,6 +383,7 @@
 </blockquote>
 <p>主机IP逐位&amp;子网掩码=网络号</p>
 <p>在CIDR中，$IP::=\{&lt;网络前缀&gt;，&lt;主机号&gt;\}$</p>
+<p>路由聚合的好处：路由表中的一个项目可以表示很多个(例如上千个)原来传统分类地址的路由，可以减少路由表中表项个数，并减少路由器间交换的路由信息量。  </p>
 <h3 id="34-地址解析协议arp"><a href="#3-4-地址解析协议（ARP）" class="headerlink" title="3.4 地址解析协议（ARP）"></a>3.4 地址解析协议（ARP）</h3><p>IP地址是网络层使用的地址，硬件地址是数据链路层使用的MAC地址，在不同抽象层次中地址可见性不同。地址解析协议（Address  Resolution Protocol，ARP）用于完成IP地址到MAC地址的映射。</p>
 <p>ARP协议工作在网络层，用于解决同一局域网的主机与路由器的IP地址与硬件地址的映射问题，如果目标不在该局域网，则需要找到本局域网的某个路由器由其转发至下一个网络。</p>
 <h3 id="35-路由表"><a href="#3-5-路由表" class="headerlink" title="3.5 路由表"></a>3.5 路由表</h3><p>路由表表项一般包含：</p>
@@ -396,7 +412,7 @@
 <li><p>客户端端口号（49152~65535）仅在客户端进程运行时才动态选择，在通信结束后即被释放</p>
 </li>
 </ol>
-<p><strong>套接字</strong> $Socket=(IP地址: 端口号)$ 是一个通信端点，唯一地标识了网络中的一台主机和其上的一个应用（进程）。</p>
+<p><strong>套接字</strong> $Socket=(IP地址: 端口号)$ 是一个通信端点，唯一地标识了网络中的一台主机和其上的一个应用（进程），这是TCP/IP协议向应用层提供的<strong>编程接口</strong>。</p>
 <p>面向连接服务TCP主要适用于可靠性较重要的场合，如文件传输协议（FTP）、超文本传输协议（HTTP）、远程登录（TELNET）等。</p>
 <p>UDP在IP之上提供多路复用和对数据的错误检查两个附加服务，速度较快，实时性好，主要适用于小文件传送协议（TFTP）、DNS、SNMP和实时传输协议（RTP）。</p>
 <h3 id="42-udp"><a href="#4-2-UDP" class="headerlink" title="4.2 UDP"></a>4.2 UDP</h3><p>UDP不保证可靠交付，可靠性由用户在应用层完成。</p>
@@ -447,7 +463,7 @@
 <p><img src="/2023/06/02/Computer-Network/image-20230602235608043.png" alt="快恢复算法"></p>
 <h2 id="5-应用层"><a href="#5-应用层" class="headerlink" title="5 应用层"></a>5 应用层</h2><p>负责用户与网络的交互，提供<strong>所有高层协议</strong>，如 FTP、DNS、SMTP、HTTP。</p>
 <p>网络应用有<strong>客户服务器C/S</strong>模型和<strong>P2P模型</strong>。</p>
-<h3 id="51-dns"><a href="#5-1-DNS" class="headerlink" title="5.1 DNS"></a>5.1 DNS</h3><p>域名系统（Domain Name System，DNS）采用C/S模型，使用<strong>53号端口</strong>，分为层次域名空间、域名服务器和解析器。</p>
+<h3 id="51-dns"><a href="#5-1-DNS" class="headerlink" title="5.1 DNS"></a>5.1 DNS</h3><p>域名系统（Domain Name System，DNS）采用C/S模型，使用<strong>53号端口</strong>，基于UDP协议，分为层次域名空间、域名服务器和解析器。</p>
 <ol>
 <li>标号不超过63个字符，总长不超过255个字符</li>
 <li>域名从左到右级别逐次提升</li>
@@ -469,6 +485,7 @@
 <p>SMTP只能传送一定长度的ASCII码邮件，无法传送许多其他国家字符，多用途网际邮件扩充（MIME）改进了SMTP这一缺点。SMTP使用TCP连接，<strong>端口号为25 </strong>。</p>
 <p>POP也使用C/S模式，在传输层使用TCP，<strong>端口号为110</strong>。</p>
 <p>目前出现了许多基于万维网的电子邮件，如Hotmail、Gmail，其特点是用户浏览器与邮件服务器之间的邮件交互使用HTTP，仅在不同邮件服务器之间使用SMTP传送邮件。</p>
+<p>e-mail中，用户代理使用SMTP协议发送邮件，使用POP3协议收取邮件。</p>
 <h3 id="54-www"><a href="#5-4-WWW" class="headerlink" title="5.4 WWW"></a>5.4 WWW</h3><p>万维网（World Wide Web，WWW）是一个信息存储空间，其中的事物称为<strong>资源</strong>，并由一个全域的统一资源定位符<strong>URL</strong>标识，这种资源通过超文本传输协议（HTTP）传送给使用者，使用者点击链接获取资源。</p>
 <p>万维网的内核由三个标准构成：</p>
 <ol>
