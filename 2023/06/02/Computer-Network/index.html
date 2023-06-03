@@ -264,18 +264,41 @@
 <p><img src="/2023/06/02/Computer-Network/image-20230602145036518.png" alt="TCPIP"></p>
 <p><img src="/2023/06/02/Computer-Network/image-20230602145100311.png" alt="OSI与TCPIP对应关系"></p>
 <h2 id="1-物理层"><a href="#1-物理层" class="headerlink" title="1 物理层"></a>1 物理层</h2><p>传输单位是<strong>比特</strong>，体现在电路接口协议规定（网线接口、规定传输信号的意义、交换电路数量及排列等）。</p>
-<h3 id="11-电路交换"><a href="#1-1-电路交换" class="headerlink" title="1.1 电路交换"></a>1.1 电路交换</h3><h3 id="12-报文交换与分组交换"><a href="#1-2-报文交换与分组交换" class="headerlink" title="1.2 报文交换与分组交换"></a>1.2 报文交换与分组交换</h3><h3 id="13-数据报与虚电路"><a href="#1-3-数据报与虚电路" class="headerlink" title="1.3 数据报与虚电路"></a>1.3 数据报与虚电路</h3><h2 id="2-数据链路层"><a href="#2-数据链路层" class="headerlink" title="2 数据链路层"></a>2 数据链路层</h2><p>传输单位是<strong>帧</strong>，将网络层传来的 IP 数据报组装成帧，功能包括帧组装、差错控制、流量控制和传输管理等。</p>
+<p>从通信双方信息交互方式来看有三种通信方式：</p>
+<ol>
+<li>单向通信：只有一个方向的通信而没有反方向的交互，仅需一条信道。</li>
+<li>半双工通信：通信的双方均可收发信息，但任何一方都不能同时收发信息，需要两条信道。</li>
+<li>全双工通信：通信双方可以同时收发信息，需要两条信道。</li>
+</ol>
+<p>数据报与虚电路：</p>
+<p><img src="/2023/06/02/Computer-Network/image-20230603105645816.png" alt="数据报与虚电路"></p>
+<h2 id="2-数据链路层"><a href="#2-数据链路层" class="headerlink" title="2 数据链路层"></a>2 数据链路层</h2><p>传输单位是<strong>帧</strong>，将网络层传来的 IP 数据报组装成帧，功能包括帧组装、差错控制、流量控制和传输管理等。</p>
 <p>协议有 PPP、STP、帧中继等。</p>
 <blockquote>
 <p>组帧需要为数据添加首部和尾部，分组（ IP 数据报）是帧中的数据部分，不需要添加尾部</p>
 </blockquote>
-<h3 id="21-滑动窗口机制"><a href="#2-1-滑动窗口机制" class="headerlink" title="2.1 滑动窗口机制"></a>2.1 滑动窗口机制</h3><ol>
+<h3 id="21-组帧"><a href="#2-1-组帧" class="headerlink" title="2.1 组帧"></a>2.1 组帧</h3><p>组帧主要解决帧定界、帧同步、透明传输等问题，通常有四种方法：</p>
+<ol>
+<li><strong>字符计数法</strong>：在帧头部使用一个计数字段标明帧内字符数，最大的问题在于一旦计数出错则收发双方后续交流全部失去同步。</li>
+<li><strong>字符填充的首尾定界符法</strong>：使用特定字符标识一帧的起止，信息位中出现的特定字符应该用转义字符加以区分。</li>
+<li><strong>零比特填充的首尾标志法</strong>：使用特定的比特模式<code>01111110</code>来标志一帧的起止，在信息位中每遇到连续的5个1则插入一个0进行编/解码。该方法很容易由硬件实现，性能优于字符填充法。</li>
+<li><strong>违规编码法</strong>：常见编码方式（如曼彻斯特编码方法）将1编码为高低电平对，将0编码为低高电平对，高高电平对和低低电平对则为违规的数据比特编码方式，可以用于界定帧的起止位置，IEEE802采用了这种方式。</li>
+</ol>
+<p>目前常用的组帧方法是零比特填充的首尾标志法和违规编码法。</p>
+<h3 id="22-滑动窗口机制"><a href="#2-2-滑动窗口机制" class="headerlink" title="2.2 滑动窗口机制"></a>2.2 滑动窗口机制</h3><ol>
 <li>接收窗口向前滑动时发送窗口才有可能向前滑动</li>
 <li>接收窗口的大小为1时，可以保证帧的有序接收</li>
 <li>数据链路层滑动窗口协议中窗口的大小在传输过程中是固定的</li>
 </ol>
 <p><img src="/2023/06/02/Computer-Network/image-20230602135651229.png" alt="数据链路层滑动窗口"></p>
-<h3 id="22-随机访问介质访问控制"><a href="#2-2-随机访问介质访问控制" class="headerlink" title="2.2 随机访问介质访问控制"></a>2.2 随机访问介质访问控制</h3><p>载波侦听多路访问/碰撞检测（Carrier Sense Multiple Access with Collision Detection，CSMA/CD）协议：在发送数据前先侦听共用信道，发现信道空闲再发送数据，并在发送数据时继续侦听信道。</p>
+<h3 id="23-介质访问控制"><a href="#2-3-介质访问控制" class="headerlink" title="2.3 介质访问控制"></a>2.3 介质访问控制</h3><p>信道划分介质访问控制分为四种方式：</p>
+<ol>
+<li><strong>频分多路复用（FDM）</strong>：充分利用介质带宽，系统效率较高，技术成熟，实现容易。</li>
+<li><strong>时分多路复用（TDM）</strong>：类似时间片轮转。</li>
+<li><strong>波分多路复用（WDM）</strong>：光的频分多路复用，即在一根光纤中传输多种不同波长的光信号。</li>
+<li><strong>码分多路复用（CDM）</strong>：采用不同的编码来区分各路原始信号，也称码分多址（Code Division Multiple Access，CDMA），原理是每个比特时间划分为m（通常为64，128）个短的时间槽码片（Chip），数据比特1和0分别用码片序列和其反码来表示，通过保证各站点码片序列正交即可保证各信号互不干扰。</li>
+</ol>
+<p>载波侦听多路访问/碰撞检测（Carrier Sense Multiple Access with Collision Detection，CSMA/CD）协议：在发送数据前先侦听共用信道，发现信道空闲再发送数据，并在发送数据时继续侦听信道。</p>
 <p>$最小帧长=总线传播时延\times 数据传输速率 \times 2$，最小帧长用于争用信道，在此之后的数据一定不会发生冲突（因为已经成功抢占信道）。</p>
 <p>CSMA/CD 采用二进制指数退避算法避免碰撞：</p>
 <ol>
@@ -436,8 +459,33 @@
 <li>授权（权限）域名服务器，每台主机都必须在该类型服务器处登记</li>
 <li>本地域名服务器，本机中的DNS地址即为该类型服务器地址</li>
 </ol>
-<p><strong>域名解析</strong>是指把域名映射成IP地址或把IP地址映射成域名的过程，前者为<strong>正向解析</strong>，后者为<strong>反向解析</strong>。</p>
-<h3 id="52-ftp"><a href="#5-2-FTP" class="headerlink" title="5.2 FTP"></a>5.2 FTP</h3><h3 id="53-电子邮件"><a href="#5-3-电子邮件" class="headerlink" title="5.3 电子邮件"></a>5.3 电子邮件</h3><h3 id="54-www"><a href="#5-4-WWW" class="headerlink" title="5.4 WWW"></a>5.4 WWW</h3>
+<p><strong>域名解析</strong>是指把域名映射成IP地址或把IP地址映射成域名的过程，前者为<strong>正向解析</strong>，后者为<strong>反向解析</strong>。域名解析一般有递归查询和迭代查询两种形式，递归查询仅向根域名服务器查询一次；递归与迭代查询相结合的方式则会首先向本地域名服务器进行递归查询，随后由本地域名服务器依次向根域名服务器、顶级域名服务器、权限域名服务器进行迭代查询。</p>
+<h3 id="52-ftp"><a href="#5-2-FTP" class="headerlink" title="5.2 FTP"></a>5.2 FTP</h3><p>文件传输协议（File Transfer Protocol，FTP）是使用最广泛的文件传输协议，允许客户指明文件的类型与格式。其采用C/S模式，使用TCP传输服务，一个FTP服务器进程可以同时为多个客户进程提供服务。</p>
+<p>FTP在工作时使用两个并行的TCP连接：<strong>控制连接（端口号21）</strong>和<strong>数据连接（端口号20）</strong></p>
+<h3 id="53-电子邮件"><a href="#5-3-电子邮件" class="headerlink" title="5.3 电子邮件"></a>5.3 电子邮件</h3><p>电子邮件系统的三个最主要组成构件是用户代理（User Agent，UA）、邮件服务器和电子邮件使用的协议（如SMTP、POP3，IMAP）。</p>
+<p>常见UA有Outlook、Foxmail等。</p>
+<p>邮件服务器采用C/S模式。</p>
+<p><img src="/2023/06/02/Computer-Network/image-20230603101433388.png" alt="收发邮件"></p>
+<p>SMTP只能传送一定长度的ASCII码邮件，无法传送许多其他国家字符，多用途网际邮件扩充（MIME）改进了SMTP这一缺点。SMTP使用TCP连接，<strong>端口号为25 </strong>。</p>
+<p>POP也使用C/S模式，在传输层使用TCP，<strong>端口号为110</strong>。</p>
+<p>目前出现了许多基于万维网的电子邮件，如Hotmail、Gmail，其特点是用户浏览器与邮件服务器之间的邮件交互使用HTTP，仅在不同邮件服务器之间使用SMTP传送邮件。</p>
+<h3 id="54-www"><a href="#5-4-WWW" class="headerlink" title="5.4 WWW"></a>5.4 WWW</h3><p>万维网（World Wide Web，WWW）是一个信息存储空间，其中的事物称为<strong>资源</strong>，并由一个全域的统一资源定位符<strong>URL</strong>标识，这种资源通过超文本传输协议（HTTP）传送给使用者，使用者点击链接获取资源。</p>
+<p>万维网的内核由三个标准构成：</p>
+<ol>
+<li>URL：标识文档</li>
+<li>HTTP：应用层协议，使用TCP进行传输</li>
+<li>HTML：文档结构语言</li>
+</ol>
+<p>$URL::=&lt;协议&gt;://&lt;主机&gt;:&lt;端口&gt;/&lt;路径&gt;$</p>
+<blockquote>
+<p>URL中不区分大小写</p>
+</blockquote>
+<p>WWW服务器不断监听TCP的<strong>端口80</strong>，获得请求后即与浏览器建立TCP连接，随后浏览器向服务器发送获取某个Web页面的HTTP请求，服务器收到请求并构建Web页面再通过HTTP相应返回给浏览器。</p>
+<blockquote>
+<p>HTTP是无连接无状态的，可以通过Cookie进行缓存、记录</p>
+</blockquote>
+<p>HTTP可以使用非持久连接，也可以使用持久连接（HTTP/1.1，在HTTP响应后不释放连接，且使用流水线式持久连接，每次使用资源有一个RTT延迟）</p>
+
         </div>
 
         
