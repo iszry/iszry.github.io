@@ -264,8 +264,14 @@
 <p><img src="/2023/06/02/Computer-Network/image-20230602145036518.png" alt="TCPIP"></p>
 <p><img src="/2023/06/02/Computer-Network/image-20230602145100311.png" alt="OSI与TCPIP对应关系"></p>
 <p><strong>分层原因</strong>：实现信息在网络中传输非常复杂，分层是将复杂问题简单化、局部化的有效方法。</p>
-<p>按覆盖范围将网络分为<strong>广域网</strong>（WAN）与<strong>局域网</strong>（LAN）两类。</p>
+<p>按覆盖范围将网络分为<strong>广域网</strong>（WAN）与<strong>局域网</strong>（LAN）两类。IEEE802.3是以太网的标准，IEEE802.11是无线网的标准。</p>
 <h2 id="1-物理层"><a href="#1-物理层" class="headerlink" title="1 物理层"></a>1 物理层</h2><p>传输单位是<strong>比特</strong>，体现在电路接口协议规定（网线接口、规定传输信号的意义、交换电路数量及排列等）。</p>
+<ul>
+<li>双绞线被广泛用于以太网</li>
+<li>光纤分为单模光纤和多模光纤</li>
+<li>xDSL技术使用双绞线</li>
+<li>FTTH使用光纤</li>
+</ul>
 <p>从通信双方信息交互方式来看有三种通信方式：</p>
 <ol>
 <li>单向通信：只有一个方向的通信而没有反方向的交互，仅需一条信道。</li>
@@ -375,6 +381,8 @@
 <li>安全性更好</li>
 <li>IPv6首部长度必须为8B的整数倍，IPv4首部是4B的整数倍</li>
 <li>与IPv4不兼容</li>
+<li>从<strong>点分十进制</strong>改为<strong>冒号十六进制</strong></li>
+<li>实现IPv4/IPv6互操作的技术主要有<strong>双协议栈</strong>和<strong>隧道技术</strong>两种</li>
 </ol>
 </blockquote>
 <h3 id="33-子网划分与子网掩码-cidr"><a href="#3-3-子网划分与子网掩码、CIDR" class="headerlink" title="3.3 子网划分与子网掩码、CIDR"></a>3.3 子网划分与子网掩码、CIDR</h3><p>子网划分下的$三级IP地址：\{&lt;网络号&gt;，&lt;子网号&gt;，&lt;主机号&gt;\}$。</p>
@@ -486,7 +494,7 @@
 <p>POP也使用C/S模式，在传输层使用TCP，<strong>端口号为110</strong>。</p>
 <p>目前出现了许多基于万维网的电子邮件，如Hotmail、Gmail，其特点是用户浏览器与邮件服务器之间的邮件交互使用HTTP，仅在不同邮件服务器之间使用SMTP传送邮件。</p>
 <p>e-mail中，用户代理使用SMTP协议发送邮件，使用POP3协议收取邮件。</p>
-<h3 id="54-www"><a href="#5-4-WWW" class="headerlink" title="5.4 WWW"></a>5.4 WWW</h3><p>万维网（World Wide Web，WWW）是一个信息存储空间，其中的事物称为<strong>资源</strong>，并由一个全域的统一资源定位符<strong>URL</strong>标识，这种资源通过超文本传输协议（HTTP）传送给使用者，使用者点击链接获取资源。</p>
+<h3 id="54-http"><a href="#5-4-HTTP" class="headerlink" title="5.4 HTTP"></a>5.4 HTTP</h3><p>万维网（World Wide Web，WWW）是一个信息存储空间，其中的事物称为<strong>资源</strong>，并由一个全域的统一资源定位符<strong>URL</strong>标识，这种资源通过超文本传输协议（HTTP）传送给使用者，使用者点击链接获取资源。</p>
 <p>万维网的内核由三个标准构成：</p>
 <ol>
 <li>URL：标识文档</li>
@@ -502,6 +510,7 @@
 <p>HTTP是无连接无状态的，可以通过Cookie进行缓存、记录</p>
 </blockquote>
 <p>HTTP可以使用非持久连接，也可以使用持久连接（HTTP/1.1，在HTTP响应后不释放连接，且使用流水线式持久连接，每次使用资源有一个RTT延迟）</p>
+<p>HTTPS是安全的HTTP协议，建立在SSL基础上，使用<strong>端口号443</strong>.</p>
 
         </div>
 
