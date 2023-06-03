@@ -261,7 +261,7 @@
         <div class="post-content">
             <toc>
 
-<h1 id="oo-multithreaded"><a href="#OO-Multithreaded" class="headerlink" title="OO-Multithreaded"></a>OO-Multithreaded</h1><h2 id="一-线程-thread"><a href="#一、线程-Thread" class="headerlink" title="一、线程 ( Thread )"></a>一、线程 ( Thread )</h2><p>多进程：操作系统将 CPU 的时间片分配给每一个进程，给人并行处理的感觉。</p>
+<h2 id="一-线程-thread"><a href="#一、线程-Thread" class="headerlink" title="一、线程 ( Thread )"></a>一、线程 ( Thread )</h2><p>多进程：操作系统将 CPU 的时间片分配给每一个进程，给人并行处理的感觉。</p>
 <p>多线程：一个程序同时执行多个任务，每一个任务称为一个线程( thread )。</p>
 <p>多进程和多线程的本质区别在于每个进程拥有自己的一套变量，而线程则共享数据。</p>
 <p>Java 程序运行时会有一到多个线程运行。每个线程都有专属的栈，用以追踪方法的执行（例：线程栈栈底为线程入口方法）。同一个 Java 程序的所有线程共享一个堆，用于保存对象或数组，为垃圾回收提供支持（无法被程序引用 -&gt; 被垃圾回收器回收，无程序引用 ≠ 引用计数为零）。</p>

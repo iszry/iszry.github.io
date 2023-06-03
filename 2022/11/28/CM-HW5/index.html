@@ -15,7 +15,7 @@
 
 
 
-<title>Compiler Techniques | Matcha Flavor</title>
+<title>Coin Problems | Matcha Flavor</title>
 
 
 
@@ -234,7 +234,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Compiler Techniques</h1>
+            <h1 class="post-title">Coin Problems</h1>
             
                 <div class="post-meta">
                     
@@ -243,14 +243,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 3, 2022&nbsp;&nbsp;18:40:04</a>      
+                        Date: <a href="#">November 28, 2022&nbsp;&nbsp;17:23:56</a>      
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD/">持续更新中</a>
+                                <a href="/categories/Math/">Math</a>
                                   
                         </span>
                     
@@ -261,12 +261,34 @@
         <div class="post-content">
             <toc>
 
-<h1 id="一-文法和语言"><a href="#一、文法和语言" class="headerlink" title="一、文法和语言"></a>一、文法和语言</h1><p><strong>定义-文法</strong> 可以被定义为一个四元组 $G=<v_n,v_t,p,z>$</v_n,v_t,p,z></p>
-<p>$V_n$: 非终结符号集</p>
-<p>$V_t$ : 终结符号集</p>
-<p>$P$  : 规则集合，其中规则为 $U::=x\ \ ,\ \ U\in V_n\ \ ,\ \ x\in V^*\ \ ,\ \ V=V_n\cup V_t$</p>
-<p>$Z$  : 文法的识别符号 $Z\in V_n$</p>
-<p><strong>定义-直接推导</strong></p>
+<h2 id="question"><a href="#Question" class="headerlink" title="Question"></a>Question</h2><p>Are there patterns A and B of heads and tails such A is longer than B, yet A appears before B more than half the time when a fair coin is being flipped? The textbook has already found one: A=TTHH and B=HHH, in exercise 8.59. The question is:</p>
+<p>(1) are there other solutions?</p>
+<p>(2) is there a generalized way to produce these solutions?</p>
+<p>(3) prove or disprove: the length of A is just 1 more than that of B.</p>
+<h2 id="answer"><a href="#Answer" class="headerlink" title="Answer"></a>Answer</h2><h3 id="one-generalized-solution"><a href="#One-Generalized-Solution" class="headerlink" title="One Generalized Solution"></a>One Generalized Solution</h3><p>Of course there are other solutions to this question, here is one of the generalized ways to produce these solutions:</p>
+<p>$A=TTHH\cdots HH_{n-1}$，$B=HH\cdots HH_n$</p>
+<blockquote>
+<p>Sequence B consists of n H’s, while sequence A consists of two T’s and n-1 H’s where n is greater than two. </p>
+</blockquote>
+<h3 id="prove-the-solution"><a href="#Prove-the-Solution" class="headerlink" title="Prove the Solution"></a>Prove the Solution</h3><p>We can notate the probation of sequence A and B appears as $S_a$ and $S_b$, while the probation of  other sequence which can’t be identified as A or B as $N$.</p>
+<p>Then, we can get equations as follows:</p>
+<script type="math/tex; mode=display">
+1+N(H+T)=N+S_a+S_b\\
+NB=S_b+\sum_{i=1}^{n-1}(S_a+S_b)H^i
+\\NA=S_a</script><p>Obviously, $H=T=\frac{1}{2}$ when we consider a  fair coin is being flipped. Finally, we can get $S_b=\frac{1+2^{n-1}}{2^{2n+1}-2^{n+1}}N$ and $S_a=\frac{1}{2^{n+1}}N$.</p>
+<p>When n is greater than 2, $S_a$ is greater than $S_b$, which means A appears before B more than half the time.</p>
+<p>Take A=TTHH and B=HHH as example, we find $S_{TTHH}=\frac{1}{16}N$ and $S_{HHH}=\frac{5}{112}N$ which check the result mentioned above.</p>
+<h3 id="prove-the-length-relation-between-a-and-b"><a href="#Prove-the-Length-Relation-between-A-and-B" class="headerlink" title="Prove the Length Relation between A and B"></a>Prove the Length Relation between A and B</h3><p>As we have found one generalized way to produce sequence A and B where the length of A is just 1 more than that of B, we just need to disprove the existence of solution where the length of A is 2 or greater more than that of B.</p>
+<p>To expand the solution proposed above, we modify the equations first:</p>
+<script type="math/tex; mode=display">
+1+N(H+T)=N+S_a+S_b\\
+S_b\geq NB-\sum_{i=1}^{n-1}(S_a+S_b)(H|T)^i\geq \frac{1}{2}NB-\frac{1}{2}\sum_{i=1}^{n-1}S_a(H|T)^i
+\\NA\geq S_a</script><p>The first one is the same as before. The second one is limited to find the minimum of $S_b$. And the last one limits the maximum of $S_a$.</p>
+<p>When the length of A is $k$ more tan that of B, we notate $|A|=k+n,|B|=n$. Then we find </p>
+<script type="math/tex; mode=display">
+S_a\leq \frac{1}{2^{n+k}}N\\
+S_b\geq \frac{1}{2^{n+1}}N-S_a(\frac{1}{2}-\frac{1}{2^{n}})\\\geq \frac{1}{2^{n+1}}N-\frac{1}{2^{n+k}}N(\frac{1}{2}-\frac{1}{2^{n}})\\=(\frac{1}{2^{n+1}}+\frac{1}{2^{2n+k}}-\frac{1}{2^{n+k}})N</script><p>Obviously, $S_b-S_a\geq N\frac{1+2^{n+k-1}-2^{n+1}}{2^{2n+k}}=\frac{N}{2^{2n+k}}(1+2^{n+1}(2^{k-2}-1))$ which means $S_b&gt;S_a$ when $k$ is euqal to or greater than 2.</p>
+<p>As a result, we have proved the length of A is just 1 more than that of B.</p>
 </toc>
         </div>
 
@@ -277,7 +299,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Compiler-Techniques/"># Compiler Techniques</a>
+                        <a href="/tags/CM/"># CM</a>
                     
                         
                 </span>
@@ -290,10 +312,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/10/07/CM-Hanoi/">Hanoi</a>
+                <a class="prev" rel="prev" href="/2023/06/02/Computer-Network/">Computer Network</a>
             
             
-            <a class="next" rel="next" href="/2022/05/21/ML%20Notes/">ML Notes</a>
+            <a class="next" rel="next" href="/2022/11/05/CM-HW4/">Harmonic Series</a>
             
         </section>
 
