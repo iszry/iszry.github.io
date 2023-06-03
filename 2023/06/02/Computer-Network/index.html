@@ -261,18 +261,37 @@
         <div class="post-content">
             <toc>
 
-<p>结合 OSI 参考模型与 TCP/IP 模型，采用具有五层协议的计算机网络体系结构（物理层、数据链路层、网络层、传输层和应用层）。</p>
+<p>结合 OSI 参考模型与 TCP/IP 模型，本文聚焦于具有五层协议的计算机网络体系结构（物理层、数据链路层、网络层、传输层和应用层）。</p>
 <p><img src="/2023/06/02/Computer-Network/image-20230602144959108.png" alt="OSI"></p>
 <p><img src="/2023/06/02/Computer-Network/image-20230602145036518.png" alt="TCPIP"></p>
 <p><img src="/2023/06/02/Computer-Network/image-20230602145100311.png" alt="OSI与TCPIP对应关系"></p>
 <p><strong>分层原因</strong>：实现信息在网络中传输非常复杂，分层是将复杂问题简单化、局部化的有效方法。</p>
 <p>按覆盖范围将网络分为<strong>广域网</strong>（WAN）与<strong>局域网</strong>（LAN）两类。IEEE802.3是以太网的标准，IEEE802.11是无线网的标准。</p>
-<h2 id="1-物理层"><a href="#1-物理层" class="headerlink" title="1 物理层"></a>1 物理层</h2><p>传输单位是<strong>比特</strong>，体现在电路接口协议规定（网线接口、规定传输信号的意义、交换电路数量及排列等）。</p>
+<p><strong>计算机网络性能指标</strong>：</p>
 <ul>
-<li>双绞线被广泛用于以太网</li>
+<li><strong>速率</strong>：传送数据的速率，也称数据速率或比特率，单位：b/s，bps</li>
+<li><strong>带宽</strong>：通信线路传送数据的能力，即最高数据率</li>
+<li><strong>吞吐量</strong>：单位时间内通过网络的数据量</li>
+<li><strong>时延</strong>：数据从网络一端传送到另一端所需的时间，又称为延迟（由发送时延、传播时延、处理时延和排队时延组成）</li>
+<li><strong>时延带宽积</strong>：即传播时延×带宽</li>
+<li><strong>往返时间</strong>：从发送方发送数据开始，到收到接收方应答所经历的时间</li>
+<li><strong>利用率</strong>：包括信道利用率（某信道有百分之几的时间是被利用过的）和网络利用率（全网络的信道利用率的加权平均值）</li>
+</ul>
+<h2 id="1-物理层"><a href="#1-物理层" class="headerlink" title="1 物理层"></a>1 物理层</h2><p>传输单位是<strong>比特</strong>，体现在电路接口协议规定（网线接口、规定传输信号的意义、交换电路数量及排列等）。</p>
+<p>物理层涉及四个特性：</p>
+<ol>
+<li>机械特性</li>
+<li>电气特性</li>
+<li>功能特性</li>
+<li>过程特性</li>
+</ol>
+<p>一些补充：</p>
+<ul>
+<li>双绞线被广泛用于以太网，网络时代前被广泛应用于电话系统</li>
 <li>光纤分为单模光纤和多模光纤</li>
 <li>xDSL技术使用双绞线</li>
-<li>FTTH使用光纤</li>
+<li>FTTH、EPON、GPON使用光纤</li>
+<li>数字化话音数据使用时分多路复用（E1-30路与T1-24路）</li>
 </ul>
 <p>从通信双方信息交互方式来看有三种通信方式：</p>
 <ol>
@@ -299,7 +318,7 @@
 <blockquote>
 <p>组帧需要为数据添加首部和尾部，分组（ IP 数据报）是帧中的数据部分，不需要添加尾部</p>
 </blockquote>
-<p>IEEE局域网的数据链路层分为<strong>逻辑链路控制</strong>和<strong>介质访问控制</strong>两个子层。</p>
+<p>IEEE802标准将局域网的数据链路层分为<strong>逻辑链路控制</strong>（Logic Link Control，LLC）和<strong>介质访问控制</strong>（Media Access Control，MAC）两个子层。</p>
 <h3 id="21-组帧"><a href="#2-1-组帧" class="headerlink" title="2.1 组帧"></a>2.1 组帧</h3><p>组帧主要解决帧定界、帧同步、透明传输等问题，通常有四种方法：</p>
 <ol>
 <li><strong>字符计数法</strong>：在帧头部使用一个计数字段标明帧内字符数，最大的问题在于一旦计数出错则收发双方后续交流全部失去同步。</li>
@@ -308,13 +327,30 @@
 <li><strong>违规编码法</strong>：常见编码方式（如曼彻斯特编码方法）将1编码为高低电平对，将0编码为低高电平对，高高电平对和低低电平对则为违规的数据比特编码方式，可以用于界定帧的起止位置，IEEE802采用了这种方式。</li>
 </ol>
 <p>目前常用的组帧方法是零比特填充的首尾标志法和违规编码法。</p>
-<h3 id="22-滑动窗口机制"><a href="#2-2-滑动窗口机制" class="headerlink" title="2.2 滑动窗口机制"></a>2.2 滑动窗口机制</h3><ol>
+<h3 id="22-循环冗余校验crc"><a href="#2-2-循环冗余校验CRC" class="headerlink" title="2.2 循环冗余校验CRC"></a>2.2 循环冗余校验CRC</h3><p>循环冗余校验（Cyclic Redundancy Check，CRC）过程中，发送方将数据划分为组，每组 K 比特，在其后添加供差错检测用的 n 位冗余码，将（k + n）比特一起发送。</p>
+<p>计算 n 位冗余码过程如下：</p>
+<ol>
+<li>在 k 比特数据后添 n 位 0 得到 M</li>
+<li>用 M 除以长度（n + 1）位的除数 P（收发双方提前商定好除数），得到商是 Q，余数是 R，其中 n 位的余数即为冗余码</li>
+</ol>
+<p>接收方计算（k + n）% P 为 0 则表示未出错。</p>
+<h3 id="23-滑动窗口协议"><a href="#2-3-滑动窗口协议" class="headerlink" title="2.3 滑动窗口协议"></a>2.3 滑动窗口协议</h3><p>ARQ协议（Automatic Repeat reQuest 使用校验和、确认帧、超时重发、帧序号解决帧传输过程中可能出现的错误）在同一时刻仅有一个帧在链路上传输，信道利用率较低，表现为：$U=\frac{T_D}{T_D+RTT+T_A}$。因此，滑动窗口协议（sliding window protocol）允许发送方<strong>连续发送多个帧</strong>，并通过滑动窗口实现<strong>流量控制</strong>。</p>
+<ol>
 <li>接收窗口向前滑动时发送窗口才有可能向前滑动</li>
 <li>接收窗口的大小为1时，可以保证帧的有序接收</li>
 <li>数据链路层滑动窗口协议中窗口的大小在传输过程中是固定的</li>
+<li>窗口最大尺寸为1的滑动窗口协议即为ARQ协议</li>
+<li>帧出错或丢失后，有<strong>后退N帧</strong>（当某帧出错时该帧之后的帧全被丢弃）和<strong>选择性重传</strong>（只选重发出错/丢失帧，要求接收方可以临时缓存接收窗口的帧）两种方案</li>
 </ol>
 <p><img src="/2023/06/02/Computer-Network/image-20230602135651229.png" alt="数据链路层滑动窗口"></p>
-<h3 id="23-介质访问控制"><a href="#2-3-介质访问控制" class="headerlink" title="2.3 介质访问控制"></a>2.3 介质访问控制</h3><p>信道划分介质访问控制分为四种方式：</p>
+<h3 id="24-点对点协议ppp"><a href="#2-4-点对点协议PPP" class="headerlink" title="2.4 点对点协议PPP"></a>2.4 点对点协议PPP</h3><p>点对点协议（Point-to-Point Protocol，PPP）是广泛应用于点到点链路的数据传输，它面向字节，由以下三个部分组成：</p>
+<ol>
+<li>将IP数据报封装到串行链路的方法</li>
+<li>链路控制协议（Link Control Protocol，LCP）</li>
+<li>网络控制协议（Network Control Protocol，NCP）</li>
+</ol>
+<p>对同步传输，PPP采用<strong>零比特填充</strong>；对异步传输，PPP采用<strong>字符填充</strong>。</p>
+<h3 id="25-介质访问控制"><a href="#2-5-介质访问控制" class="headerlink" title="2.5 介质访问控制"></a>2.5 介质访问控制</h3><p>信道划分介质访问控制分为四种方式：</p>
 <ol>
 <li><strong>频分多路复用（FDM）</strong>：充分利用介质带宽，系统效率较高，技术成熟，实现容易。</li>
 <li><strong>时分多路复用（TDM）</strong>：类似时间片轮转。</li>
@@ -372,8 +408,13 @@
 <li>32位全为0表示本网络上的本主机</li>
 <li>32位全为1表示整个 TCP/IP 网络的广播地址</li>
 </ul>
+<p>IP地址与硬件地址的区别：</p>
+<ul>
+<li>IP地址是网络层及以上各层使用的地址，是一种逻辑地址，存放在IP包头部</li>
+<li>物理地址是数据链路层及物理层使用的地址，存放在数据链路层的帧中</li>
+</ul>
 <p><img src="/2023/06/02/Computer-Network/image-20230603145747325.png" alt="IP地址分类"></p>
-<p>网络地址转换（NAT）将专用网络地址转换为公用地址，NAT 转换表中存放着<strong>{本地IP地址：端口}</strong>到<strong>{全球IP地址：端口}</strong>的映射。</p>
+<p>网络地址转换（NAT）将专用网络地址转换为公用地址，NAT 转换表中存放着<strong>{本地IP地址：端口}</strong>到<strong>{全球IP地址：端口}</strong>的映射（专用地址：<strong>10/8</strong>，<strong>172.16/12</strong>，<strong>192.168/16</strong>）。</p>
 <blockquote>
 <p>IPv6主要特点：</p>
 <ol>
@@ -408,7 +449,25 @@
 <blockquote>
 <p><strong>转发</strong>是路由器根据转发表把IP数据报从合适的端口转发出去，仅涉及一个路由器；<strong>路由选择</strong>则涉及多个路由器，路由表是许多路由器协同工作的结果。</p>
 </blockquote>
-<h2 id="4-传输层"><a href="#4-传输层" class="headerlink" title="4 传输层"></a>4 传输层</h2><p>传输单位是<strong>报文段 TCP</strong> 或用户<strong>数据报 UDP</strong>，负责主机中两个<strong>进程之间</strong>的通信，为端到端连接提供可靠的传输服务，如流量控制、差错控制、服务质量、数据传输管理等服务。</p>
+<h3 id="36-icmp"><a href="#3-6-ICMP" class="headerlink" title="3.6 ICMP"></a>3.6 ICMP</h3><p>网际控制报文协议（Internet Control Message Protocol，ICMP）主要用于报告出错和测试等控制信息，位于IP层，封装在IP包中进行传输。</p>
+<blockquote>
+<p>Ping、Traceroute/Tracert 为ICMP的应用示例</p>
+</blockquote>
+<p>ICMP报文有9种类型，分为差错报告报文和询问报文两种。</p>
+<p>差错报告报文：</p>
+<ul>
+<li>Destination unreachable：重点不可达，路由器或主机无法传输报文</li>
+<li>Source quench：源点抑制，路由器或主机由于拥塞丢弃报文</li>
+<li>Time exceeded：超时，报文TTL字段为0时路由器丢弃报文</li>
+<li>Parameter problem：参数问题，路由器或主机收到的报文中头部有非法字段时丢弃数据包</li>
+<li>Redirect：重定向，路由器向主机报告路由发生改变</li>
+</ul>
+<p>询问报文：</p>
+<ul>
+<li>Echo request/reply：回声探测，用于测试网络连通性</li>
+<li>Timestamp request/reply：请求时间，可用于时间同步</li>
+</ul>
+<h2 id="4-传输层"><a href="#4-传输层" class="headerlink" title="4 传输层"></a>4 传输层</h2><p>传输单位是<strong>报文段 TCP</strong> 或用户<strong>数据报 UDP</strong>，负责主机中两个<strong>进程之间</strong>的通信，为端到端连接提供可靠的传输服务，如流量控制、差错控制、服务质量、数据传输管理、拥塞控制、顺序控制等服务。</p>
 <p>协议有 TCP、UDP。</p>
 <h3 id="41-传输层服务"><a href="#4-1-传输层服务" class="headerlink" title="4.1 传输层服务"></a>4.1 传输层服务</h3><p>较网络层而言，传输层会提供对报文的差错检测服务，以及面向连接的TCP和无连接的UDP两种传输协议。</p>
 <p><strong>端口</strong>（软件端口）是传输层服务访问点（SAP），用于标识主机中的应用进程。</p>
@@ -419,7 +478,7 @@
 <li><p>端口号长度为16bit，可以表示65536个不同的端口号</p>
 </li>
 <li><p>服务器端使用的端口号分为两类，熟知端口号（0~1023）被IANA（互联网地址指派机构）指派给TCP/IP最重要的一些应用程序；登记端口号（1024~49151）供没有熟知端口号的应用程序使用，使用时必须在IANA登记</p>
-<p><img src="/2023/06/02/Computer-Network/image-20230602170853543.png" alt="熟知端口号"></p>
+<p><img src="/2023/06/02/Computer-Network/image-20230604000648590.png" alt="熟知端口号"></p>
 </li>
 <li><p>客户端端口号（49152~65535）仅在客户端进程运行时才动态选择，在通信结束后即被释放</p>
 </li>
@@ -443,7 +502,7 @@
 <li>允许双方协商一些参数（最大窗口值等）</li>
 <li>能够对运输实体资源（缓存大小等）进行分配</li>
 </ol>
-<p>TCP连接建立时经历的三个步骤称为<strong>三次挥手</strong>。</p>
+<p>TCP连接建立时经历的三个步骤称为<strong>三次握手</strong>。</p>
 <blockquote>
 <p>服务器端资源在第二次握手时分配，客户端资源在第三次握手时分配</p>
 </blockquote>
@@ -498,7 +557,7 @@
 <p>POP也使用C/S模式，在传输层使用TCP，<strong>端口号为110</strong>。</p>
 <p>目前出现了许多基于万维网的电子邮件，如Hotmail、Gmail，其特点是用户浏览器与邮件服务器之间的邮件交互使用HTTP，仅在不同邮件服务器之间使用SMTP传送邮件。</p>
 <p>e-mail中，用户代理使用SMTP协议发送邮件，使用POP3协议收取邮件。</p>
-<h3 id="54-http"><a href="#5-4-HTTP" class="headerlink" title="5.4 HTTP"></a>5.4 HTTP</h3><p>万维网（World Wide Web，WWW）是一个信息存储空间，其中的事物称为<strong>资源</strong>，并由一个全域的统一资源定位符<strong>URL</strong>标识，这种资源通过超文本传输协议（HTTP）传送给使用者，使用者点击链接获取资源。</p>
+<h3 id="54-http"><a href="#5-4-HTTP" class="headerlink" title="5.4 HTTP"></a>5.4 HTTP</h3><p>万维网（World Wide Web，WWW）是一个信息存储空间，其中的事物称为<strong>资源</strong>，并由一个全域的统一资源定位符<strong>URL</strong>标识，这种资源通过超文本传输协议（Hyper Text Transfer Protocol，HTTP）传送给使用者，使用者点击链接获取资源。</p>
 <p>万维网的内核由三个标准构成：</p>
 <ol>
 <li>URL：标识文档</li>
