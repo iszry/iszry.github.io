@@ -387,12 +387,14 @@
 <li>实现IPv4/IPv6互操作的技术主要有<strong>双协议栈</strong>和<strong>隧道技术</strong>两种</li>
 </ol>
 </blockquote>
-<h3 id="33-子网划分与子网掩码-cidr"><a href="#3-3-子网划分与子网掩码、CIDR" class="headerlink" title="3.3 子网划分与子网掩码、CIDR"></a>3.3 子网划分与子网掩码、CIDR</h3><p>子网划分下的$三级IP地址：\{&lt;网络号&gt;，&lt;子网号&gt;，&lt;主机号&gt;\}$。</p>
+<h3 id="33-子网划分与子网掩码-cidr"><a href="#3-3-子网划分与子网掩码、CIDR" class="headerlink" title="3.3 子网划分与子网掩码、CIDR"></a>3.3 子网划分与子网掩码、CIDR</h3><p>子网划分下的三级IP地址：</p>
+<p>$\{&lt;网络号&gt;，&lt;子网号&gt;，&lt;主机号&gt;\}$。</p>
 <blockquote>
 <p>子网主机号不能被指派全0与全1的地址，其中全0地址为子网的网络号，全1地址为子网的广播地址。</p>
 </blockquote>
 <p>主机IP逐位&amp;子网掩码=网络号</p>
-<p>在CIDR中，$IP::=\{&lt;网络前缀&gt;，&lt;主机号&gt;\}$</p>
+<p>在CIDR中，</p>
+<p>$IP::=\{&lt;网络前缀&gt;，&lt;主机号&gt;\}$</p>
 <p>路由聚合的好处：路由表中的一个项目可以表示很多个(例如上千个)原来传统分类地址的路由，可以减少路由表中表项个数，并减少路由器间交换的路由信息量。  </p>
 <h3 id="34-地址解析协议arp"><a href="#3-4-地址解析协议（ARP）" class="headerlink" title="3.4 地址解析协议（ARP）"></a>3.4 地址解析协议（ARP）</h3><p>IP地址是网络层使用的地址，硬件地址是数据链路层使用的MAC地址，在不同抽象层次中地址可见性不同。地址解析协议（Address  Resolution Protocol，ARP）用于完成IP地址到MAC地址的映射。</p>
 <p>ARP协议工作在网络层，用于解决同一局域网的主机与路由器的IP地址与硬件地址的映射问题，如果目标不在该局域网，则需要找到本局域网的某个路由器由其转发至下一个网络。</p>
@@ -503,16 +505,15 @@
 <li>HTTP：应用层协议，使用TCP进行传输</li>
 <li>HTML：文档结构语言</li>
 </ol>
-<p>$URL::=&lt;协议&gt;://&lt;主机&gt;:&lt;端口&gt;/&lt;路径&gt;$</p>
-<blockquote>
+<script type="math/tex; mode=display">URL::=<协议>://<主机>:<端口>/<路径></script><blockquote>
 <p>URL中不区分大小写</p>
 </blockquote>
 <p>WWW服务器不断监听TCP的<strong>端口80</strong>，获得请求后即与浏览器建立TCP连接，随后浏览器向服务器发送获取某个Web页面的HTTP请求，服务器收到请求并构建Web页面再通过HTTP相应返回给浏览器。</p>
 <blockquote>
 <p>HTTP是无连接无状态的，可以通过Cookie进行缓存、记录</p>
 </blockquote>
-<p>HTTP可以使用非持久连接，也可以使用持久连接（HTTP/1.1，在HTTP响应后不释放连接，且使用流水线式持久连接，每次使用资源有一个RTT延迟）</p>
-<p>HTTPS是安全的HTTP协议，建立在SSL基础上，使用<strong>端口号443</strong>.</p>
+<p>HTTP可以使用非持久连接，也可以使用持久连接（HTTP/1.1，在HTTP响应后不释放连接，且使用流水线式持久连接，每次使用资源有一个RTT延迟）。</p>
+<p>HTTPS是安全的HTTP协议，建立在SSL基础上，使用<strong>端口号443</strong>。</p>
 </toc>
         </div>
 
