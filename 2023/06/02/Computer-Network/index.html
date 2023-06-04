@@ -10,7 +10,7 @@
     <meta name="author" content="Rayee @ SCSE, BUAA">
 
 
-    <meta name="subtitle" content="Simple Life, Writing Briefly">
+    <meta name="subtitle" content="Living Simply & Writing Briefly">
 
 
 
@@ -292,6 +292,7 @@
 <li>xDSL技术使用双绞线</li>
 <li>FTTH、EPON、GPON使用光纤</li>
 <li>数字化话音数据使用时分多路复用（E1-30路与T1-24路）</li>
+<li>10Base-T中10是10Mbps，Base是基带传输，T是双绞线</li>
 </ul>
 <p>从通信双方信息交互方式来看有三种通信方式：</p>
 <ol>
@@ -343,7 +344,7 @@
 <li>帧出错或丢失后，有<strong>后退N帧</strong>（当某帧出错时该帧之后的帧全被丢弃）和<strong>选择性重传</strong>（只选重发出错/丢失帧，要求接收方可以临时缓存接收窗口的帧）两种方案</li>
 </ol>
 <p><img src="/2023/06/02/Computer-Network/image-20230602135651229.png" alt="数据链路层滑动窗口"></p>
-<h3 id="24-点对点协议ppp"><a href="#2-4-点对点协议PPP" class="headerlink" title="2.4 点对点协议PPP"></a>2.4 点对点协议PPP</h3><p>点对点协议（Point-to-Point Protocol，PPP）是广泛应用于点到点链路的数据传输，它面向字节，由以下三个部分组成：</p>
+<h3 id="24-点对点协议ppp"><a href="#2-4-点对点协议PPP" class="headerlink" title="2.4 点对点协议PPP"></a>2.4 点对点协议PPP</h3><p>点对点协议（Point-to-Point Protocol，PPP）是广泛应用于点到点链路的数据传输，它面向字节，提供<strong>有连接的不可靠服务</strong>，由以下三个部分组成：</p>
 <ol>
 <li>将IP数据报封装到串行链路的方法</li>
 <li>链路控制协议（Link Control Protocol，LCP）</li>
@@ -489,6 +490,7 @@
 <h3 id="42-udp"><a href="#4-2-UDP" class="headerlink" title="4.2 UDP"></a>4.2 UDP</h3><p>UDP不保证可靠交付，可靠性由用户在应用层完成。</p>
 <p>UDP可以应用于一对一、一对多、多对一、多对多交互通信。</p>
 <p>UDP数据报包含首部和用户数据。首部有8B共4个字段，每个字段长度2B，在计算校验和时需要提供12B的伪首部（可以检查源端口号、目的端口号、源IP、目的地址和数据报数据部分）。</p>
+<p>为了实现网络互连，互联网中的所有端系统和路由器都必须实现UDP协议。</p>
 <blockquote>
 <p>UDP与TCP校验机制一样。</p>
 </blockquote>
