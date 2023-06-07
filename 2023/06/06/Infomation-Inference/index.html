@@ -306,7 +306,32 @@
 </ul>
 </li>
 </ol>
+<h3 id="观念改变之难"><a href="#观念改变之难" class="headerlink" title="观念改变之难"></a>观念改变之难</h3><p>$P(H|E)\times P(E)=P(H\and E)=P(E|H)\times P(H)$</p>
+<p>$P(E|H)=P(E)\times \frac{P(H|E)}{P(H)}$，其中$\frac{P(H|E)}{P(H)}=\frac{1}{1-(1-P(E))\times (1-R)}$，$R=\frac{P(H|\overline{E})}{P(H|E)}$</p>
+<p>通过比较 R 与 1 的大小关系判断 $E$ 与 $\overline{E}$ 的解释力度的相对大小</p>
 <h3 id="巴纳姆效应"><a href="#巴纳姆效应" class="headerlink" title="巴纳姆效应"></a>巴纳姆效应</h3><p>每个人都会很容易相信一个笼统的，一般性的人格描述，认为其特别适合自己。</p>
+<h3 id="多观测下的贝叶斯"><a href="#多观测下的贝叶斯" class="headerlink" title="多观测下的贝叶斯"></a>多观测下的贝叶斯</h3><p>基本形式：$P(H_i|E_1,E_2)=\frac{P(E_1|H_i)\times P(E_2|H_i)}{\sum_{k=1}^{n}P(E_1|H_k)\times P(E_2|H_k)\times P(H_k)}$</p>
+<p>迭代形式：$P(H|E,E_k)=P(H|E_1)\times \frac{P(E_k|H)}{P(E_k|E)}$</p>
+<p>在线贝叶斯的启发：</p>
+<ul>
+<li>online or offline</li>
+<li>精益求精 or 步步为营</li>
+<li>观点随事实改变而改变</li>
+</ul>
+<h3 id="贝叶斯计算"><a href="#贝叶斯计算" class="headerlink" title="贝叶斯计算"></a>贝叶斯计算</h3><p>将观测集划分为A，B，将 A 放在先验概率中，B作为当前的观测。</p>
+<p>$P(H_i|A_1,A_2,\cdots,A_n)=P(H_i|A)\times \frac{P(B|H_i)}{P(B|A)}$</p>
+<ul>
+<li>计算时仅考虑先验概率，忽视似然概率</li>
+<li>计算先验概率时不依赖公式，直接使用统计数据</li>
+<li>应将信息量大的观测放在 A 中</li>
+</ul>
+<h3 id="分层描述法"><a href="#分层描述法" class="headerlink" title="分层描述法"></a>分层描述法</h3><p>围绕被观测的对象，在不同的颗粒度上将该对象的所有信息展现出来。</p>
+<p>具体步骤：</p>
+<ul>
+<li>明确对象：抛开观测，明确问题中的观测对象</li>
+<li>描述对象：重新组织现有观测，对该对象的特点按粗粒度到细粒度进行多级描述（信息量大的观测尽量放在前面的层次）</li>
+<li>统计数据：根据多级描述，寻找能找到数据的粒度最细的那层描述，将其观测放入集合 A</li>
+</ul>
 </toc>
         </div>
 
